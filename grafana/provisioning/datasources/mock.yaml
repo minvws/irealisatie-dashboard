@@ -1,0 +1,6 @@
+apiVersion: 1
+
+datasources:
+  - name: Mock (TestData)
+    type: testdata
+    isDefault: true

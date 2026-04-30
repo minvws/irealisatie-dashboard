@@ -1,0 +1,20 @@
+apiVersion: 1
+
+datasources:
+  # Option 1: GitHub Personal Access Token (simpler to set up, but less secure)
+  - name: GitHub (Personal Access Token)
+    type: grafana-github-datasource
+    jsonData:
+      selectedAuthType: personal-access-token
+    secureJsonData:
+      accessToken: ${GITHUB_TOKEN}
+
+  # Option 2: GitHub App (recommended for production use)
+  - name: GitHub (App)
+    type: grafana-github-datasource
+    jsonData:
+      selectedAuthType: github-app
+      appId: ${GITHUB_APP_ID}
+      installationId: ${GITHUB_APP_INSTALL_ID}
+    secureJsonData:
+      privateKey: ${GITHUB_APP_PRIVATE_KEY}
