@@ -121,7 +121,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS_GITHUB}",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -330,7 +330,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_GITHUB}",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -618,7 +618,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_GITHUB}",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -906,7 +906,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_GITHUB}",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1510,7 +1510,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_GITHUB}",
+        "datasource": "$datasource",
         "definition": "GitHub - Repositories",
         "description": null,
         "error": null,
@@ -1539,7 +1539,7 @@
       {
         "allValue": "",
         "current": {},
-        "datasource": "${DS_GITHUB}",
+        "datasource": "$datasource",
         "definition": "GitHub - Labels",
         "description": null,
         "error": null,
@@ -1594,7 +1594,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_GITHUB}",
+        "datasource": "$datasource",
         "definition": "GitHub - Milestones",
         "description": null,
         "error": null,
