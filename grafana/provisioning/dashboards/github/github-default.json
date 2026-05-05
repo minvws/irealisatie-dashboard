@@ -1642,7 +1642,7 @@
   },
   "timezone": "",
   "title": "GitHub Default",
-  "uid": "iVcSTeyGz",
+  "uid": "github-default",
   "version": 3,
   "description": "This dashboard contains a sample of some of the various features and display methods available in the GitHub datasource."
 }
