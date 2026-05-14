@@ -3471,8 +3471,8 @@
         "spec": {
           "allowCustomValue": true,
           "current": {
-            "text": "master",
-            "value": "master"
+            "text": "main",
+            "value": "main"
           },
           "hide": "dontHide",
           "includeAll": false,
@@ -3480,7 +3480,7 @@
           "multi": false,
           "name": "branch",
           "options": [],
-          "query": "master",
+          "query": "main",
           "skipUrlSync": false,
           "valuesFormat": "csv"
         }
