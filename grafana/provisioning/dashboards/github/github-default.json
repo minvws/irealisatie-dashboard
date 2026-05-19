@@ -29,7 +29,7 @@
       {
         "kind": "AnnotationQuery",
         "spec": {
-          "enable": true,
+          "enable": false,
           "hide": false,
           "iconColor": "#E02F44",
           "legacyOptions": {
@@ -362,6 +362,21 @@
                     },
                     "inspect": false
                   },
+                  "mappings": [
+                    {
+                      "options": {
+                        "closed": {
+                          "color": "light-green",
+                          "index": 1
+                        },
+                        "open": {
+                          "color": "light-red",
+                          "index": 0
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -386,6 +401,21 @@
                       {
                         "id": "custom.width",
                         "value": 323
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
                       }
                     ]
                   }
@@ -469,6 +499,9 @@
             "spec": {
               "fieldConfig": {
                 "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
                   "custom": {
                     "align": "auto",
                     "cellOptions": {
@@ -480,6 +513,25 @@
                     },
                     "inspect": false
                   },
+                  "mappings": [
+                    {
+                      "options": {
+                        "CLOSED": {
+                          "color": "light-red",
+                          "index": 2
+                        },
+                        "MERGED": {
+                          "color": "light-green",
+                          "index": 1
+                        },
+                        "OPEN": {
+                          "color": "light-blue",
+                          "index": 0
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -498,24 +550,27 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "number"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 44
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
                       "options": "title"
                     },
                     "properties": [
                       {
                         "id": "custom.width",
                         "value": 259
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
                       }
                     ]
                   }
@@ -616,8 +671,8 @@
                         "value": 0
                       },
                       {
-                        "color": "red",
-                        "value": 80
+                        "color": "orange",
+                        "value": 1
                       }
                     ]
                   }
@@ -1899,6 +1954,37 @@
                     },
                     "inspect": false
                   },
+                  "mappings": [
+                    {
+                      "options": {
+                        "CRITICAL": {
+                          "color": "light-red",
+                          "index": 2
+                        },
+                        "FIXED": {
+                          "color": "light-green",
+                          "index": 0
+                        },
+                        "HIGH": {
+                          "color": "light-orange",
+                          "index": 3
+                        },
+                        "LOW": {
+                          "color": "light-blue",
+                          "index": 5
+                        },
+                        "MODERATE": {
+                          "color": "light-green",
+                          "index": 4
+                        },
+                        "OPEN": {
+                          "color": "light-red",
+                          "index": 1
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -1913,7 +1999,38 @@
                     ]
                   }
                 },
-                "overrides": []
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "severity",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
+                      }
+                    ]
+                  }
+                ]
               },
               "options": {
                 "cellHeight": "sm",
@@ -2134,7 +2251,7 @@
           "description": "",
           "id": 39,
           "links": [],
-          "title": "Resolved",
+          "title": "Closed",
           "vizConfig": {
             "group": "stat",
             "kind": "VizConfig",
@@ -2145,11 +2262,15 @@
                     "mode": "thresholds"
                   },
                   "thresholds": {
-                    "mode": "percentage",
+                    "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green",
+                        "color": "red",
                         "value": 0
+                      },
+                      {
+                        "color": "green",
+                        "value": 1
                       }
                     ]
                   }
@@ -2424,6 +2545,37 @@
                     },
                     "inspect": false
                   },
+                  "mappings": [
+                    {
+                      "options": {
+                        "dismissed": {
+                          "color": "light-orange",
+                          "index": 2
+                        },
+                        "fixed": {
+                          "color": "light-green",
+                          "index": 1
+                        },
+                        "high": {
+                          "color": "light-red",
+                          "index": 3
+                        },
+                        "low": {
+                          "color": "light-green",
+                          "index": 5
+                        },
+                        "medium": {
+                          "color": "light-orange",
+                          "index": 4
+                        },
+                        "open": {
+                          "color": "light-red",
+                          "index": 0
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -2472,6 +2624,36 @@
                       {
                         "id": "custom.width",
                         "value": 201
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "rule_security_severity_level",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
                       }
                     ]
                   }
@@ -2813,7 +2995,7 @@
                       },
                       {
                         "color": "red",
-                        "value": 80
+                        "value": 1
                       }
                     ]
                   }
@@ -3083,7 +3265,7 @@
                       },
                       {
                         "color": "red",
-                        "value": 80
+                        "value": 1
                       }
                     ]
                   }
@@ -3287,10 +3469,10 @@
                           "config": {
                             "id": "equal",
                             "options": {
-                              "value": "true"
+                              "value": "closed"
                             }
                           },
-                          "fieldName": "closed"
+                          "fieldName": "state"
                         }
                       ],
                       "match": "any",
@@ -3346,12 +3528,12 @@
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green",
+                        "color": "red",
                         "value": 0
                       },
                       {
-                        "color": "red",
-                        "value": 80
+                        "color": "green",
+                        "value": 1
                       }
                     ]
                   }
@@ -3506,6 +3688,709 @@
                 "showPercentChange": false,
                 "textMode": "auto",
                 "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-51": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "group": "grafana-github-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "options": {
+                          "query": "label:bug"
+                        },
+                        "owner": "$organization",
+                        "queryType": "Issues",
+                        "repository": "$repository"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "bug"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "mode": "reduceRow",
+                      "reduce": {
+                        "include": ["number"],
+                        "reducer": "count"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "groupBy",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "fields": {
+                        "0": {
+                          "aggregations": [],
+                          "operation": "groupby"
+                        },
+                        "1": {
+                          "aggregations": []
+                        },
+                        "2": {
+                          "aggregations": []
+                        },
+                        "Count": {
+                          "aggregations": ["count"],
+                          "operation": "aggregate"
+                        },
+                        "number": {
+                          "aggregations": [],
+                          "operation": "groupby"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 51,
+          "links": [],
+          "title": "Bug",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["count"],
+                  "fields": "/^Count \\(count\\)$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-52": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "group": "grafana-github-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "options": {
+                          "query": "label:feature"
+                        },
+                        "owner": "$organization",
+                        "queryType": "Issues",
+                        "repository": "$repository"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "bug"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "mode": "reduceRow",
+                      "reduce": {
+                        "include": ["number"],
+                        "reducer": "count"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "groupBy",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "fields": {
+                        "0": {
+                          "aggregations": [],
+                          "operation": "groupby"
+                        },
+                        "1": {
+                          "aggregations": []
+                        },
+                        "2": {
+                          "aggregations": []
+                        },
+                        "Count": {
+                          "aggregations": ["count"],
+                          "operation": "aggregate"
+                        },
+                        "number": {
+                          "aggregations": [],
+                          "operation": "groupby"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 52,
+          "links": [],
+          "title": "Feature",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["count"],
+                  "fields": "/^Count \\(count\\)$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-53": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "group": "grafana-github-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "options": {
+                          "query": "label:security"
+                        },
+                        "owner": "$organization",
+                        "queryType": "Issues",
+                        "repository": "$repository"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "bug"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "mode": "reduceRow",
+                      "reduce": {
+                        "include": ["number"],
+                        "reducer": "count"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "groupBy",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "fields": {
+                        "0": {
+                          "aggregations": [],
+                          "operation": "groupby"
+                        },
+                        "1": {
+                          "aggregations": []
+                        },
+                        "2": {
+                          "aggregations": []
+                        },
+                        "Count": {
+                          "aggregations": ["count"],
+                          "operation": "aggregate"
+                        },
+                        "number": {
+                          "aggregations": [],
+                          "operation": "groupby"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 53,
+          "links": [],
+          "title": "Security",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["count"],
+                  "fields": "/^Count \\(count\\)$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-54": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "group": "grafana-github-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "owner": "$organization",
+                        "queryType": "Vulnerabilities",
+                        "repository": "$repository"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "groupBy",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "fields": {
+                        "cumulative ": {
+                          "aggregations": ["first"]
+                        },
+                        "severity": {
+                          "aggregations": ["count"],
+                          "operation": "groupby"
+                        },
+                        "value": {
+                          "aggregations": []
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 54,
+          "links": [],
+          "title": "Severity",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "MODERATE"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-green",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "HIGH"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-orange",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "LOW"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-blue",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "CRITICAL"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-55": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "group": "grafana-github-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "options": {
+                          "gitRef": "",
+                          "state": "open"
+                        },
+                        "owner": "$organization",
+                        "queryType": "Code_Scanning",
+                        "repository": "$repository"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "group": "grafana-github-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "options": {
+                          "gitRef": "",
+                          "state": "closed"
+                        },
+                        "owner": "$organization",
+                        "queryType": "Code_Scanning",
+                        "repository": "$repository"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "B"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "merge",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {}
+                  }
+                },
+                {
+                  "group": "groupBy",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "fields": {
+                        "rule_security_severity_level": {
+                          "aggregations": ["count"],
+                          "operation": "groupby"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 55,
+          "links": [],
+          "title": "Security severity level",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "high"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "medium"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-orange",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
               }
             },
             "version": "13.0.1"
@@ -3752,7 +4637,7 @@
                           "kind": "ElementReference",
                           "name": "panel-11"
                         },
-                        "height": 6,
+                        "height": 9,
                         "width": 24,
                         "x": 0,
                         "y": 4
@@ -3885,7 +4770,7 @@
                           "name": "panel-15"
                         },
                         "height": 4,
-                        "width": 4,
+                        "width": 6,
                         "x": 0,
                         "y": 0
                       }
@@ -3899,7 +4784,7 @@
                         },
                         "height": 4,
                         "width": 4,
-                        "x": 4,
+                        "x": 6,
                         "y": 0
                       }
                     },
@@ -3912,33 +4797,7 @@
                         },
                         "height": 4,
                         "width": 4,
-                        "x": 8,
-                        "y": 0
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-34"
-                        },
-                        "height": 4,
-                        "width": 4,
-                        "x": 12,
-                        "y": 0
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-33"
-                        },
-                        "height": 4,
-                        "width": 4,
-                        "x": 16,
+                        "x": 10,
                         "y": 0
                       }
                     },
@@ -3951,8 +4810,73 @@
                         },
                         "height": 4,
                         "width": 4,
-                        "x": 20,
+                        "x": 14,
                         "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-51"
+                        },
+                        "height": 4,
+                        "width": 2,
+                        "x": 0,
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-52"
+                        },
+                        "height": 4,
+                        "width": 2,
+                        "x": 2,
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-53"
+                        },
+                        "height": 4,
+                        "width": 2,
+                        "x": 4,
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-33"
+                        },
+                        "height": 4,
+                        "width": 4,
+                        "x": 6,
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-34"
+                        },
+                        "height": 4,
+                        "width": 4,
+                        "x": 10,
+                        "y": 4
                       }
                     },
                     {
@@ -3965,7 +4889,7 @@
                         "height": 8,
                         "width": 24,
                         "x": 0,
-                        "y": 4
+                        "y": 8
                       }
                     }
                   ]
@@ -3990,7 +4914,7 @@
                           "name": "panel-38"
                         },
                         "height": 4,
-                        "width": 4,
+                        "width": 6,
                         "x": 0,
                         "y": 0
                       }
@@ -4004,7 +4928,7 @@
                         },
                         "height": 4,
                         "width": 4,
-                        "x": 4,
+                        "x": 6,
                         "y": 0
                       }
                     },
@@ -4017,8 +4941,21 @@
                         },
                         "height": 4,
                         "width": 4,
-                        "x": 8,
+                        "x": 10,
                         "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-54"
+                        },
+                        "height": 6,
+                        "width": 6,
+                        "x": 0,
+                        "y": 4
                       }
                     },
                     {
@@ -4031,7 +4968,7 @@
                         "height": 9,
                         "width": 24,
                         "x": 0,
-                        "y": 4
+                        "y": 10
                       }
                     }
                   ]
@@ -4056,7 +4993,7 @@
                           "name": "panel-43"
                         },
                         "height": 4,
-                        "width": 4,
+                        "width": 6,
                         "x": 0,
                         "y": 0
                       }
@@ -4070,7 +5007,7 @@
                         },
                         "height": 4,
                         "width": 4,
-                        "x": 4,
+                        "x": 6,
                         "y": 0
                       }
                     },
@@ -4083,7 +5020,7 @@
                         },
                         "height": 4,
                         "width": 4,
-                        "x": 8,
+                        "x": 10,
                         "y": 0
                       }
                     },
@@ -4096,8 +5033,21 @@
                         },
                         "height": 4,
                         "width": 4,
-                        "x": 12,
+                        "x": 14,
                         "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-55"
+                        },
+                        "height": 6,
+                        "width": 6,
+                        "x": 0,
+                        "y": 4
                       }
                     },
                     {
@@ -4110,7 +5060,7 @@
                         "height": 9,
                         "width": 24,
                         "x": 0,
-                        "y": 4
+                        "y": 10
                       }
                     }
                   ]
