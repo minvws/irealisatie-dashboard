@@ -6,3 +6,4 @@ datasources:
     jsonData:
       allowedHosts:
         - http://json-server:3000
+        - https://api.github.com
