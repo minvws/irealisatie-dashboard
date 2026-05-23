@@ -1,9 +1,25 @@
 apiVersion: 1
 
 datasources:
-  - name: Infinity
+  - name: GitHub API
     type: yesoreyeram-infinity-datasource
+    access: proxy
+    url: https://api.github.com
     jsonData:
-      allowedHosts:
-        - http://json-server:3000
-        - https://api.github.com
+      auth_method: bearerToken
+    secureJsonData:
+      bearerToken: ${GITHUB_TOKEN}
+
+  - name: SonarCloud API
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    url: https://api.sonarcloud.io
+    jsonData:
+      auth_method: bearerToken
+    secureJsonData:
+      bearerToken: ${SONARCLOUD_TOKEN}
+
+  - name: Local JSON Server
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    url: http://json-server:3000
