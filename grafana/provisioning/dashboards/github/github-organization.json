@@ -962,616 +962,6 @@
           }
         }
       },
-      "panel-40": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filterExpression": "archived == false",
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "id": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 40,
-          "links": [],
-          "title": "Archived",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "light-blue",
-                        "value": 0
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "background",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id \\(count\\)$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-41": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filterExpression": "private == false",
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "id": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 41,
-          "links": [],
-          "title": "Public",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "light-blue",
-                        "value": 0
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "background",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id \\(count\\)$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-42": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filterExpression": "private == true",
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "id": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 42,
-          "links": [],
-          "title": "Private",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "light-blue",
-                        "value": 0
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "background",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id \\(count\\)$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-43": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "id": {
-                          "aggregations": []
-                        },
-                        "private": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 43,
-          "links": [],
-          "title": "Repository state",
-          "vizConfig": {
-            "group": "piechart",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    }
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "private (count)",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "super-light-red",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "displayLabels": [],
-                "legend": {
-                  "displayMode": "table",
-                  "placement": "right",
-                  "showLegend": true,
-                  "values": ["value"]
-                },
-                "pieType": "donut",
-                "reduceOptions": {
-                  "calcs": ["lastNotNull"],
-                  "fields": "",
-                  "values": false
-                },
-                "sort": "desc",
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-44": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [
-                          {
-                            "selector": "total_count",
-                            "text": "Public",
-                            "type": "number"
-                          }
-                        ],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+is:public",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Public"
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [
-                          {
-                            "selector": "total_count",
-                            "text": "Private",
-                            "type": "number"
-                          }
-                        ],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+is:private",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Private"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "concatenate",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "frameNameLabel": "frame",
-                      "frameNameMode": "drop"
-                    }
-                  }
-                },
-                {
-                  "group": "organize",
-                  "kind": "Transformation",
-                  "spec": {
-                    "disabled": true,
-                    "options": {
-                      "excludeByName": {},
-                      "includeByName": {},
-                      "indexByName": {},
-                      "orderByMode": "manual",
-                      "renameByName": {
-                        "Private · total_count": "Private",
-                        "Public": "",
-                        "Public · total_count": "Public"
-                      }
-                    }
-                  }
-                },
-                {
-                  "group": "transpose",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "firstFieldName": "Field",
-                      "restFieldsName": "Value"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 44,
-          "links": [],
-          "title": "Repository status",
-          "vizConfig": {
-            "group": "piechart",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    }
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "displayLabels": ["name"],
-                "legend": {
-                  "displayMode": "table",
-                  "placement": "right",
-                  "showLegend": true,
-                  "values": ["value"]
-                },
-                "pieType": "donut",
-                "reduceOptions": {
-                  "calcs": ["lastNotNull"],
-                  "fields": "",
-                  "values": true
-                },
-                "sort": "none",
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
       "panel-45": {
         "kind": "Panel",
         "spec": {
@@ -1619,36 +1009,6 @@
                     },
                     "refId": "Public / Private"
                   }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": true,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/orgs/${organization}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Test"
-                  }
                 }
               ],
               "queryOptions": {},
@@ -1668,7 +1028,7 @@
           "description": "",
           "id": 45,
           "links": [],
-          "title": "Repository status",
+          "title": "Repository state",
           "vizConfig": {
             "group": "piechart",
             "kind": "VizConfig",
@@ -1971,6 +1331,863 @@
           }
         }
       },
+      "panel-47": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Project",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:project",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Project"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Components",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Component"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Actions",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:action",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Action"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "concatenate",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "frameNameLabel": "frame",
+                      "frameNameMode": "field"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {
+                        "Active": false
+                      },
+                      "includeByName": {},
+                      "indexByName": {
+                        "Active": 3,
+                        "Archived": 4,
+                        "Private": 2,
+                        "Public": 1,
+                        "Total": 0
+                      },
+                      "orderByMode": "manual",
+                      "renameByName": {
+                        "A · Components": "Projects",
+                        "Action": "Actions",
+                        "Action · Actions": "Actions",
+                        "Component · Components": "Components",
+                        "Project · Project": "Projects"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 47,
+          "links": [],
+          "title": "Projects, components, actions",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "orange",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "#FFB357",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "background",
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": false
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-48": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Total",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Total"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Active",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Active"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Archived",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:true+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Archived"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "concatenate",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "frameNameLabel": "frame",
+                      "frameNameMode": "drop"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "Active": 3,
+                        "Archived": 4,
+                        "Private": 2,
+                        "Public": 1,
+                        "Total": 0
+                      },
+                      "renameByName": {}
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 48,
+          "links": [],
+          "title": "Components",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "light-purple",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "light-blue",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "background",
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-49": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Active",
+                            "type": "number"
+                          }
+                        ],
+                        "computed_columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Active"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Archived",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:true+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Archived"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "reduce",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "labelsToFields": true,
+                      "reducers": ["last"]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 49,
+          "links": [],
+          "title": "Component status",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Active"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-blue",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Archived"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-50": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Active",
+                            "type": "number"
+                          }
+                        ],
+                        "computed_columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Active"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Archived",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:true",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Private"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "reduce",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "labelsToFields": true,
+                      "reducers": ["last"]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 50,
+          "links": [],
+          "title": "Repository status",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Active"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-blue",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Archived"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "super-light-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-51": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "items",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 51,
+          "links": [],
+          "title": "Repos",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "hideFrom": {
+                      "viz": false
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "description"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 283
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
       "panel-9": {
         "kind": "Panel",
         "spec": {
@@ -2069,117 +2286,124 @@
             "kind": "RowsLayoutRow",
             "spec": {
               "collapse": false,
+              "fillScreen": false,
+              "hideHeader": false,
               "layout": {
-                "kind": "RowsLayout",
+                "kind": "GridLayout",
                 "spec": {
-                  "rows": [
+                  "items": [
                     {
-                      "kind": "RowsLayoutRow",
+                      "kind": "GridLayoutItem",
                       "spec": {
-                        "collapse": false,
-                        "hideHeader": false,
-                        "layout": {
-                          "kind": "GridLayout",
-                          "spec": {
-                            "items": [
-                              {
-                                "kind": "GridLayoutItem",
-                                "spec": {
-                                  "element": {
-                                    "kind": "ElementReference",
-                                    "name": "panel-46"
-                                  },
-                                  "height": 4,
-                                  "width": 7,
-                                  "x": 0,
-                                  "y": 0
-                                }
-                              },
-                              {
-                                "kind": "GridLayoutItem",
-                                "spec": {
-                                  "element": {
-                                    "kind": "ElementReference",
-                                    "name": "panel-45"
-                                  },
-                                  "height": 6,
-                                  "width": 4,
-                                  "x": 0,
-                                  "y": 4
-                                }
-                              }
-                            ]
-                          }
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-47"
                         },
-                        "title": "Repositories"
+                        "height": 4,
+                        "width": 4,
+                        "x": 0,
+                        "y": 0
                       }
                     },
                     {
-                      "kind": "RowsLayoutRow",
+                      "kind": "GridLayoutItem",
                       "spec": {
-                        "collapse": true,
-                        "layout": {
-                          "kind": "AutoGridLayout",
-                          "spec": {
-                            "columnWidthMode": "standard",
-                            "items": [
-                              {
-                                "kind": "AutoGridLayoutItem",
-                                "spec": {
-                                  "element": {
-                                    "kind": "ElementReference",
-                                    "name": "panel-41"
-                                  }
-                                }
-                              },
-                              {
-                                "kind": "AutoGridLayoutItem",
-                                "spec": {
-                                  "element": {
-                                    "kind": "ElementReference",
-                                    "name": "panel-42"
-                                  }
-                                }
-                              },
-                              {
-                                "kind": "AutoGridLayoutItem",
-                                "spec": {
-                                  "element": {
-                                    "kind": "ElementReference",
-                                    "name": "panel-40"
-                                  }
-                                }
-                              },
-                              {
-                                "kind": "AutoGridLayoutItem",
-                                "spec": {
-                                  "element": {
-                                    "kind": "ElementReference",
-                                    "name": "panel-44"
-                                  }
-                                }
-                              },
-                              {
-                                "kind": "AutoGridLayoutItem",
-                                "spec": {
-                                  "element": {
-                                    "kind": "ElementReference",
-                                    "name": "panel-43"
-                                  }
-                                }
-                              }
-                            ],
-                            "maxColumnCount": 3,
-                            "rowHeightMode": "standard"
-                          }
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-48"
                         },
-                        "title": "New row"
+                        "height": 4,
+                        "width": 4,
+                        "x": 4,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-46"
+                        },
+                        "height": 4,
+                        "width": 7,
+                        "x": 8,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-49"
+                        },
+                        "height": 6,
+                        "width": 4,
+                        "x": 0,
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-45"
+                        },
+                        "height": 6,
+                        "width": 4,
+                        "x": 4,
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-50"
+                        },
+                        "height": 6,
+                        "width": 4,
+                        "x": 8,
+                        "y": 4
                       }
                     }
                   ]
                 }
               },
               "title": "Repositories overview"
+            }
+          },
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "collapse": false,
+              "layout": {
+                "kind": "AutoGridLayout",
+                "spec": {
+                  "columnWidthMode": "standard",
+                  "items": [
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-51"
+                        }
+                      }
+                    }
+                  ],
+                  "maxColumnCount": 3,
+                  "rowHeightMode": "standard"
+                }
+              },
+              "repeat": {
+                "mode": "variable",
+                "value": "projects"
+              },
+              "title": "Project: $projects"
             }
           },
           {
@@ -2431,6 +2655,107 @@
           "regexApplyTo": "value",
           "skipUrlSync": false,
           "sort": "alphabeticalAsc"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
+            "text": "icore",
+            "value": "icore"
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "multi": false,
+          "name": "projects",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "P7DE29E761332DDA9"
+            },
+            "group": "yesoreyeram-infinity-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "values\nfoo\nbar\nbaz",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "$distinct($[].topics[$contains($, \"ic\")])",
+                "source": "url",
+                "type": "json",
+                "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "meta": {
+                "valueField": "variable"
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": false,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "multi": false,
+          "name": "repos_per_project",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "P7DE29E761332DDA9"
+            },
+            "group": "yesoreyeram-infinity-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "values\nfoo\nbar\nbaz",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "",
+                "source": "url",
+                "type": "json",
+                "url": "",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": false,
+          "sort": "disabled"
         }
       }
     ]
