@@ -87,7 +87,7 @@
         "description": "",
         "id": 45,
         "links": [],
-        "title": "Repository state",
+        "title": "Repository visibility",
         "vizConfig": {
           "group": "piechart",
           "kind": "VizConfig",
@@ -1162,13 +1162,8 @@
                       "columns": [],
                       "computed_columns": [
                         {
-                          "selector": "private ? \"Private\" : \"Public\"",
-                          "text": "status",
-                          "type": "string"
-                        },
-                        {
                           "selector": "archived ? \"Archived\" : \"Active\"",
-                          "text": "state",
+                          "text": "status",
                           "type": "string"
                         }
                       ],
@@ -1179,7 +1174,7 @@
                       "root_selector": "items",
                       "source": "url",
                       "type": "json",
-                      "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                      "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
                       "url_options": {
                         "data": "",
                         "method": "GET"
@@ -1244,7 +1239,7 @@
                       "issues_url": true,
                       "keys_url": true,
                       "labels_url": true,
-                      "language": true,
+                      "language": false,
                       "languages_url": true,
                       "license": true,
                       "merges_url": true,
@@ -1326,57 +1321,58 @@
                       "issues_url": 52,
                       "keys_url": 53,
                       "labels_url": 54,
-                      "language": 55,
-                      "languages_url": 56,
-                      "license": 57,
-                      "merges_url": 58,
-                      "milestones_url": 59,
-                      "mirror_url": 60,
+                      "language": 9,
+                      "languages_url": 55,
+                      "license": 56,
+                      "merges_url": 57,
+                      "milestones_url": 58,
+                      "mirror_url": 59,
                       "name": 0,
-                      "node_id": 61,
-                      "notifications_url": 62,
+                      "node_id": 60,
+                      "notifications_url": 61,
                       "open_issues": 4,
                       "open_issues_count": 5,
-                      "owner": 63,
-                      "permissions": 64,
-                      "private": 65,
-                      "pull_request_creation_policy": 66,
-                      "pulls_url": 67,
-                      "pushed_at": 68,
-                      "releases_url": 69,
-                      "score": 70,
-                      "size": 71,
-                      "ssh_url": 72,
-                      "stargazers_count": 73,
-                      "stargazers_url": 74,
-                      "state": 7,
+                      "owner": 62,
+                      "permissions": 63,
+                      "private": 64,
+                      "pull_request_creation_policy": 65,
+                      "pulls_url": 66,
+                      "pushed_at": 67,
+                      "releases_url": 68,
+                      "score": 69,
+                      "size": 70,
+                      "ssh_url": 71,
+                      "stargazers_count": 72,
+                      "stargazers_url": 73,
                       "status": 6,
-                      "statuses_url": 75,
-                      "subscribers_url": 76,
-                      "subscription_url": 77,
-                      "svn_url": 78,
-                      "tags_url": 79,
-                      "teams_url": 80,
-                      "topics": 9,
-                      "trees_url": 81,
+                      "statuses_url": 74,
+                      "subscribers_url": 75,
+                      "subscription_url": 76,
+                      "svn_url": 77,
+                      "tags_url": 78,
+                      "teams_url": 79,
+                      "topics": 8,
+                      "trees_url": 80,
                       "updated_at": 10,
                       "url": 3,
-                      "visibility": 8,
-                      "watchers": 82,
-                      "watchers_count": 83,
-                      "web_commit_signoff_required": 84
+                      "visibility": 7,
+                      "watchers": 81,
+                      "watchers_count": 82,
+                      "web_commit_signoff_required": 83
                     },
                     "renameByName": {
                       "archived": "",
                       "description": "Description",
                       "full_name": "URL",
+                      "language": "Language",
                       "name": "Name",
-                      "open_issues": "Open Issues",
+                      "open_issues": "Open Issues (+PR's)",
                       "state": "State",
                       "status": "Status",
                       "topics": "Topics",
                       "updated_at": "Updated At",
                       "url": "URL",
+                      "visibility": "Visibility",
                       "web_commit_signoff_required": ""
                     }
                   }
@@ -1422,13 +1418,15 @@
                         "color": "light-red",
                         "index": 3
                       },
-                      "Private": {
+                      "private": {
                         "color": "light-red",
-                        "index": 1
+                        "index": 1,
+                        "text": "Private"
                       },
-                      "Public": {
+                      "public": {
                         "color": "light-blue",
-                        "index": 0
+                        "index": 0,
+                        "text": "Public"
                       }
                     },
                     "type": "value"
@@ -1575,7 +1573,7 @@
                 {
                   "matcher": {
                     "id": "byName",
-                    "options": "State",
+                    "options": "Visibility",
                     "scope": "series"
                   },
                   "properties": [
@@ -1590,13 +1588,13 @@
                 {
                   "matcher": {
                     "id": "byName",
-                    "options": "Open Issues",
+                    "options": "Open Issues (+PR's)",
                     "scope": "series"
                   },
                   "properties": [
                     {
                       "id": "custom.footer.reducers",
-                      "value": ["count"]
+                      "value": ["sum"]
                     },
                     {
                       "id": "custom.cellOptions",
@@ -1644,6 +1642,19 @@
                           "url": "https://github.com/${__data.fields.full_name}"
                         }
                       ]
+                    }
+                  ]
+                },
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "Name",
+                    "scope": "series"
+                  },
+                  "properties": [
+                    {
+                      "id": "custom.footer.reducers",
+                      "value": ["count"]
                     }
                   ]
                 }
@@ -1821,7 +1832,7 @@
     "timezone": "browser",
     "to": "now"
   },
-  "title": "GitHub Organization",
+  "title": "Organization overview",
   "variables": [
     {
       "kind": "DatasourceVariable",
@@ -1919,9 +1930,10 @@
           "value": "icore"
         },
         "definition": "",
-        "hide": "hideVariable",
-        "includeAll": false,
-        "multi": false,
+        "hide": "dontHide",
+        "includeAll": true,
+        "label": "Projects",
+        "multi": true,
         "name": "projects",
         "options": [],
         "query": {
@@ -1938,7 +1950,7 @@
               "format": "table",
               "parser": "backend",
               "refId": "",
-              "root_selector": "$distinct($[].topics[$contains($, \"ic\")])",
+              "root_selector": "$distinct($[].topics)",
               "source": "url",
               "type": "json",
               "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
