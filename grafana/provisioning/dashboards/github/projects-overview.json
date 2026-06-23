@@ -90,6 +90,21 @@
               "queryOptions": {},
               "transformations": [
                 {
+                  "group": "convertFieldType",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "conversions": [
+                        {
+                          "destinationType": "time",
+                          "targetField": "updated_at"
+                        }
+                      ],
+                      "fields": {}
+                    }
+                  }
+                },
+                {
                   "group": "organize",
                   "kind": "Transformation",
                   "spec": {
@@ -469,6 +484,10 @@
                         "value": {
                           "type": "color-background"
                         }
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "center"
                       }
                     ]
                   },
@@ -484,6 +503,10 @@
                         "value": {
                           "type": "color-background"
                         }
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "center"
                       }
                     ]
                   },
@@ -507,6 +530,10 @@
                       {
                         "id": "custom.align",
                         "value": "center"
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 195
                       }
                     ]
                   },
@@ -568,7 +595,7 @@
                 "sortBy": [
                   {
                     "desc": true,
-                    "displayName": "Updated At"
+                    "displayName": "Open Issues (+PR's)"
                   }
                 ]
               }
@@ -1873,7 +1900,7 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "items",
+                        "root_selector": "items\n    ",
                         "source": "url",
                         "type": "json",
                         "url": "https://api.github.com/search/issues?q=is:pr+repo:${repos}+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
@@ -1889,7 +1916,102 @@
                 }
               ],
               "queryOptions": {},
-              "transformations": []
+              "transformations": [
+                {
+                  "group": "convertFieldType",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "conversions": [
+                        {
+                          "destinationType": "time",
+                          "targetField": "created_at"
+                        },
+                        {
+                          "destinationType": "time",
+                          "targetField": "closed_at"
+                        },
+                        {
+                          "destinationType": "time",
+                          "targetField": "updated_at"
+                        }
+                      ],
+                      "fields": {}
+                    }
+                  }
+                },
+                {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "between",
+                            "options": {
+                              "from": "$__from",
+                              "to": "$__to"
+                            }
+                          },
+                          "fieldName": "created_at"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "active_lock_reason": 10,
+                        "assignee": 11,
+                        "assignees": 12,
+                        "author_association": 13,
+                        "body": 14,
+                        "closed_at": 8,
+                        "comments": 4,
+                        "comments_url": 5,
+                        "created_at": 6,
+                        "draft": 2,
+                        "events_url": 15,
+                        "html_url": 9,
+                        "id": 16,
+                        "issue_field_values": 17,
+                        "labels": 18,
+                        "labels_url": 19,
+                        "locked": 20,
+                        "milestone": 21,
+                        "node_id": 22,
+                        "number": 1,
+                        "performed_via_github_app": 23,
+                        "pull_request": 24,
+                        "reactions": 25,
+                        "repository_url": 26,
+                        "score": 27,
+                        "state": 0,
+                        "state_reason": 28,
+                        "timeline_url": 29,
+                        "title": 3,
+                        "type": 30,
+                        "updated_at": 7,
+                        "url": 31,
+                        "user": 32
+                      },
+                      "renameByName": {
+                        "number": "Number",
+                        "state": "State"
+                      }
+                    }
+                  }
+                }
+              ]
             }
           },
           "description": "",
@@ -1915,6 +2037,23 @@
                     },
                     "inspect": false
                   },
+                  "mappings": [
+                    {
+                      "options": {
+                        "closed": {
+                          "color": "light-red",
+                          "index": 1,
+                          "text": "CLOSED"
+                        },
+                        "open": {
+                          "color": "light-green",
+                          "index": 0,
+                          "text": "OPEN"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -1929,7 +2068,110 @@
                     ]
                   }
                 },
-                "overrides": []
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 87
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "title"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 660
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "number"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 91
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "State",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "center"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Number",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.align",
+                        "value": "center"
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "${__value.text}",
+                            "url": "${__data.fields.html_url}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "created_at"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 172
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "draft"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 79
+                      }
+                    ]
+                  }
+                ]
               },
               "options": {
                 "cellHeight": "sm",
@@ -2611,7 +2853,7 @@
                         "pagination_param_size_field_name": "per_page",
                         "pagination_param_size_value": 100,
                         "parser": "backend",
-                        "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"package\": $v.dependency.package.name,\n    \"ecosystem\": $v.dependency.package.ecosystem,\n    \"scope\": $v.dependency.scope,\n    \"state\": $v.state,\n    \"severity\": $v.security_advisory.severity,\n    \"cvss\": $v.security_advisory.cvss.score,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"html_url\": $v.html_url\n  }\n})",
+                        "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"package\": $v.dependency.package.name,\n    \"ecosystem\": $v.dependency.package.ecosystem,\n    \"scope\": $v.dependency.scope,\n    \"state\": $v.state,\n    \"severity\": $v.security_advisory.severity,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"html_url\": $v.html_url\n  }\n})",
                         "source": "url",
                         "type": "json",
                         "url": "https://api.github.com/repos/${repos}/dependabot/alerts",
@@ -2622,7 +2864,7 @@
                       },
                       "version": "v0"
                     },
-                    "refId": "A"
+                    "refId": "Dependabot alerts"
                   }
                 }
               ],
@@ -2720,7 +2962,7 @@
                         "fixed": {
                           "color": "light-green",
                           "index": 1,
-                          "text": "✅"
+                          "text": "FIXED"
                         },
                         "high": {
                           "color": "light-red",
@@ -2740,7 +2982,7 @@
                         "open": {
                           "color": "semi-dark-orange",
                           "index": 0,
-                          "text": "⚠️"
+                          "text": "OPEN"
                         }
                       },
                       "type": "value"
@@ -2889,7 +3131,7 @@
                     "properties": [
                       {
                         "id": "custom.width",
-                        "value": 138
+                        "value": 102
                       }
                     ]
                   },
@@ -3043,7 +3285,7 @@
                         "pagination_param_size_field_name": "per_page",
                         "pagination_param_size_value": 100,
                         "parser": "backend",
-                        "root_selector": "",
+                        "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url\n    \n  }\n})",
                         "source": "url",
                         "type": "json",
                         "url": "https://api.github.com/repos/${repos}/code-scanning/alerts",
@@ -3069,6 +3311,14 @@
                         {
                           "destinationType": "time",
                           "targetField": "created_at"
+                        },
+                        {
+                          "destinationType": "time",
+                          "targetField": "fixed_at"
+                        },
+                        {
+                          "destinationType": "time",
+                          "targetField": "dismissed_at"
                         }
                       ],
                       "fields": {}
@@ -3094,6 +3344,36 @@
                       ],
                       "match": "any",
                       "type": "include"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "created_at": 4,
+                        "description": 3,
+                        "dismissed_at": 6,
+                        "fixed_at": 5,
+                        "html_url": 7,
+                        "number": 1,
+                        "state": 0,
+                        "tool": 2
+                      },
+                      "renameByName": {
+                        "created_at": "Created at",
+                        "description": "Description",
+                        "dismissed_at": "Dismissed at",
+                        "fixed_at": "Fixed at",
+                        "html_url": "URL",
+                        "number": "Alert ID",
+                        "state": "State",
+                        "tool": "Tool"
+                      }
                     }
                   }
                 }
@@ -3126,6 +3406,28 @@
                     },
                     "inspect": false
                   },
+                  "mappings": [
+                    {
+                      "options": {
+                        "dismissed": {
+                          "color": "light-blue",
+                          "index": 2,
+                          "text": "DISMISSED"
+                        },
+                        "fixed": {
+                          "color": "light-green",
+                          "index": 1,
+                          "text": "FIXED"
+                        },
+                        "open": {
+                          "color": "semi-dark-orange",
+                          "index": 0,
+                          "text": "OPEN"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -3174,6 +3476,115 @@
                       {
                         "id": "custom.width",
                         "value": 257
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "number"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 108
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 97
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "number",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.align",
+                        "value": "center"
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "${__value.text}",
+                            "url": "${__data.fields.html_url}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.align",
+                        "value": "center"
+                      },
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "tool"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 188
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "fixed_at"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 204
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "html_url",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "${__value.text}",
+                            "url": "${__value.text}"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -3258,119 +3669,6 @@
                 },
                 "content": "#### Activity\n---",
                 "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-85": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {},
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 85,
-          "links": [],
-          "title": "New panel",
-          "vizConfig": {
-            "group": "timeseries",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "linear",
-                    "lineWidth": 1,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "auto",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
               }
             },
             "version": "13.0.1"
@@ -3687,7 +3985,7 @@
                           "kind": "ElementReference",
                           "name": "panel-65"
                         },
-                        "height": 8,
+                        "height": 12,
                         "width": 24,
                         "x": 0,
                         "y": 19
@@ -3703,7 +4001,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 27
+                        "y": 31
                       }
                     },
                     {
@@ -3716,7 +4014,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 28
+                        "y": 32
                       }
                     },
                     {
@@ -3729,7 +4027,7 @@
                         "height": 3,
                         "width": 3,
                         "x": 0,
-                        "y": 30
+                        "y": 34
                       }
                     },
                     {
@@ -3742,7 +4040,7 @@
                         "height": 8,
                         "width": 24,
                         "x": 0,
-                        "y": 33
+                        "y": 37
                       }
                     },
                     {
@@ -3755,7 +4053,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 41
+                        "y": 45
                       }
                     },
                     {
@@ -3768,7 +4066,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 42
+                        "y": 46
                       }
                     },
                     {
@@ -3781,7 +4079,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 44
+                        "y": 48
                       }
                     },
                     {
@@ -3794,7 +4092,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 45
+                        "y": 49
                       }
                     },
                     {
@@ -3807,7 +4105,7 @@
                         "height": 10,
                         "width": 24,
                         "x": 0,
-                        "y": 47
+                        "y": 51
                       }
                     },
                     {
@@ -3820,7 +4118,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 57
+                        "y": 61
                       }
                     },
                     {
@@ -3833,20 +4131,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 58
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-85"
-                        },
-                        "height": 6,
-                        "width": 3,
-                        "x": 0,
-                        "y": 60
+                        "y": 62
                       }
                     },
                     {
@@ -3859,7 +4144,7 @@
                         "height": 10,
                         "width": 24,
                         "x": 0,
-                        "y": 66
+                        "y": 64
                       }
                     }
                   ]
