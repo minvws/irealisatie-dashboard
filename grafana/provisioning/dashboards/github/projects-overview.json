@@ -71,11 +71,14 @@
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
+                        "pagination_mode": "page",
+                        "pagination_param_size_field_name": "per_page",
+                        "pagination_param_size_value": 100,
                         "parser": "backend",
                         "root_selector": "items",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -540,25 +543,6 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "URL",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "targetBlank": true,
-                            "title": "https://github.com/${__data.fields.full_name}",
-                            "url": "https://github.com/${__data.fields.full_name}"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
                       "options": "full_name",
                       "scope": "series"
                     },
@@ -567,6 +551,7 @@
                         "id": "links",
                         "value": [
                           {
+                            "targetBlank": true,
                             "title": "${__value.text}",
                             "url": "https://github.com/${__data.fields.full_name}"
                           }
@@ -1899,6 +1884,11 @@
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
+                        "pagination_max_pages": 1,
+                        "pagination_mode": "page",
+                        "pagination_param_page_field_name": "page",
+                        "pagination_param_size_field_name": "per_page",
+                        "pagination_param_size_value": 30,
                         "parser": "backend",
                         "root_selector": "items\n    ",
                         "source": "url",
@@ -1963,25 +1953,68 @@
                   }
                 },
                 {
+                  "group": "extractFields",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "delimiter": ",",
+                      "format": "json",
+                      "jsonPaths": [
+                        {
+                          "alias": "Author Type",
+                          "path": "type"
+                        }
+                      ],
+                      "source": "user"
+                    }
+                  }
+                },
+                {
                   "group": "organize",
                   "kind": "Transformation",
                   "spec": {
                     "options": {
-                      "excludeByName": {},
+                      "excludeByName": {
+                        "active_lock_reason": true,
+                        "assignee": true,
+                        "assignees": true,
+                        "author_association": false,
+                        "body": true,
+                        "comments_url": true,
+                        "events_url": true,
+                        "html_url": true,
+                        "id": true,
+                        "issue_field_values": true,
+                        "labels": true,
+                        "labels_url": true,
+                        "locked": true,
+                        "milestone": true,
+                        "node_id": true,
+                        "performed_via_github_app": true,
+                        "pull_request": true,
+                        "reactions": true,
+                        "repository_url": true,
+                        "score": true,
+                        "state_reason": true,
+                        "timeline_url": true,
+                        "type": true,
+                        "url": true,
+                        "user": true
+                      },
                       "includeByName": {},
                       "indexByName": {
-                        "active_lock_reason": 10,
-                        "assignee": 11,
-                        "assignees": 12,
-                        "author_association": 13,
+                        "active_lock_reason": 11,
+                        "assignee": 12,
+                        "assignees": 13,
+                        "author_association": 10,
                         "body": 14,
-                        "closed_at": 8,
-                        "comments": 4,
-                        "comments_url": 5,
-                        "created_at": 6,
-                        "draft": 2,
+                        "closed_at": 9,
+                        "comments": 5,
+                        "comments_url": 6,
+                        "created_at": 7,
+                        "draft": 3,
                         "events_url": 15,
-                        "html_url": 9,
+                        "html_url": 2,
                         "id": 16,
                         "issue_field_values": 17,
                         "labels": 18,
@@ -1998,15 +2031,24 @@
                         "state": 0,
                         "state_reason": 28,
                         "timeline_url": 29,
-                        "title": 3,
+                        "title": 4,
                         "type": 30,
-                        "updated_at": 7,
+                        "updated_at": 8,
                         "url": 31,
                         "user": 32
                       },
                       "renameByName": {
+                        "author_association": "Author Association",
+                        "closed_at": "Closed At",
+                        "comments": "Comments",
+                        "comments_url": "Comments URL",
+                        "created_at": "Created At",
+                        "draft": "Draft",
+                        "html_url": "URL",
                         "number": "Number",
-                        "state": "State"
+                        "state": "State",
+                        "title": "Title",
+                        "updated_at": "Updated At"
                       }
                     }
                   }
@@ -2141,9 +2183,13 @@
                           {
                             "targetBlank": true,
                             "title": "${__value.text}",
-                            "url": "${__data.fields.html_url}"
+                            "url": "https://github.com/${repos.value}/pull/${__data.fields.Number}"
                           }
                         ]
+                      },
+                      {
+                        "id": "custom.footer.reducers",
+                        "value": ["count"]
                       }
                     ]
                   },
@@ -2168,6 +2214,74 @@
                       {
                         "id": "custom.width",
                         "value": 79
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "center"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "updated_at"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 168
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "closed_at"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 174
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "URL"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 381
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Comments"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 95
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "center"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Author Association"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 162
                       }
                     ]
                   }
@@ -2846,11 +2960,13 @@
                         "global_query_id": "",
                         "pagination_max_pages": 5,
                         "pagination_mode": "cursor",
-                        "pagination_param_cursor_extraction_path": "rel=\"next\"",
+                        "pagination_param_cursor_extraction_path": "",
                         "pagination_param_cursor_field_name": "Link",
                         "pagination_param_cursor_field_type": "header",
                         "pagination_param_page_field_name": "page",
+                        "pagination_param_page_field_type": "header",
                         "pagination_param_size_field_name": "per_page",
+                        "pagination_param_size_field_type": "query",
                         "pagination_param_size_value": 100,
                         "parser": "backend",
                         "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"package\": $v.dependency.package.name,\n    \"ecosystem\": $v.dependency.package.ecosystem,\n    \"scope\": $v.dependency.scope,\n    \"state\": $v.state,\n    \"severity\": $v.security_advisory.severity,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"html_url\": $v.html_url\n  }\n})",
@@ -2890,6 +3006,28 @@
                   }
                 },
                 {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "between",
+                            "options": {
+                              "from": "$__from",
+                              "to": "$__to"
+                            }
+                          },
+                          "fieldName": "created_at"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                },
+                {
                   "group": "organize",
                   "kind": "Transformation",
                   "spec": {
@@ -2915,7 +3053,7 @@
                         "cvss": "CVSS Score",
                         "ecosystem": "Ecosystem",
                         "fixed_at": "Fixed at",
-                        "html_url": "Link",
+                        "html_url": "URL",
                         "number": "Alert ID",
                         "package": "Package",
                         "scope": "Scope",
@@ -3278,14 +3416,17 @@
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
+                        "pagination_max_pages": 1,
                         "pagination_mode": "cursor",
-                        "pagination_param_cursor_extraction_path": "rel=\"next\"",
+                        "pagination_param_cursor_extraction_path": "",
                         "pagination_param_cursor_field_name": "Link",
                         "pagination_param_cursor_field_type": "header",
+                        "pagination_param_page_field_name": "page",
+                        "pagination_param_page_field_type": "replace",
                         "pagination_param_size_field_name": "per_page",
                         "pagination_param_size_value": 100,
                         "parser": "backend",
-                        "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url\n    \n  }\n})",
+                        "root_selector": " $map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url\n  }\n})",
                         "source": "url",
                         "type": "json",
                         "url": "https://api.github.com/repos/${repos}/code-scanning/alerts",

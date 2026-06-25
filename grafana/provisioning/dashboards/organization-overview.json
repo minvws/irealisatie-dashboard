@@ -1170,6 +1170,9 @@
                       "filters": [],
                       "format": "table",
                       "global_query_id": "",
+                      "pagination_mode": "page",
+                      "pagination_param_size_field_name": "per_page",
+                      "pagination_param_size_value": 100,
                       "parser": "backend",
                       "root_selector": "items",
                       "source": "url",
@@ -1504,6 +1507,10 @@
                     {
                       "id": "custom.width",
                       "value": 91
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
                     }
                   ]
                 },
@@ -1528,6 +1535,10 @@
                     {
                       "id": "custom.width",
                       "value": 97
+                    },
+                    {
+                      "id": "custom.align",
+                      "value": "center"
                     }
                   ]
                 },
@@ -1842,7 +1853,7 @@
           "text": "GitHub",
           "value": "GitHub"
         },
-        "hide": "dontHide",
+        "hide": "hideVariable",
         "includeAll": false,
         "multi": false,
         "name": "datasource",
@@ -1876,7 +1887,7 @@
           "value": ""
         },
         "definition": "",
-        "hide": "dontHide",
+        "hide": "hideVariable",
         "includeAll": true,
         "label": "Repository",
         "multi": true,
