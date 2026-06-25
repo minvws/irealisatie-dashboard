@@ -42,7 +42,1127 @@
     "description": "This dashboard contains PR and Issues across multiple repositories in the Organization using GitHub data source.",
     "editable": true,
     "elements": {
-      "panel-51": {
+      "panel-45": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_private_repos",
+                            "text": "Private",
+                            "type": "number"
+                          },
+                          {
+                            "selector": "public_repos",
+                            "text": "Public",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/orgs/${organization}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Public / Private"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "reduce",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "reducers": ["last"]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 45,
+          "links": [],
+          "title": "Repository visibility",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Private"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "super-light-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Public"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-blue",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-46": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "public_repos",
+                            "text": "Public",
+                            "type": "number"
+                          },
+                          {
+                            "selector": "total_private_repos",
+                            "text": "Private",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/orgs/${organization}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Public / Private"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Active",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Active"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Archived",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:true",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Archived"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "Total",
+                      "binary": {
+                        "left": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Public / Private Public"
+                          }
+                        },
+                        "right": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Public / Private Private"
+                          }
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "concatenate",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "frameNameLabel": "frame",
+                      "frameNameMode": "drop"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "Active": 3,
+                        "Archived": 4,
+                        "Private": 2,
+                        "Public": 1,
+                        "Total": 0
+                      },
+                      "renameByName": {}
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 46,
+          "links": [],
+          "title": "Repositories",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "light-blue",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "background",
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-47": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Project",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:project",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Project"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Components",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Component"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Actions",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:action",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Action"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "concatenate",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "frameNameLabel": "frame",
+                      "frameNameMode": "field"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {
+                        "Active": false
+                      },
+                      "includeByName": {},
+                      "indexByName": {
+                        "Active": 3,
+                        "Archived": 4,
+                        "Private": 2,
+                        "Public": 1,
+                        "Total": 0
+                      },
+                      "orderByMode": "manual",
+                      "renameByName": {
+                        "A · Components": "Projects",
+                        "Action": "Actions",
+                        "Action · Actions": "Actions",
+                        "Component · Components": "Components",
+                        "Project · Project": "Projects"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 47,
+          "links": [],
+          "title": "Projects, components, actions",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "orange",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "#FFB357",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "background",
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": false
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-48": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Total",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Total"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Active",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Active"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Archived",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:true+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Archived"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "concatenate",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "frameNameLabel": "frame",
+                      "frameNameMode": "drop"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "Active": 3,
+                        "Archived": 4,
+                        "Private": 2,
+                        "Public": 1,
+                        "Total": 0
+                      },
+                      "renameByName": {}
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 48,
+          "links": [],
+          "title": "Components",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "light-purple",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "light-blue",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "background",
+                "graphMode": "area",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-49": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Active",
+                            "type": "number"
+                          }
+                        ],
+                        "computed_columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Active"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Archived",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:true+topic:component",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Archived"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "reduce",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "labelsToFields": true,
+                      "reducers": ["last"]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 49,
+          "links": [],
+          "title": "Component status",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Active"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-blue",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Archived"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-50": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Active",
+                            "type": "number"
+                          }
+                        ],
+                        "computed_columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Active"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Archived",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:true",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Private"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "reduce",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "labelsToFields": true,
+                      "reducers": ["last"]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 50,
+          "links": [],
+          "title": "Repository status",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Active"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-blue",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Archived"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "super-light-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-52": {
         "kind": "Panel",
         "spec": {
           "data": {
@@ -71,6 +1191,9 @@
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
+                        "pagination_mode": "page",
+                        "pagination_param_size_field_name": "per_page",
+                        "pagination_param_size_value": 100,
                         "parser": "backend",
                         "root_selector": "items",
                         "source": "url",
@@ -89,21 +1212,6 @@
               ],
               "queryOptions": {},
               "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "updated_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
                 {
                   "group": "organize",
                   "kind": "Transformation",
@@ -191,91 +1299,90 @@
                       },
                       "includeByName": {},
                       "indexByName": {
-                        "allow_forking": 12,
-                        "archive_url": 13,
-                        "archived": 14,
-                        "assignees_url": 15,
-                        "blobs_url": 16,
-                        "branches_url": 17,
-                        "clone_url": 18,
-                        "collaborators_url": 19,
-                        "comments_url": 20,
-                        "commits_url": 21,
-                        "compare_url": 22,
-                        "contents_url": 23,
-                        "contributors_url": 24,
-                        "created_at": 25,
-                        "default_branch": 26,
-                        "deployments_url": 27,
+                        "allow_forking": 11,
+                        "archive_url": 12,
+                        "archived": 13,
+                        "assignees_url": 14,
+                        "blobs_url": 15,
+                        "branches_url": 16,
+                        "clone_url": 17,
+                        "collaborators_url": 18,
+                        "comments_url": 19,
+                        "commits_url": 20,
+                        "compare_url": 21,
+                        "contents_url": 22,
+                        "contributors_url": 23,
+                        "created_at": 24,
+                        "default_branch": 25,
+                        "deployments_url": 26,
                         "description": 2,
-                        "disabled": 28,
-                        "downloads_url": 29,
-                        "events_url": 30,
-                        "fork": 31,
-                        "forks": 32,
-                        "forks_count": 33,
-                        "forks_url": 34,
+                        "disabled": 27,
+                        "downloads_url": 28,
+                        "events_url": 29,
+                        "fork": 30,
+                        "forks": 31,
+                        "forks_count": 32,
+                        "forks_url": 33,
                         "full_name": 1,
-                        "git_commits_url": 35,
-                        "git_refs_url": 36,
-                        "git_tags_url": 37,
-                        "git_url": 38,
-                        "has_discussions": 39,
-                        "has_downloads": 40,
-                        "has_issues": 41,
-                        "has_pages": 42,
-                        "has_projects": 43,
-                        "has_pull_requests": 44,
-                        "has_wiki": 45,
-                        "homepage": 46,
-                        "hooks_url": 47,
-                        "html_url": 48,
-                        "id": 49,
-                        "is_template": 50,
-                        "issue_comment_url": 51,
-                        "issue_events_url": 52,
-                        "issues_url": 53,
-                        "keys_url": 54,
-                        "labels_url": 55,
-                        "language": 10,
-                        "languages_url": 56,
-                        "license": 57,
-                        "merges_url": 58,
-                        "milestones_url": 59,
-                        "mirror_url": 60,
+                        "git_commits_url": 34,
+                        "git_refs_url": 35,
+                        "git_tags_url": 36,
+                        "git_url": 37,
+                        "has_discussions": 38,
+                        "has_downloads": 39,
+                        "has_issues": 40,
+                        "has_pages": 41,
+                        "has_projects": 42,
+                        "has_pull_requests": 43,
+                        "has_wiki": 44,
+                        "homepage": 45,
+                        "hooks_url": 46,
+                        "html_url": 47,
+                        "id": 48,
+                        "is_template": 49,
+                        "issue_comment_url": 50,
+                        "issue_events_url": 51,
+                        "issues_url": 52,
+                        "keys_url": 53,
+                        "labels_url": 54,
+                        "language": 9,
+                        "languages_url": 55,
+                        "license": 56,
+                        "merges_url": 57,
+                        "milestones_url": 58,
+                        "mirror_url": 59,
                         "name": 0,
-                        "node_id": 61,
-                        "notifications_url": 62,
+                        "node_id": 60,
+                        "notifications_url": 61,
                         "open_issues": 4,
                         "open_issues_count": 5,
-                        "owner": 63,
-                        "permissions": 64,
-                        "private": 65,
-                        "pull_request_creation_policy": 66,
-                        "pulls_url": 67,
-                        "pushed_at": 68,
-                        "releases_url": 69,
-                        "score": 70,
-                        "size": 71,
-                        "ssh_url": 72,
-                        "stargazers_count": 73,
-                        "stargazers_url": 74,
-                        "state": 7,
+                        "owner": 62,
+                        "permissions": 63,
+                        "private": 64,
+                        "pull_request_creation_policy": 65,
+                        "pulls_url": 66,
+                        "pushed_at": 67,
+                        "releases_url": 68,
+                        "score": 69,
+                        "size": 70,
+                        "ssh_url": 71,
+                        "stargazers_count": 72,
+                        "stargazers_url": 73,
                         "status": 6,
-                        "statuses_url": 75,
-                        "subscribers_url": 76,
-                        "subscription_url": 77,
-                        "svn_url": 78,
-                        "tags_url": 79,
-                        "teams_url": 80,
-                        "topics": 9,
-                        "trees_url": 81,
-                        "updated_at": 11,
+                        "statuses_url": 74,
+                        "subscribers_url": 75,
+                        "subscription_url": 76,
+                        "svn_url": 77,
+                        "tags_url": 78,
+                        "teams_url": 79,
+                        "topics": 8,
+                        "trees_url": 80,
+                        "updated_at": 10,
                         "url": 3,
-                        "visibility": 8,
-                        "watchers": 82,
-                        "watchers_count": 83,
-                        "web_commit_signoff_required": 84
+                        "visibility": 7,
+                        "watchers": 81,
+                        "watchers_count": 82,
+                        "web_commit_signoff_required": 83
                       },
                       "renameByName": {
                         "archived": "",
@@ -299,7 +1406,7 @@
             }
           },
           "description": "",
-          "id": 51,
+          "id": 52,
           "links": [],
           "title": "Repositories",
           "vizConfig": {
@@ -421,6 +1528,10 @@
                       {
                         "id": "custom.width",
                         "value": 91
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "center"
                       }
                     ]
                   },
@@ -445,6 +1556,10 @@
                       {
                         "id": "custom.width",
                         "value": 97
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "center"
                       }
                     ]
                   },
@@ -484,10 +1599,6 @@
                         "value": {
                           "type": "color-background"
                         }
-                      },
-                      {
-                        "id": "custom.align",
-                        "value": "center"
                       }
                     ]
                   },
@@ -503,10 +1614,6 @@
                         "value": {
                           "type": "color-background"
                         }
-                      },
-                      {
-                        "id": "custom.align",
-                        "value": "center"
                       }
                     ]
                   },
@@ -530,10 +1637,6 @@
                       {
                         "id": "custom.align",
                         "value": "center"
-                      },
-                      {
-                        "id": "custom.width",
-                        "value": 195
                       }
                     ]
                   },
@@ -595,3080 +1698,9 @@
                 "sortBy": [
                   {
                     "desc": true,
-                    "displayName": "Open Issues (+PR's)"
+                    "displayName": "Updated At"
                   }
                 ]
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-52": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "computed_columns": [
-                          {
-                            "selector": "archived ? \"Archived\" : \"Active\"",
-                            "text": "status",
-                            "type": "string"
-                          }
-                        ],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Repositories"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "archived": {
-                          "aggregations": ["count"]
-                        },
-                        "id": {
-                          "aggregations": []
-                        },
-                        "status": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 52,
-          "links": [],
-          "title": "Repository Status",
-          "vizConfig": {
-            "group": "piechart",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    }
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Active"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "super-light-blue",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "displayLabels": ["percent"],
-                "legend": {
-                  "displayMode": "table",
-                  "placement": "right",
-                  "showLegend": true,
-                  "values": ["value"]
-                },
-                "pieType": "donut",
-                "reduceOptions": {
-                  "calcs": [],
-                  "fields": "",
-                  "values": true
-                },
-                "sort": "desc",
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-53": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "computed_columns": [
-                          {
-                            "selector": "private ? \"Private\" : \"Public\"",
-                            "text": "state",
-                            "type": "string"
-                          }
-                        ],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Repositories"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "archived": {
-                          "aggregations": ["count"]
-                        },
-                        "id": {
-                          "aggregations": []
-                        },
-                        "state": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        },
-                        "status": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 53,
-          "links": [],
-          "title": "Repository visibility",
-          "vizConfig": {
-            "group": "piechart",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    }
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Active"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "super-light-blue",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Public"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "super-light-blue",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "displayLabels": ["percent"],
-                "legend": {
-                  "displayMode": "table",
-                  "placement": "right",
-                  "showLegend": true,
-                  "values": ["value"]
-                },
-                "pieType": "donut",
-                "reduceOptions": {
-                  "calcs": [],
-                  "fields": "",
-                  "values": true
-                },
-                "sort": "desc",
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-54": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:issue+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Issues"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 54,
-          "links": [],
-          "title": "Created",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "orange",
-                        "value": 1
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-55": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 55,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "| Field            | Value    |\n| ---------------- | -------- |\n| Project Manager  | Alice Doe |\n| Project Owner    | Bob Doe |\n| Status           | In beheer |\n| Duration         | 31 Dec 2026 |\n| Support          | helpdesk@irealisatie.nl |\n| Helpdesk         | Charlie Doe |",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-56": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "total_count",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:issue+state:open+${repos_per_project}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Issues"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 56,
-          "links": [],
-          "title": "Open",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "orange",
-                        "value": 1
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["last"],
-                  "fields": "/^Issues$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-57": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:issue+state:closed+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Issues"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 57,
-          "links": [],
-          "title": "Closed",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "orange",
-                        "value": 1
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-58": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:issue+state:closed+closed:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Issues"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "created_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "closed_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "calculateField",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "alias": "open_time",
-                      "binary": {
-                        "left": {
-                          "matcher": {
-                            "id": "byName",
-                            "options": "closed_at"
-                          }
-                        },
-                        "operator": "-",
-                        "right": {
-                          "matcher": {
-                            "id": "byName",
-                            "options": "created_at"
-                          }
-                        }
-                      },
-                      "mode": "binary",
-                      "reduce": {
-                        "reducer": "sum"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 58,
-          "links": [],
-          "title": "Average open time (Closed)",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "orange",
-                        "value": 1
-                      }
-                    ]
-                  },
-                  "unit": "dtdurationms"
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["mean"],
-                  "fields": "/^open_time$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-62": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/commits?since=${__from:date:YYYY-MM-DD}&until=${__to:date:YYYY-MM-DD}&per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 62,
-          "links": [],
-          "title": "Commits",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^sha$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-63": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/releases",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "published_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "created_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "filterByValue",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "between",
-                            "options": {
-                              "from": "$__from",
-                              "to": "$__to"
-                            }
-                          },
-                          "fieldName": "published_at"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                },
-                {
-                  "group": "extractFields",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "delimiter": ",",
-                      "format": "json",
-                      "jsonPaths": [
-                        {
-                          "alias": "Author",
-                          "path": "login"
-                        }
-                      ],
-                      "keepTime": false,
-                      "replace": false,
-                      "source": "author"
-                    }
-                  }
-                },
-                {
-                  "group": "organize",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "excludeByName": {
-                        "assets": true,
-                        "assets_url": true,
-                        "author": true,
-                        "body": true,
-                        "created_at": true,
-                        "html_url": true,
-                        "id": true,
-                        "immutable": true,
-                        "mentions_count": true,
-                        "name": false,
-                        "node_id": true,
-                        "reactions": true,
-                        "tag_name": true,
-                        "tarball_url": true,
-                        "target_commitish": true,
-                        "updated_at": true,
-                        "upload_url": true,
-                        "url": true,
-                        "zipball_url": true
-                      },
-                      "includeByName": {},
-                      "indexByName": {
-                        "assets": 6,
-                        "assets_url": 7,
-                        "author": 4,
-                        "body": 8,
-                        "created_at": 9,
-                        "draft": 2,
-                        "html_url": 5,
-                        "id": 10,
-                        "immutable": 11,
-                        "mentions_count": 12,
-                        "name": 0,
-                        "node_id": 13,
-                        "prerelease": 1,
-                        "published_at": 3,
-                        "reactions": 14,
-                        "tag_name": 15,
-                        "tarball_url": 16,
-                        "target_commitish": 17,
-                        "updated_at": 18,
-                        "upload_url": 19,
-                        "url": 20,
-                        "zipball_url": 21
-                      },
-                      "orderByMode": "manual",
-                      "renameByName": {
-                        "author": "Author",
-                        "draft": "Draft",
-                        "html_url": "",
-                        "name": "Name",
-                        "prerelease": "Prerelease",
-                        "published_at": "Published at"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 63,
-          "links": [],
-          "title": "Releases",
-          "vizConfig": {
-            "group": "table",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "inspect": false
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Prerelease"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 107
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Draft"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 97
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Published at"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 285
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "name",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "targetBlank": true,
-                            "title": "${__value.text}",
-                            "url": "${__data.fields.html_url}"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Name",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "title": "${__value.text}",
-                            "url": "${__data.fields.html_url}"
-                          }
-                        ]
-                      },
-                      {
-                        "id": "custom.width",
-                        "value": 204
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Author",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "targetBlank": true,
-                            "title": "${__value.text}",
-                            "url": "https://github.com/${__value.text}"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": true,
-                "sortBy": [
-                  {
-                    "desc": true,
-                    "displayName": "Published at"
-                  }
-                ]
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-64": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/releases",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "published_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "created_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "filterByValue",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "between",
-                            "options": {
-                              "from": "$__from",
-                              "to": "$__to"
-                            }
-                          },
-                          "fieldName": "published_at"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 64,
-          "links": [],
-          "title": "Releases",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-65": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items\n    ",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:pr+repo:${repos}+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "created_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "closed_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "updated_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "filterByValue",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "between",
-                            "options": {
-                              "from": "$__from",
-                              "to": "$__to"
-                            }
-                          },
-                          "fieldName": "created_at"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                },
-                {
-                  "group": "organize",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "excludeByName": {},
-                      "includeByName": {},
-                      "indexByName": {
-                        "active_lock_reason": 10,
-                        "assignee": 11,
-                        "assignees": 12,
-                        "author_association": 13,
-                        "body": 14,
-                        "closed_at": 8,
-                        "comments": 4,
-                        "comments_url": 5,
-                        "created_at": 6,
-                        "draft": 2,
-                        "events_url": 15,
-                        "html_url": 9,
-                        "id": 16,
-                        "issue_field_values": 17,
-                        "labels": 18,
-                        "labels_url": 19,
-                        "locked": 20,
-                        "milestone": 21,
-                        "node_id": 22,
-                        "number": 1,
-                        "performed_via_github_app": 23,
-                        "pull_request": 24,
-                        "reactions": 25,
-                        "repository_url": 26,
-                        "score": 27,
-                        "state": 0,
-                        "state_reason": 28,
-                        "timeline_url": 29,
-                        "title": 3,
-                        "type": 30,
-                        "updated_at": 7,
-                        "url": 31,
-                        "user": 32
-                      },
-                      "renameByName": {
-                        "number": "Number",
-                        "state": "State"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 65,
-          "links": [],
-          "title": "Pull requests",
-          "vizConfig": {
-            "group": "table",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "inspect": false
-                  },
-                  "mappings": [
-                    {
-                      "options": {
-                        "closed": {
-                          "color": "light-red",
-                          "index": 1,
-                          "text": "CLOSED"
-                        },
-                        "open": {
-                          "color": "light-green",
-                          "index": 0,
-                          "text": "OPEN"
-                        }
-                      },
-                      "type": "value"
-                    }
-                  ],
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "state"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 87
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "title"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 660
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "number"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 91
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "State",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.cellOptions",
-                        "value": {
-                          "type": "color-background"
-                        }
-                      },
-                      {
-                        "id": "custom.align",
-                        "value": "center"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Number",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.align",
-                        "value": "center"
-                      },
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "targetBlank": true,
-                            "title": "${__value.text}",
-                            "url": "${__data.fields.html_url}"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "created_at"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 172
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "draft"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 79
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-66": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/commits?since=${__from:date:YYYY-MM-DD}&until=${__to:date:YYYY-MM-DD}&per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 66,
-          "links": [],
-          "title": "Commits",
-          "vizConfig": {
-            "group": "table",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "hideFrom": {
-                      "viz": false
-                    },
-                    "inspect": false
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-67": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:pr+repo:${repos}+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 67,
-          "links": [],
-          "title": "Opened",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-68": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 68,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "#### Releases\n---",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-69": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 69,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "#### Pull Requests\n---",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-70": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 70,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "#### Commits\n---",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-72": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 72,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-73": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 73,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-74": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 74,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "# ${projects.text}\n---",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-75": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 75,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "#### Dependencies\n---",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-76": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 76,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-77": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 77,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-78": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 78,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "#### Code Quality\n---",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-79": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 79,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-80": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 80,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "#### Vulnerabilities\n---",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-81": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "pagination_max_pages": 5,
-                        "pagination_mode": "cursor",
-                        "pagination_param_cursor_extraction_path": "rel=\"next\"",
-                        "pagination_param_cursor_field_name": "Link",
-                        "pagination_param_cursor_field_type": "header",
-                        "pagination_param_page_field_name": "page",
-                        "pagination_param_size_field_name": "per_page",
-                        "pagination_param_size_value": 100,
-                        "parser": "backend",
-                        "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"package\": $v.dependency.package.name,\n    \"ecosystem\": $v.dependency.package.ecosystem,\n    \"scope\": $v.dependency.scope,\n    \"state\": $v.state,\n    \"severity\": $v.security_advisory.severity,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"html_url\": $v.html_url\n  }\n})",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "Dependabot alerts"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "created_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "fixed_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "organize",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "excludeByName": {
-                        "html_url": false
-                      },
-                      "includeByName": {},
-                      "indexByName": {
-                        "created_at": 7,
-                        "cvss": 6,
-                        "ecosystem": 3,
-                        "fixed_at": 8,
-                        "html_url": 9,
-                        "number": 2,
-                        "package": 4,
-                        "scope": 5,
-                        "severity": 1,
-                        "state": 0
-                      },
-                      "renameByName": {
-                        "created_at": "Created at",
-                        "cvss": "CVSS Score",
-                        "ecosystem": "Ecosystem",
-                        "fixed_at": "Fixed at",
-                        "html_url": "Link",
-                        "number": "Alert ID",
-                        "package": "Package",
-                        "scope": "Scope",
-                        "severity": "Severity",
-                        "state": "State"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 81,
-          "links": [],
-          "title": "Dependabot alerts",
-          "vizConfig": {
-            "group": "table",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "inspect": false
-                  },
-                  "mappings": [
-                    {
-                      "options": {
-                        "critical": {
-                          "color": "dark-red",
-                          "index": 2,
-                          "text": "CRITICAL"
-                        },
-                        "fixed": {
-                          "color": "light-green",
-                          "index": 1,
-                          "text": "FIXED"
-                        },
-                        "high": {
-                          "color": "light-red",
-                          "index": 3,
-                          "text": "HIGH"
-                        },
-                        "low": {
-                          "color": "light-green",
-                          "index": 5,
-                          "text": "LOW"
-                        },
-                        "medium": {
-                          "color": "light-orange",
-                          "index": 4,
-                          "text": "MEDIUM"
-                        },
-                        "open": {
-                          "color": "semi-dark-orange",
-                          "index": 0,
-                          "text": "OPEN"
-                        }
-                      },
-                      "type": "value"
-                    }
-                  ],
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "dependency"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 1050
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "security_vulnerability"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 804
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "url"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 559
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "html_url"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 487
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Alert ID"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 101
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Created at"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 227
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Fixed at"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 191
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "State"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 67
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Ecosystem"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 134
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Package"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 298
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Severity"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 102
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Scope"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 143
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Alert ID",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "targetBlank": true,
-                            "title": "${__value.text}",
-                            "url": "${__data.fields.html_url}"
-                          }
-                        ]
-                      },
-                      {
-                        "id": "custom.align",
-                        "value": "center"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "State",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.cellOptions",
-                        "value": {
-                          "type": "color-background"
-                        }
-                      },
-                      {
-                        "id": "custom.align",
-                        "value": "center"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Severity",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.cellOptions",
-                        "value": {
-                          "type": "color-background"
-                        }
-                      },
-                      {
-                        "id": "custom.align",
-                        "value": "center"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "CVSS Score"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 148
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Link",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "targetBlank": true,
-                            "title": "${__value.text}",
-                            "url": "${__value.text}"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": true,
-                "sortBy": [
-                  {
-                    "desc": true,
-                    "displayName": "Created at"
-                  }
-                ]
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-82": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "pagination_mode": "cursor",
-                        "pagination_param_cursor_extraction_path": "rel=\"next\"",
-                        "pagination_param_cursor_field_name": "Link",
-                        "pagination_param_cursor_field_type": "header",
-                        "pagination_param_size_field_name": "per_page",
-                        "pagination_param_size_value": 100,
-                        "parser": "backend",
-                        "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url\n    \n  }\n})",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "created_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "fixed_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "dismissed_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "filterByValue",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "between",
-                            "options": {
-                              "from": "$__from",
-                              "to": "$__to"
-                            }
-                          },
-                          "fieldName": "created_at"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                },
-                {
-                  "group": "organize",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "excludeByName": {},
-                      "includeByName": {},
-                      "indexByName": {
-                        "created_at": 4,
-                        "description": 3,
-                        "dismissed_at": 6,
-                        "fixed_at": 5,
-                        "html_url": 7,
-                        "number": 1,
-                        "state": 0,
-                        "tool": 2
-                      },
-                      "renameByName": {
-                        "created_at": "Created at",
-                        "description": "Description",
-                        "dismissed_at": "Dismissed at",
-                        "fixed_at": "Fixed at",
-                        "html_url": "URL",
-                        "number": "Alert ID",
-                        "state": "State",
-                        "tool": "Tool"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "description": "",
-          "id": 82,
-          "links": [],
-          "title": "Code scanning alerts",
-          "vizConfig": {
-            "group": "table",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "hideFrom": {
-                      "viz": false
-                    },
-                    "inspect": false
-                  },
-                  "mappings": [
-                    {
-                      "options": {
-                        "dismissed": {
-                          "color": "light-blue",
-                          "index": 2,
-                          "text": "DISMISSED"
-                        },
-                        "fixed": {
-                          "color": "light-green",
-                          "index": 1,
-                          "text": "FIXED"
-                        },
-                        "open": {
-                          "color": "semi-dark-orange",
-                          "index": 0,
-                          "text": "OPEN"
-                        }
-                      },
-                      "type": "value"
-                    }
-                  ],
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "instances_url"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 234
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "rule"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 354
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "created_at"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 257
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "number"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 108
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "state"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 97
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "number",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.align",
-                        "value": "center"
-                      },
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "targetBlank": true,
-                            "title": "${__value.text}",
-                            "url": "${__data.fields.html_url}"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "state",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.align",
-                        "value": "center"
-                      },
-                      {
-                        "id": "custom.cellOptions",
-                        "value": {
-                          "type": "color-background"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "tool"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 188
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "fixed_at"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 204
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "html_url",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "links",
-                        "value": [
-                          {
-                            "targetBlank": true,
-                            "title": "${__value.text}",
-                            "url": "${__value.text}"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-83": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 83,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "#### Issues\n---",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-84": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 84,
-          "links": [],
-          "title": "",
-          "transparent": true,
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "#### Activity\n---",
-                "mode": "markdown"
               }
             },
             "version": "13.0.1"
@@ -3683,35 +1715,9 @@
           {
             "kind": "RowsLayoutRow",
             "spec": {
-              "collapse": true,
-              "hideHeader": true,
-              "layout": {
-                "kind": "GridLayout",
-                "spec": {
-                  "items": [
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-74"
-                        },
-                        "height": 2,
-                        "width": 24,
-                        "x": 0,
-                        "y": 0
-                      }
-                    }
-                  ]
-                }
-              },
-              "title": "Project name"
-            }
-          },
-          {
-            "kind": "RowsLayoutRow",
-            "spec": {
               "collapse": false,
+              "fillScreen": false,
+              "hideHeader": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -3721,62 +1727,9 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-55"
+                          "name": "panel-47"
                         },
-                        "height": 7,
-                        "width": 24,
-                        "x": 0,
-                        "y": 0
-                      }
-                    }
-                  ]
-                }
-              },
-              "title": "Project details"
-            }
-          },
-          {
-            "kind": "RowsLayoutRow",
-            "spec": {
-              "collapse": true,
-              "layout": {
-                "kind": "GridLayout",
-                "spec": {
-                  "items": []
-                }
-              },
-              "title": "Service management"
-            }
-          },
-          {
-            "kind": "RowsLayoutRow",
-            "spec": {
-              "collapse": true,
-              "layout": {
-                "kind": "GridLayout",
-                "spec": {
-                  "items": []
-                }
-              },
-              "title": "Security"
-            }
-          },
-          {
-            "kind": "RowsLayoutRow",
-            "spec": {
-              "collapse": false,
-              "layout": {
-                "kind": "GridLayout",
-                "spec": {
-                  "items": [
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-53"
-                        },
-                        "height": 7,
+                        "height": 4,
                         "width": 4,
                         "x": 0,
                         "y": 0
@@ -3787,9 +1740,9 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-52"
+                          "name": "panel-48"
                         },
-                        "height": 7,
+                        "height": 4,
                         "width": 4,
                         "x": 4,
                         "y": 0
@@ -3800,10 +1753,10 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-83"
+                          "name": "panel-46"
                         },
-                        "height": 2,
-                        "width": 16,
+                        "height": 4,
+                        "width": 7,
                         "x": 8,
                         "y": 0
                       }
@@ -3813,83 +1766,44 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-54"
+                          "name": "panel-49"
                         },
-                        "height": 3,
-                        "width": 2,
-                        "x": 8,
-                        "y": 2
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-57"
-                        },
-                        "height": 3,
-                        "width": 2,
-                        "x": 10,
-                        "y": 2
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-56"
-                        },
-                        "height": 3,
-                        "width": 2,
-                        "x": 12,
-                        "y": 2
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-58"
-                        },
-                        "height": 3,
+                        "height": 6,
                         "width": 4,
-                        "x": 14,
-                        "y": 2
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-84"
-                        },
-                        "height": 2,
-                        "width": 16,
-                        "x": 8,
-                        "y": 5
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-51"
-                        },
-                        "height": 13,
-                        "width": 24,
                         "x": 0,
-                        "y": 7
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-45"
+                        },
+                        "height": 6,
+                        "width": 4,
+                        "x": 4,
+                        "y": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-50"
+                        },
+                        "height": 6,
+                        "width": 4,
+                        "x": 8,
+                        "y": 4
                       }
                     }
                   ]
                 }
               },
-              "title": "Repositories"
+              "title": "Repositories overview"
             }
           },
           {
@@ -3905,246 +1819,12 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-68"
+                          "name": "panel-52"
                         },
-                        "height": 2,
+                        "height": 14,
                         "width": 24,
                         "x": 0,
                         "y": 0
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-64"
-                        },
-                        "height": 3,
-                        "width": 3,
-                        "x": 0,
-                        "y": 2
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-63"
-                        },
-                        "height": 8,
-                        "width": 24,
-                        "x": 0,
-                        "y": 5
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-73"
-                        },
-                        "height": 1,
-                        "width": 24,
-                        "x": 0,
-                        "y": 13
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-69"
-                        },
-                        "height": 2,
-                        "width": 24,
-                        "x": 0,
-                        "y": 14
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-67"
-                        },
-                        "height": 3,
-                        "width": 3,
-                        "x": 0,
-                        "y": 16
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-65"
-                        },
-                        "height": 12,
-                        "width": 24,
-                        "x": 0,
-                        "y": 19
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-72"
-                        },
-                        "height": 1,
-                        "width": 24,
-                        "x": 0,
-                        "y": 31
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-70"
-                        },
-                        "height": 2,
-                        "width": 24,
-                        "x": 0,
-                        "y": 32
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-62"
-                        },
-                        "height": 3,
-                        "width": 3,
-                        "x": 0,
-                        "y": 34
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-66"
-                        },
-                        "height": 8,
-                        "width": 24,
-                        "x": 0,
-                        "y": 37
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-76"
-                        },
-                        "height": 1,
-                        "width": 24,
-                        "x": 0,
-                        "y": 45
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-75"
-                        },
-                        "height": 2,
-                        "width": 24,
-                        "x": 0,
-                        "y": 46
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-77"
-                        },
-                        "height": 1,
-                        "width": 24,
-                        "x": 0,
-                        "y": 48
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-78"
-                        },
-                        "height": 2,
-                        "width": 24,
-                        "x": 0,
-                        "y": 49
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-82"
-                        },
-                        "height": 10,
-                        "width": 24,
-                        "x": 0,
-                        "y": 51
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-79"
-                        },
-                        "height": 1,
-                        "width": 24,
-                        "x": 0,
-                        "y": 61
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-80"
-                        },
-                        "height": 2,
-                        "width": 24,
-                        "x": 0,
-                        "y": 62
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-81"
-                        },
-                        "height": 10,
-                        "width": 24,
-                        "x": 0,
-                        "y": 64
                       }
                     }
                   ]
@@ -4152,9 +1832,9 @@
               },
               "repeat": {
                 "mode": "variable",
-                "value": "repos"
+                "value": "projects"
               },
-              "title": "Repository: ${repos}"
+              "title": "Project: $projects"
             }
           }
         ]
@@ -4184,7 +1864,7 @@
       "timezone": "browser",
       "to": "now"
     },
-    "title": "Project Overview",
+    "title": "Organization overview",
     "variables": [
       {
         "kind": "DatasourceVariable",
@@ -4224,14 +1904,68 @@
         "spec": {
           "allowCustomValue": true,
           "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": true,
+          "label": "Repository",
+          "multi": true,
+          "name": "repository",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "P7DE29E761332DDA9"
+            },
+            "group": "yesoreyeram-infinity-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "values\nfoo\nbar\nbaz",
+                "filterExpression": "archived == false && fork == false",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "",
+                "source": "url",
+                "type": "json",
+                "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "meta": {
+                "valueField": "name"
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": false,
+          "sort": "alphabeticalAsc"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
             "text": "icore",
             "value": "icore"
           },
           "definition": "",
           "hide": "dontHide",
-          "includeAll": false,
+          "includeAll": true,
           "label": "Projects",
-          "multi": false,
+          "multi": true,
           "name": "projects",
           "options": [],
           "query": {
@@ -4248,7 +1982,7 @@
                 "format": "table",
                 "parser": "backend",
                 "refId": "",
-                "root_selector": "$distinct($[].topics[$contains($, \"c\")])",
+                "root_selector": "$distinct($[].topics)",
                 "source": "url",
                 "type": "json",
                 "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
@@ -4275,15 +2009,15 @@
       {
         "kind": "QueryVariable",
         "spec": {
-          "allowCustomValue": false,
+          "allowCustomValue": true,
           "current": {
-            "text": "All",
-            "value": ["$__all"]
+            "text": "",
+            "value": ""
           },
           "definition": "",
           "hide": "hideVariable",
-          "includeAll": true,
-          "multi": true,
+          "includeAll": false,
+          "multi": false,
           "name": "repos_per_project",
           "options": [],
           "query": {
@@ -4295,76 +2029,19 @@
             "spec": {
               "infinityQuery": {
                 "columns": [],
-                "computed_columns": [],
                 "data": "values\nfoo\nbar\nbaz",
                 "filters": [],
                 "format": "table",
                 "parser": "backend",
                 "refId": "",
-                "root_selector": "items.full_name ~> $map(function($v){ \"repo:\" & $v }) ~> $join(\" \")",
+                "root_selector": "",
                 "source": "url",
                 "type": "json",
-                "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                "url": "",
                 "url_options": {
                   "data": "",
                   "method": "GET"
                 }
-              },
-              "meta": {
-                "valueField": "variable"
-              },
-              "queryType": "infinity",
-              "refId": "variable"
-            },
-            "version": "v0"
-          },
-          "refresh": "onDashboardLoad",
-          "regex": "",
-          "regexApplyTo": "value",
-          "skipUrlSync": false,
-          "sort": "disabled"
-        }
-      },
-      {
-        "kind": "QueryVariable",
-        "spec": {
-          "allowCustomValue": true,
-          "current": {
-            "text": ["All"],
-            "value": ["$__all"]
-          },
-          "definition": "",
-          "hide": "dontHide",
-          "includeAll": true,
-          "label": "Repositories",
-          "multi": true,
-          "name": "repos",
-          "options": [],
-          "query": {
-            "datasource": {
-              "name": "P7DE29E761332DDA9"
-            },
-            "group": "yesoreyeram-infinity-datasource",
-            "kind": "DataQuery",
-            "spec": {
-              "infinityQuery": {
-                "columns": [],
-                "data": "values\nfoo\nbar\nbaz",
-                "filters": [],
-                "format": "table",
-                "parser": "backend",
-                "refId": "",
-                "root_selector": "items.full_name",
-                "source": "url",
-                "type": "json",
-                "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
-                "url_options": {
-                  "data": "",
-                  "method": "GET"
-                }
-              },
-              "meta": {
-                "valueField": "variable"
               },
               "queryType": "infinity",
               "refId": "variable"
