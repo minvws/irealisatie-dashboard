@@ -2,7 +2,7 @@
   "apiVersion": "dashboard.grafana.app/v2",
   "kind": "Dashboard",
   "metadata": {
-    "name": "github-projects",
+    "name": "projects-overview",
     "namespace": "default",
     "uid": "60221a5a-0dcc-4c71-8be1-d9195e7f436c",
     "resourceVersion": "1781533176789003",
@@ -11,13 +11,7 @@
     "labels": {
       "grafana.app/deprecatedInternalID": "3741411739811840"
     },
-    "annotations": {
-      "grafana.app/createdBy": "user:bfmqpu56ieio0f",
-      "grafana.app/folder": "",
-      "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
-      "grafana.app/updatedBy": "user:bfmqpu56ieio0f",
-      "grafana.app/updatedTimestamp": "2026-06-15T14:19:36Z"
-    }
+    "annotations": {}
   },
   "spec": {
     "annotations": [

@@ -1,12 +1,13 @@
 apiVersion: 1
 
 providers:
-  - name: GitHub Dashboards
+  - name: Dashboards
     orgId: 1
-    folder: GitHub
+    folder: General
     type: file
     disableDeletion: false
     editable: true
 
     options:
-      path: /etc/grafana/provisioning/dashboards/github
+      path: /etc/grafana/provisioning/dashboards/
+      foldersFromFilesStructure: true
