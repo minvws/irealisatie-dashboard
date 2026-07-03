@@ -3355,7 +3355,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "Link",
+                      "options": "URL",
                       "scope": "series"
                     },
                     "properties": [
@@ -3420,7 +3420,7 @@
                         "pagination_param_size_field_name": "per_page",
                         "pagination_param_size_value": 100,
                         "parser": "backend",
-                        "root_selector": " $map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url\n  }\n})",
+                        "root_selector": " $map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url,\n    \"security_severity_level\": $v.rule.security_severity_level,\n    \"severity\": $v.rule.severity\n  }\n})",
                         "source": "url",
                         "type": "json",
                         "url": "https://api.github.com/repos/${repos}/code-scanning/alerts",
@@ -3431,7 +3431,7 @@
                       },
                       "version": "v0"
                     },
-                    "refId": "A"
+                    "refId": "Code scanning alerts"
                   }
                 }
               ],
@@ -3490,14 +3490,16 @@
                       "excludeByName": {},
                       "includeByName": {},
                       "indexByName": {
-                        "created_at": 4,
-                        "description": 3,
-                        "dismissed_at": 6,
-                        "fixed_at": 5,
-                        "html_url": 7,
-                        "number": 1,
+                        "created_at": 5,
+                        "description": 4,
+                        "dismissed_at": 7,
+                        "fixed_at": 6,
+                        "html_url": 8,
+                        "number": 2,
+                        "security_severity_level": 1,
+                        "severity": 9,
                         "state": 0,
-                        "tool": 2
+                        "tool": 3
                       },
                       "renameByName": {
                         "created_at": "Created at",
@@ -3506,6 +3508,8 @@
                         "fixed_at": "Fixed at",
                         "html_url": "URL",
                         "number": "Alert ID",
+                        "security_severity_level": "Security severity level",
+                        "severity": "Severity",
                         "state": "State",
                         "tool": "Tool"
                       }
@@ -3553,6 +3557,16 @@
                           "color": "light-green",
                           "index": 1,
                           "text": "FIXED"
+                        },
+                        "high": {
+                          "color": "red",
+                          "index": 4,
+                          "text": "HIGH"
+                        },
+                        "medium": {
+                          "color": "light-orange",
+                          "index": 3,
+                          "text": "MEDIUM"
                         },
                         "open": {
                           "color": "semi-dark-orange",
@@ -3722,6 +3736,37 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Security severity level"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 167
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Security severity level",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.align",
+                        "value": "center"
+                      },
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
+                      }
+                    ]
                   }
                 ]
               },
@@ -3847,6 +3892,908 @@
             "version": "13.0.1"
           }
         }
+      },
+      "panel-86": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "pagination_max_pages": 5,
+                        "pagination_mode": "cursor",
+                        "pagination_param_cursor_extraction_path": "",
+                        "pagination_param_cursor_field_name": "Link",
+                        "pagination_param_cursor_field_type": "header",
+                        "pagination_param_page_field_name": "page",
+                        "pagination_param_page_field_type": "header",
+                        "pagination_param_size_field_name": "per_page",
+                        "pagination_param_size_field_type": "query",
+                        "pagination_param_size_value": 100,
+                        "parser": "backend",
+                        "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"package\": $v.dependency.package.name,\n    \"ecosystem\": $v.dependency.package.ecosystem,\n    \"scope\": $v.dependency.scope,\n    \"state\": $v.state,\n    \"severity\": $v.security_advisory.severity,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"html_url\": $v.html_url\n  }\n})",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Dependabot alerts"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "convertFieldType",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "conversions": [
+                        {
+                          "destinationType": "time",
+                          "targetField": "created_at"
+                        },
+                        {
+                          "destinationType": "time",
+                          "targetField": "fixed_at"
+                        }
+                      ],
+                      "fields": {}
+                    }
+                  }
+                },
+                {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "between",
+                            "options": {
+                              "from": "$__from",
+                              "to": "$__to"
+                            }
+                          },
+                          "fieldName": "created_at"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "disabled": true,
+                    "options": {
+                      "excludeByName": {
+                        "html_url": false
+                      },
+                      "includeByName": {},
+                      "indexByName": {
+                        "created_at": 7,
+                        "cvss": 6,
+                        "ecosystem": 3,
+                        "fixed_at": 8,
+                        "html_url": 9,
+                        "number": 2,
+                        "package": 4,
+                        "scope": 5,
+                        "severity": 1,
+                        "state": 0
+                      },
+                      "renameByName": {
+                        "created_at": "Created at",
+                        "cvss": "CVSS Score",
+                        "ecosystem": "Ecosystem",
+                        "fixed_at": "Fixed at",
+                        "html_url": "URL",
+                        "number": "Alert ID",
+                        "package": "Package",
+                        "scope": "Scope",
+                        "severity": "Severity",
+                        "state": "State"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "groupBy",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "fields": {
+                        "severity": {
+                          "aggregations": ["count"],
+                          "operation": "groupby"
+                        },
+                        "state": {
+                          "aggregations": []
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 86,
+          "links": [],
+          "title": "Severity",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  },
+                  "mappings": [
+                    {
+                      "options": {
+                        "critical": {
+                          "color": "dark-red",
+                          "index": 2,
+                          "text": "CRITICAL"
+                        },
+                        "fixed": {
+                          "color": "light-green",
+                          "index": 1,
+                          "text": "FIXED"
+                        },
+                        "high": {
+                          "color": "light-red",
+                          "index": 3,
+                          "text": "HIGH"
+                        },
+                        "low": {
+                          "color": "light-green",
+                          "index": 5,
+                          "text": "LOW"
+                        },
+                        "medium": {
+                          "color": "light-orange",
+                          "index": 4,
+                          "text": "MEDIUM"
+                        },
+                        "open": {
+                          "color": "semi-dark-orange",
+                          "index": 0,
+                          "text": "OPEN"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ]
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "dependency"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "security_vulnerability"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "url"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "html_url"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Alert ID"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Created at"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Fixed at"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "State"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Ecosystem"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Package"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Severity"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Scope"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Alert ID",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "${__value.text}",
+                            "url": "${__data.fields.html_url}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "State",
+                      "scope": "series"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Severity",
+                      "scope": "series"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "CVSS Score"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Link",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "${__value.text}",
+                            "url": "${__value.text}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "__systemRef": "hideSeriesFrom",
+                    "matcher": {
+                      "id": "byNames",
+                      "options": {
+                        "mode": "exclude",
+                        "names": ["severity (count)"],
+                        "prefix": "All except:",
+                        "readOnly": true
+                      }
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.hideFrom",
+                        "value": {
+                          "legend": false,
+                          "tooltip": true,
+                          "viz": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "MEDIUM"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-orange",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "HIGH"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "super-light-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "LOW"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "super-light-green",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "CRITICAL"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "semi-dark-red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-87": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "pagination_max_pages": 1,
+                        "pagination_mode": "cursor",
+                        "pagination_param_cursor_extraction_path": "",
+                        "pagination_param_cursor_field_name": "Link",
+                        "pagination_param_cursor_field_type": "header",
+                        "pagination_param_page_field_name": "page",
+                        "pagination_param_page_field_type": "replace",
+                        "pagination_param_size_field_name": "per_page",
+                        "pagination_param_size_value": 100,
+                        "parser": "backend",
+                        "root_selector": " $map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url,\n    \"security_severity_level\": $v.rule.security_severity_level,\n    \"severity\": $v.rule.severity\n  }\n})",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "convertFieldType",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "conversions": [
+                        {
+                          "destinationType": "time",
+                          "targetField": "created_at"
+                        },
+                        {
+                          "destinationType": "time",
+                          "targetField": "fixed_at"
+                        },
+                        {
+                          "destinationType": "time",
+                          "targetField": "dismissed_at"
+                        }
+                      ],
+                      "fields": {}
+                    }
+                  }
+                },
+                {
+                  "group": "filterByValue",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "between",
+                            "options": {
+                              "from": "$__from",
+                              "to": "$__to"
+                            }
+                          },
+                          "fieldName": "created_at"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                },
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "created_at": 4,
+                        "description": 3,
+                        "dismissed_at": 6,
+                        "fixed_at": 5,
+                        "html_url": 7,
+                        "number": 1,
+                        "state": 0,
+                        "tool": 2
+                      },
+                      "renameByName": {
+                        "created_at": "Created at",
+                        "description": "Description",
+                        "dismissed_at": "Dismissed at",
+                        "fixed_at": "Fixed at",
+                        "html_url": "URL",
+                        "number": "Alert ID",
+                        "security_severity_level": "Security severity level",
+                        "severity": "Severity",
+                        "state": "State",
+                        "tool": "Tool"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "groupBy",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "fields": {
+                        "Security severity level": {
+                          "aggregations": ["count"],
+                          "operation": "groupby"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 87,
+          "links": [],
+          "title": "Security severity level",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  },
+                  "mappings": [
+                    {
+                      "options": {
+                        "dismissed": {
+                          "color": "light-blue",
+                          "index": 2,
+                          "text": "DISMISSED"
+                        },
+                        "fixed": {
+                          "color": "light-green",
+                          "index": 1,
+                          "text": "FIXED"
+                        },
+                        "open": {
+                          "color": "semi-dark-orange",
+                          "index": 0,
+                          "text": "OPEN"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ]
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "instances_url"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "rule"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "created_at"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "number"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "number",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "${__value.text}",
+                            "url": "${__data.fields.html_url}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state",
+                      "scope": "series"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "tool"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "fixed_at"
+                    },
+                    "properties": []
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "html_url",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "${__value.text}",
+                            "url": "${__value.text}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "medium"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "light-orange",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "displayLabels": ["percent"],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": ["value"]
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-88": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "sbom.packages",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/minvws/nl-rdo-manon/dependency-graph/sbom",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Dependencies"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "SPDXID": 4,
+                        "copyrightText": 5,
+                        "downloadLocation": 6,
+                        "externalRefs": 3,
+                        "filesAnalyzed": 7,
+                        "licenseConcluded": 2,
+                        "name": 0,
+                        "versionInfo": 1
+                      },
+                      "renameByName": {}
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 88,
+          "links": [],
+          "title": "Dependencies",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "hideFrom": {
+                      "viz": false
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
       }
     },
     "layout": {
@@ -3856,8 +4803,7 @@
           {
             "kind": "RowsLayoutRow",
             "spec": {
-              "collapse": true,
-              "hideHeader": true,
+              "collapse": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -3911,7 +4857,7 @@
           {
             "kind": "RowsLayoutRow",
             "spec": {
-              "collapse": true,
+              "collapse": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -3924,7 +4870,7 @@
           {
             "kind": "RowsLayoutRow",
             "spec": {
-              "collapse": true,
+              "collapse": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -4069,7 +5015,6 @@
             "kind": "RowsLayoutRow",
             "spec": {
               "collapse": false,
-              "hideHeader": true,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -4261,12 +5206,25 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
+                          "name": "panel-88"
+                        },
+                        "height": 9,
+                        "width": 24,
+                        "x": 0,
+                        "y": 51
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
                           "name": "panel-77"
                         },
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 51
+                        "y": 60
                       }
                     },
                     {
@@ -4279,7 +5237,20 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 52
+                        "y": 61
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-87"
+                        },
+                        "height": 9,
+                        "width": 4,
+                        "x": 0,
+                        "y": 63
                       }
                     },
                     {
@@ -4292,7 +5263,7 @@
                         "height": 10,
                         "width": 24,
                         "x": 0,
-                        "y": 54
+                        "y": 72
                       }
                     },
                     {
@@ -4305,7 +5276,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 64
+                        "y": 82
                       }
                     },
                     {
@@ -4318,7 +5289,20 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 65
+                        "y": 83
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-86"
+                        },
+                        "height": 9,
+                        "width": 4,
+                        "x": 0,
+                        "y": 85
                       }
                     },
                     {
@@ -4331,7 +5315,7 @@
                         "height": 10,
                         "width": 24,
                         "x": 0,
-                        "y": 67
+                        "y": 94
                       }
                     }
                   ]
