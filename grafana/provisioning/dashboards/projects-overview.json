@@ -3368,6 +3368,10 @@
                             "url": "${__value.text}"
                           }
                         ]
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 667
                       }
                     ]
                   }
@@ -4706,7 +4710,7 @@
                         "root_selector": "sbom.packages",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/minvws/nl-rdo-manon/dependency-graph/sbom",
+                        "url": "https://api.github.com/repos/${repos}/dependency-graph/sbom",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -4789,6 +4793,251 @@
               "options": {
                 "cellHeight": "sm",
                 "showHeader": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-89": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PF9153EDC0117EC0B"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "components[repository = \"${repos}\"].used_by",
+                        "source": "url",
+                        "type": "json",
+                        "url": "/dependencies",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "organize",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {},
+                      "includeByName": {},
+                      "indexByName": {
+                        "ecosystem": 3,
+                        "package": 1,
+                        "repository": 0,
+                        "version": 2
+                      },
+                      "renameByName": {
+                        "ecosystem": "Ecosystem",
+                        "package": "Package",
+                        "repository": "Repository",
+                        "version": "Version"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 89,
+          "links": [],
+          "title": "Used by",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "components"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 635
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Repository"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 677
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Package"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 276
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Repository",
+                      "scope": "series"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "${__value.text}",
+                            "url": "https://github.com/${__value.text}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-90": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 90,
+          "links": [],
+          "title": "",
+          "transparent": true,
+          "vizConfig": {
+            "group": "text",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              },
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "#### Used by\n---",
+                "mode": "markdown"
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-91": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 91,
+          "links": [],
+          "title": "",
+          "transparent": true,
+          "vizConfig": {
+            "group": "text",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              },
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "",
+                "mode": "markdown"
               }
             },
             "version": "13.0.1"
@@ -5180,7 +5429,7 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-76"
+                          "name": "panel-91"
                         },
                         "height": 1,
                         "width": 24,
@@ -5193,7 +5442,7 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-75"
+                          "name": "panel-90"
                         },
                         "height": 2,
                         "width": 24,
@@ -5206,12 +5455,51 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
+                          "name": "panel-89"
+                        },
+                        "height": 8,
+                        "width": 24,
+                        "x": 0,
+                        "y": 51
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-76"
+                        },
+                        "height": 1,
+                        "width": 24,
+                        "x": 0,
+                        "y": 59
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-75"
+                        },
+                        "height": 2,
+                        "width": 24,
+                        "x": 0,
+                        "y": 60
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
                           "name": "panel-88"
                         },
                         "height": 9,
                         "width": 24,
                         "x": 0,
-                        "y": 51
+                        "y": 62
                       }
                     },
                     {
@@ -5224,7 +5512,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 60
+                        "y": 71
                       }
                     },
                     {
@@ -5237,7 +5525,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 61
+                        "y": 72
                       }
                     },
                     {
@@ -5250,7 +5538,7 @@
                         "height": 9,
                         "width": 4,
                         "x": 0,
-                        "y": 63
+                        "y": 74
                       }
                     },
                     {
@@ -5263,7 +5551,7 @@
                         "height": 10,
                         "width": 24,
                         "x": 0,
-                        "y": 72
+                        "y": 83
                       }
                     },
                     {
@@ -5276,7 +5564,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 82
+                        "y": 93
                       }
                     },
                     {
@@ -5289,7 +5577,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 83
+                        "y": 94
                       }
                     },
                     {
@@ -5302,7 +5590,7 @@
                         "height": 9,
                         "width": 4,
                         "x": 0,
-                        "y": 85
+                        "y": 96
                       }
                     },
                     {
@@ -5315,7 +5603,7 @@
                         "height": 10,
                         "width": 24,
                         "x": 0,
-                        "y": 94
+                        "y": 105
                       }
                     }
                   ]

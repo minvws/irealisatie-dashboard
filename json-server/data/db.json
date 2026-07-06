@@ -1,6 +1,351 @@
 {
-  "users": [
-    { "id": 1, "name": "Test User", "status": "active" },
-    { "id": 2, "name": "Admin", "status": "pending" }
-  ]
+  "dependencies": {
+    "generated_at": "2026-07-03T07:08:23.296405+00:00",
+    "date": "2026-07-03",
+    "organisation": "minvws",
+    "summary": {
+      "components": 33
+    },
+    "components": [
+      {
+        "repository": "minvws/pUZI-php",
+        "usage_count": 3,
+        "used_by": [
+          {
+            "repository": "minvws/pUZI-laravel",
+            "package": "minvws/puzi-php",
+            "version": ">= 2.0,< 3.0",
+            "ecosystem": "composer"
+          },
+          {
+            "repository": "minvws/nl-ggd-meldportaal-web-public",
+            "package": "minvws/puzi-php",
+            "version": "2.3.1",
+            "ecosystem": "composer"
+          },
+          {
+            "repository": "minvws/nl-ggd-meldportaal-admin-public",
+            "package": "minvws/puzi-php",
+            "version": "2.3.0",
+            "ecosystem": "composer"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/pUZI-laravel",
+        "usage_count": 2,
+        "used_by": [
+          {
+            "repository": "minvws/nl-ggd-meldportaal-web-public",
+            "package": "minvws/puzi-laravel",
+            "version": "3.2.2",
+            "ecosystem": "composer"
+          },
+          {
+            "repository": "minvws/nl-ggd-meldportaal-admin-public",
+            "package": "minvws/puzi-laravel",
+            "version": "3.2.2",
+            "ecosystem": "composer"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/pUzi-python",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/horsebattery",
+        "usage_count": 4,
+        "used_by": [
+          {
+            "repository": "minvws/horsebattery-laravel",
+            "package": "minvws/horsebattery",
+            "version": ">= 1.1.3,< 2.0.0",
+            "ecosystem": "composer"
+          },
+          {
+            "repository": "minvws/nl-ggd-meldportaal-web-public",
+            "package": "minvws/horsebattery",
+            "version": "1.1.3",
+            "ecosystem": "composer"
+          },
+          {
+            "repository": "minvws/nl-ggd-meldportaal-admin-public",
+            "package": "minvws/horsebattery",
+            "version": "1.1.3",
+            "ecosystem": "composer"
+          },
+          {
+            "repository": "minvws/nl-rdo-woo-web",
+            "package": "minvws/horsebattery",
+            "version": "2.0.0",
+            "ecosystem": "composer"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/horsebattery-laravel",
+        "usage_count": 2,
+        "used_by": [
+          {
+            "repository": "minvws/nl-ggd-meldportaal-web-public",
+            "package": "minvws/horsebattery-laravel",
+            "version": "1.3.0",
+            "ecosystem": "composer"
+          },
+          {
+            "repository": "minvws/nl-ggd-meldportaal-admin-public",
+            "package": "minvws/horsebattery-laravel",
+            "version": "1.3.0",
+            "ecosystem": "composer"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/nl-rdo-laravel-logging",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/nl-rdo-zammad-api-export",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/nl-rdo-manon",
+        "usage_count": 2,
+        "used_by": [
+          {
+            "repository": "minvws/nl-rdo-max",
+            "package": "@minvws/manon",
+            "version": "16.2.0",
+            "ecosystem": "npm"
+          },
+          {
+            "repository": "minvws/nl-rdo-rijksoverheid-ui-theme",
+            "package": "@minvws/manon",
+            "version": "17.1.0",
+            "ecosystem": "npm"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/nl-rdo-max",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/nl-rdo-openid-connect-php-laravel",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/nl-rdo-rijksoverheid-ui-theme",
+        "usage_count": 1,
+        "used_by": [
+          {
+            "repository": "minvws/nl-rdo-max",
+            "package": "@minvws/nl-rdo-rijksoverheid-ui-theme",
+            "version": "0.0.18",
+            "ecosystem": "npm"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/nl-rdo-laravel-translation",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/icore-php-codable",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/nl-rdo-php-audit-logger",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/nl-rdo-php-audit-logger-bundle",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/nl-rdo-laravel-sql-export",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/action-robotframework-summary",
+        "usage_count": 1,
+        "used_by": [
+          {
+            "repository": "minvws/nl-rdo-woo-web",
+            "package": "minvws/action-robotframework-summary",
+            "version": "1.0.0",
+            "ecosystem": "githubactions"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/nl-irealisatie-generic-pipelines",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/icore-php-typearray",
+        "usage_count": 1,
+        "used_by": [
+          {
+            "repository": "minvws/nl-rdo-woo-web",
+            "package": "minvws/icore-php-typearray",
+            "version": "1.0.0",
+            "ecosystem": "composer"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/nl-rdo-dataprocessing-register",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/workflow-documentation-linter",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/action-sonarqube",
+        "usage_count": 8,
+        "used_by": [
+          {
+            "repository": "minvws/nl-rdo-laravel-logging",
+            "package": "minvws/action-sonarqube",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          },
+          {
+            "repository": "minvws/nl-rdo-manon",
+            "package": "minvws/action-sonarqube",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          },
+          {
+            "repository": "minvws/nl-rdo-max",
+            "package": "minvws/action-sonarqube",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          },
+          {
+            "repository": "minvws/nl-rdo-openid-connect-php-laravel",
+            "package": "minvws/action-sonarqube",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          },
+          {
+            "repository": "minvws/icore-php-codable",
+            "package": "minvws/action-sonarqube",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          },
+          {
+            "repository": "minvws/nl-rdo-woo-web",
+            "package": "minvws/action-sonarqube",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          },
+          {
+            "repository": "minvws/nl-rdo-php-audit-logger",
+            "package": "minvws/action-sonarqube",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          },
+          {
+            "repository": "minvws/nl-rdo-php-audit-logger-bundle",
+            "package": "minvws/action-sonarqube",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/action-php-composer-install",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/action-python-poetry-install",
+        "usage_count": 1,
+        "used_by": [
+          {
+            "repository": "minvws/nl-rdo-max",
+            "package": "minvws/action-python-poetry-install",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/action-python-venv-package",
+        "usage_count": 1,
+        "used_by": [
+          {
+            "repository": "minvws/nl-rdo-max",
+            "package": "minvws/action-python-venv-package",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/gfmodules-action-trigger-ci",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/action-generic-build-package",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/action-major-version-tag",
+        "usage_count": 1,
+        "used_by": [
+          {
+            "repository": "minvws/action-robotframework-summary",
+            "package": "minvws/action-major-version-tag",
+            "version": "1.*.*",
+            "ecosystem": "githubactions"
+          }
+        ]
+      },
+      {
+        "repository": "minvws/action-markdown-formatter",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/manon-icore-open-sphinx-theme",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/manon-rijkshuisstijl-2008-sphinx-theme",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/action-nodejs-install",
+        "usage_count": 0,
+        "used_by": []
+      },
+      {
+        "repository": "minvws/nl-rdo-zvs-web",
+        "usage_count": 0,
+        "used_by": []
+      }
+    ]
+  }
 }
