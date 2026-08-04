@@ -10,6 +10,8 @@ services:
       - grafana-data:/var/lib/grafana
     env_file:
       - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   json-server:
     build:
@@ -22,3 +24,7 @@ services:
 
 volumes:
   grafana-data:
+
+networks:
+  monitoring:
+    external: true

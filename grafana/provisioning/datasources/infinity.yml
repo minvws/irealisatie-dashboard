@@ -19,6 +19,17 @@ datasources:
     secureJsonData:
       bearerToken: ${SONARCLOUD_TOKEN}
 
+  - name: DefectDojo API
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    url: https://demo.defectdojo.org/api/v2
+    jsonData:
+      auth_method: apiKey
+      apiKeyKey: Authorization
+      apiKeyType: header
+    secureJsonData:
+      apiKeyValue: Token ${DEFECTDOJO_TOKEN}
+
   - name: Local JSON Server
     type: yesoreyeram-infinity-datasource
     access: proxy
