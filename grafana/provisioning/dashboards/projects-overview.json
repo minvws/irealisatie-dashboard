@@ -158,14 +158,11 @@
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
-                        "pagination_mode": "page",
-                        "pagination_param_size_field_name": "per_page",
-                        "pagination_param_size_value": 100,
                         "parser": "backend",
                         "root_selector": "items",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -388,7 +385,7 @@
               ]
             }
           },
-          "description": "",
+          "description": "Repositories with the selected topic. Shows the first 100 (not paginated: GitHub's Search API allows only 30 requests/min and this dashboard already makes many search calls).",
           "id": 51,
           "links": [],
           "title": "Repositories",
@@ -687,6 +684,7 @@
                   "kind": "PanelQuery",
                   "spec": {
                     "hidden": false,
+                    "refId": "A",
                     "query": {
                       "datasource": {
                         "name": "P7DE29E761332DDA9"
@@ -694,12 +692,16 @@
                       "group": "yesoreyeram-infinity-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [],
-                        "computed_columns": [
+                        "columns": [
                           {
-                            "selector": "archived ? \"Archived\" : \"Active\"",
-                            "text": "status",
+                            "selector": "archived",
+                            "text": "archived",
                             "type": "string"
+                          },
+                          {
+                            "selector": "id",
+                            "text": "id",
+                            "type": "number"
                           }
                         ],
                         "filters": [],
@@ -709,35 +711,32 @@
                         "root_selector": "items",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
                         }
                       },
                       "version": "v0"
-                    },
-                    "refId": "Repositories"
+                    }
                   }
                 }
               ],
               "queryOptions": {},
               "transformations": [
                 {
-                  "group": "groupBy",
                   "kind": "Transformation",
+                  "group": "groupBy",
                   "spec": {
                     "options": {
                       "fields": {
                         "archived": {
-                          "aggregations": ["count"]
+                          "aggregations": [],
+                          "operation": "groupby"
                         },
                         "id": {
-                          "aggregations": []
-                        },
-                        "status": {
                           "aggregations": ["count"],
-                          "operation": "groupby"
+                          "operation": "aggregate"
                         }
                       }
                     }
@@ -746,62 +745,73 @@
               ]
             }
           },
-          "description": "",
+          "description": "Repositories by status (active vs. archived). Covers the first 100 repositories (Search API not paginated - GitHub limits search to 30 requests/min).",
           "id": 52,
           "links": [],
-          "title": "Repository Status",
+          "title": "Repository status",
           "vizConfig": {
-            "group": "piechart",
+            "group": "barchart",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
+                    "mode": "fixed",
+                    "fixedColor": "#4E86E0"
                   },
+                  "unit": "short",
+                  "mappings": [
+                    {
+                      "type": "value",
+                      "options": {
+                        "true": {
+                          "text": "Archived",
+                          "index": 0
+                        },
+                        "false": {
+                          "text": "Active",
+                          "index": 1
+                        }
+                      }
+                    }
+                  ],
                   "custom": {
+                    "lineWidth": 1,
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "axisPlacement": "auto",
+                    "axisLabel": "",
+                    "axisColorMode": "text",
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
                     "hideFrom": {
-                      "legend": false,
                       "tooltip": false,
-                      "viz": false
+                      "viz": false,
+                      "legend": false
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
                     }
                   }
                 },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Active"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "super-light-blue",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  }
-                ]
+                "overrides": []
               },
               "options": {
-                "displayLabels": ["percent"],
+                "orientation": "horizontal",
+                "xField": "archived",
+                "showValue": "auto",
+                "stacking": "none",
+                "groupWidth": 0.7,
+                "barWidth": 0.8,
+                "fullHighlight": false,
                 "legend": {
-                  "displayMode": "table",
-                  "placement": "right",
-                  "showLegend": true,
-                  "values": ["value"]
+                  "showLegend": false,
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "calcs": []
                 },
-                "pieType": "donut",
-                "reduceOptions": {
-                  "calcs": [],
-                  "fields": "",
-                  "values": true
-                },
-                "sort": "desc",
                 "tooltip": {
-                  "hideZeros": false,
                   "mode": "single",
                   "sort": "none"
                 }
@@ -822,6 +832,7 @@
                   "kind": "PanelQuery",
                   "spec": {
                     "hidden": false,
+                    "refId": "A",
                     "query": {
                       "datasource": {
                         "name": "P7DE29E761332DDA9"
@@ -829,12 +840,16 @@
                       "group": "yesoreyeram-infinity-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [],
-                        "computed_columns": [
+                        "columns": [
                           {
-                            "selector": "private ? \"Private\" : \"Public\"",
-                            "text": "state",
+                            "selector": "visibility",
+                            "text": "visibility",
                             "type": "string"
+                          },
+                          {
+                            "selector": "id",
+                            "text": "id",
+                            "type": "number"
                           }
                         ],
                         "filters": [],
@@ -844,39 +859,32 @@
                         "root_selector": "items",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
                         }
                       },
                       "version": "v0"
-                    },
-                    "refId": "Repositories"
+                    }
                   }
                 }
               ],
               "queryOptions": {},
               "transformations": [
                 {
-                  "group": "groupBy",
                   "kind": "Transformation",
+                  "group": "groupBy",
                   "spec": {
                     "options": {
                       "fields": {
-                        "archived": {
-                          "aggregations": ["count"]
+                        "visibility": {
+                          "aggregations": [],
+                          "operation": "groupby"
                         },
                         "id": {
-                          "aggregations": []
-                        },
-                        "state": {
                           "aggregations": ["count"],
-                          "operation": "groupby"
-                        },
-                        "status": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
+                          "operation": "aggregate"
                         }
                       }
                     }
@@ -885,77 +893,59 @@
               ]
             }
           },
-          "description": "",
+          "description": "Repositories by visibility (public / private / internal). Covers the first 100 repositories (Search API not paginated - GitHub limits search to 30 requests/min).",
           "id": 53,
           "links": [],
           "title": "Repository visibility",
           "vizConfig": {
-            "group": "piechart",
+            "group": "barchart",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
+                    "mode": "fixed",
+                    "fixedColor": "#4E86E0"
                   },
+                  "unit": "short",
+                  "mappings": [],
                   "custom": {
+                    "lineWidth": 1,
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "axisPlacement": "auto",
+                    "axisLabel": "",
+                    "axisColorMode": "text",
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
                     "hideFrom": {
-                      "legend": false,
                       "tooltip": false,
-                      "viz": false
+                      "viz": false,
+                      "legend": false
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
                     }
                   }
                 },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Active"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "super-light-blue",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Public"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "super-light-blue",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  }
-                ]
+                "overrides": []
               },
               "options": {
-                "displayLabels": ["percent"],
+                "orientation": "horizontal",
+                "xField": "visibility",
+                "showValue": "auto",
+                "stacking": "none",
+                "groupWidth": 0.7,
+                "barWidth": 0.8,
+                "fullHighlight": false,
                 "legend": {
-                  "displayMode": "table",
-                  "placement": "right",
-                  "showLegend": true,
-                  "values": ["value"]
+                  "showLegend": false,
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "calcs": []
                 },
-                "pieType": "donut",
-                "reduceOptions": {
-                  "calcs": [],
-                  "fields": "",
-                  "values": true
-                },
-                "sort": "desc",
                 "tooltip": {
-                  "hideZeros": false,
                   "mode": "single",
                   "sort": "none"
                 }
@@ -988,7 +978,7 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "items",
+                        "root_selector": "total_count",
                         "source": "url",
                         "type": "json",
                         "url": "https://api.github.com/search/issues?q=is:issue+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}",
@@ -1040,8 +1030,8 @@
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id$/",
+                  "calcs": ["last"],
+                  "fields": "/^Issues$/",
                   "values": false
                 },
                 "showPercentChange": false,
@@ -1204,7 +1194,7 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "items",
+                        "root_selector": "total_count",
                         "source": "url",
                         "type": "json",
                         "url": "https://api.github.com/search/issues?q=is:issue+state:closed+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}",
@@ -1256,8 +1246,8 @@
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id$/",
+                  "calcs": ["last"],
+                  "fields": "/^Issues$/",
                   "values": false
                 },
                 "showPercentChange": false,
@@ -1296,7 +1286,7 @@
                         "root_selector": "items",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:issue+state:closed+closed:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}",
+                        "url": "https://api.github.com/search/issues?q=is:issue+state:closed+closed:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -1360,7 +1350,7 @@
               ]
             }
           },
-          "description": "",
+          "description": "Average time from open to close for issues closed in range. Averaged over the first 100 issues (Search API not paginated - GitHub limits search to 30 requests/min).",
           "id": 58,
           "links": [],
           "title": "Average open time (Closed)",
@@ -1431,10 +1421,10 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "",
+                        "root_selector": "total_count",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/commits?since=${__from:date:YYYY-MM-DD}&until=${__to:date:YYYY-MM-DD}&per_page=100",
+                        "url": "https://api.github.com/search/commits?q=repo:${repos}+committer-date:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -1450,7 +1440,7 @@
               "transformations": []
             }
           },
-          "description": "",
+          "description": "Total commits to ${repos} in the selected range (uncapped, via commit search).",
           "id": 62,
           "links": [],
           "title": "Commits",
@@ -1461,18 +1451,15 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "thresholds"
+                    "mode": "fixed",
+                    "fixedColor": "text"
                   },
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green",
+                        "color": "text",
                         "value": 0
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
                       }
                     ]
                   }
@@ -1481,13 +1468,13 @@
               },
               "options": {
                 "colorMode": "value",
-                "graphMode": "area",
+                "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^sha$/",
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
                   "values": false
                 },
                 "showPercentChange": false,
@@ -1525,11 +1512,15 @@
                         "root_selector": "",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/releases",
+                        "url": "https://api.github.com/repos/${repos}/releases?per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
-                        }
+                        },
+                        "pagination_mode": "page",
+                        "pagination_max_pages": 5,
+                        "pagination_param_page_field_name": "page",
+                        "pagination_param_page_field_type": "query"
                       },
                       "version": "v0"
                     },
@@ -1665,7 +1656,7 @@
               ]
             }
           },
-          "description": "",
+          "description": "Repository releases. Paginated up to 500 (5 pages of 100).",
           "id": 63,
           "links": [],
           "title": "Releases",
@@ -1842,11 +1833,15 @@
                         "root_selector": "",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/releases",
+                        "url": "https://api.github.com/repos/${repos}/releases?per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
-                        }
+                        },
+                        "pagination_mode": "page",
+                        "pagination_max_pages": 5,
+                        "pagination_param_page_field_name": "page",
+                        "pagination_param_page_field_type": "query"
                       },
                       "version": "v0"
                     },
@@ -1900,7 +1895,7 @@
               ]
             }
           },
-          "description": "",
+          "description": "Number of releases. Paginated up to 500 (5 pages of 100).",
           "id": 64,
           "links": [],
           "title": "Releases",
@@ -1971,16 +1966,11 @@
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
-                        "pagination_max_pages": 1,
-                        "pagination_mode": "page",
-                        "pagination_param_page_field_name": "page",
-                        "pagination_param_size_field_name": "per_page",
-                        "pagination_param_size_value": 30,
                         "parser": "backend",
                         "root_selector": "items\n    ",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:pr+repo:${repos}+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
+                        "url": "https://api.github.com/search/issues?q=is:pr+repo:${repos}+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -2143,7 +2133,7 @@
               ]
             }
           },
-          "description": "",
+          "description": "Pull requests created in range. Shows the first 100 (Search API not paginated - GitHub limits search to 30 requests/min).",
           "id": 65,
           "links": [],
           "title": "Pull requests",
@@ -2413,7 +2403,11 @@
                         "url_options": {
                           "data": "",
                           "method": "GET"
-                        }
+                        },
+                        "pagination_mode": "page",
+                        "pagination_max_pages": 5,
+                        "pagination_param_page_field_name": "page",
+                        "pagination_param_page_field_type": "query"
                       },
                       "version": "v0"
                     },
@@ -2425,7 +2419,7 @@
               "transformations": []
             }
           },
-          "description": "",
+          "description": "Commits in the selected range. Paginated up to 500 (5 pages of 100).",
           "id": 66,
           "links": [],
           "title": "Commits",
@@ -2499,7 +2493,7 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "items",
+                        "root_selector": "total_count",
                         "source": "url",
                         "type": "json",
                         "url": "https://api.github.com/search/issues?q=is:pr+repo:${repos}+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
@@ -2529,7 +2523,8 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "thresholds"
+                    "mode": "fixed",
+                    "fixedColor": "text"
                   },
                   "thresholds": {
                     "mode": "absolute",
@@ -2549,13 +2544,13 @@
               },
               "options": {
                 "colorMode": "value",
-                "graphMode": "area",
+                "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["count"],
-                  "fields": "/^id$/",
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
                   "values": false
                 },
                 "showPercentChange": false,
@@ -2939,7 +2934,7 @@
                   "showLineNumbers": false,
                   "showMiniMap": false
                 },
-                "content": "#### Code Quality\n---",
+                "content": "#### Code scanning\n---",
                 "mode": "markdown"
               }
             },
@@ -3045,21 +3040,11 @@
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
-                        "pagination_max_pages": 5,
-                        "pagination_mode": "cursor",
-                        "pagination_param_cursor_extraction_path": "",
-                        "pagination_param_cursor_field_name": "Link",
-                        "pagination_param_cursor_field_type": "header",
-                        "pagination_param_page_field_name": "page",
-                        "pagination_param_page_field_type": "header",
-                        "pagination_param_size_field_name": "per_page",
-                        "pagination_param_size_field_type": "query",
-                        "pagination_param_size_value": 100,
                         "parser": "backend",
                         "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"package\": $v.dependency.package.name,\n    \"ecosystem\": $v.dependency.package.ecosystem,\n    \"scope\": $v.dependency.scope,\n    \"state\": $v.state,\n    \"severity\": $v.security_advisory.severity,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"html_url\": $v.html_url\n  }\n})",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts",
+                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts?per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -3089,28 +3074,6 @@
                         }
                       ],
                       "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "filterByValue",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "between",
-                            "options": {
-                              "from": "$__from",
-                              "to": "$__to"
-                            }
-                          },
-                          "fieldName": "created_at"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
                     }
                   }
                 },
@@ -3153,7 +3116,7 @@
               ]
             }
           },
-          "description": "",
+          "description": "Up to 100 alerts per repository. GitHub paginates this endpoint with a header-only cursor that the Infinity datasource cannot follow, so repositories with more than 100 alerts are truncated.",
           "id": 81,
           "links": [],
           "title": "Dependabot alerts",
@@ -3507,20 +3470,11 @@
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
-                        "pagination_max_pages": 1,
-                        "pagination_mode": "cursor",
-                        "pagination_param_cursor_extraction_path": "",
-                        "pagination_param_cursor_field_name": "Link",
-                        "pagination_param_cursor_field_type": "header",
-                        "pagination_param_page_field_name": "page",
-                        "pagination_param_page_field_type": "replace",
-                        "pagination_param_size_field_name": "per_page",
-                        "pagination_param_size_value": 100,
                         "parser": "backend",
                         "root_selector": " $map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url,\n    \"security_severity_level\": $v.rule.security_severity_level,\n    \"severity\": $v.rule.severity\n  }\n})",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts",
+                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts?per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -3554,28 +3508,6 @@
                         }
                       ],
                       "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "filterByValue",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "between",
-                            "options": {
-                              "from": "$__from",
-                              "to": "$__to"
-                            }
-                          },
-                          "fieldName": "created_at"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
                     }
                   }
                 },
@@ -3618,7 +3550,7 @@
               ]
             }
           },
-          "description": "",
+          "description": "Up to 100 alerts per repository. GitHub paginates this endpoint with a header-only cursor that the Infinity datasource cannot follow, so repositories with more than 100 alerts are truncated.",
           "id": 82,
           "links": [],
           "title": "Code scanning alerts",
@@ -4036,31 +3968,14 @@
                       "kind": "DataQuery",
                       "spec": {
                         "columns": [],
-                        "computed_columns": [
-                          {
-                            "selector": "[severity] == 'critical' ? '1 critical' : ([severity] == 'high' ? '2 high' : ([severity] == 'medium' ? '3 medium' : ([severity] == 'low' ? '4 low' : '5 info')))",
-                            "text": "severity_sorted",
-                            "type": "string"
-                          }
-                        ],
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
-                        "pagination_max_pages": 5,
-                        "pagination_mode": "cursor",
-                        "pagination_param_cursor_extraction_path": "",
-                        "pagination_param_cursor_field_name": "Link",
-                        "pagination_param_cursor_field_type": "header",
-                        "pagination_param_page_field_name": "page",
-                        "pagination_param_page_field_type": "header",
-                        "pagination_param_size_field_name": "per_page",
-                        "pagination_param_size_field_type": "query",
-                        "pagination_param_size_value": 100,
                         "parser": "backend",
-                        "root_selector": "$map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"package\": $v.dependency.package.name,\n    \"ecosystem\": $v.dependency.package.ecosystem,\n    \"scope\": $v.dependency.scope,\n    \"state\": $v.state,\n    \"severity\": $v.security_advisory.severity,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"html_url\": $v.html_url\n  }\n})",
+                        "root_selector": "$count($[security_advisory.severity=\"critical\"])",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts",
+                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts?state=open&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -4068,194 +3983,116 @@
                       },
                       "version": "v0"
                     },
-                    "refId": "Dependabot alerts"
+                    "refId": "Critical"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "$count($[security_advisory.severity=\"high\"])",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts?state=open&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "High"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "$count($[security_advisory.severity=\"medium\"])",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts?state=open&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Medium"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "$count($[security_advisory.severity=\"low\"])",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts?state=open&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Low"
                   }
                 }
               ],
               "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "created_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "fixed_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "filterByValue",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "between",
-                            "options": {
-                              "from": "$__from",
-                              "to": "$__to"
-                            }
-                          },
-                          "fieldName": "created_at"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                },
-                {
-                  "group": "organize",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "excludeByName": {
-                        "created_at": true,
-                        "ecosystem": true,
-                        "fixed_at": true,
-                        "html_url": true,
-                        "package": true,
-                        "scope": true,
-                        "severity": true,
-                        "severity_sorted": false
-                      },
-                      "includeByName": {},
-                      "indexByName": {
-                        "created_at": 6,
-                        "ecosystem": 3,
-                        "fixed_at": 7,
-                        "html_url": 8,
-                        "number": 0,
-                        "package": 4,
-                        "scope": 5,
-                        "severity": 1,
-                        "state": 2
-                      },
-                      "renameByName": {
-                        "created_at": "Created at",
-                        "cvss": "CVSS Score",
-                        "ecosystem": "Ecosystem",
-                        "fixed_at": "Fixed at",
-                        "html_url": "URL",
-                        "number": "",
-                        "package": "Package",
-                        "scope": "Scope",
-                        "severity": "",
-                        "state": ""
-                      }
-                    }
-                  }
-                },
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "Alert ID": {
-                          "aggregations": ["count"],
-                          "operation": "aggregate"
-                        },
-                        "Severity": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        },
-                        "State": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        },
-                        "number": {
-                          "aggregations": ["count"],
-                          "operation": "aggregate"
-                        },
-                        "severity": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        },
-                        "severity_sorted": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        },
-                        "state": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "group": "groupingToMatrix",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "columnField": "state",
-                      "rowField": "severity_sorted",
-                      "valueField": "number (count)"
-                    }
-                  }
-                },
-                {
-                  "group": "sortBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {},
-                      "sort": [
-                        {
-                          "field": "severity_sorted\\state"
-                        }
-                      ]
-                    }
-                  }
-                }
-              ]
+              "transformations": []
             }
           },
-          "description": "",
+          "description": "Currently open alerts by security severity. Point in time - not filtered by the dashboard time range. Covers up to 100 open alerts/repo - this endpoint uses a header-only pagination cursor the datasource can't follow, so counts undercount above 100.",
           "id": 86,
           "links": [],
-          "title": "Severity",
+          "title": "Dependabot severity",
           "vizConfig": {
-            "group": "barchart",
+            "group": "bargauge",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "fillOpacity": 80,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "lineWidth": 1,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
+                    "mode": "fixed"
                   },
                   "thresholds": {
                     "mode": "absolute",
@@ -4265,21 +4102,21 @@
                         "value": 0
                       }
                     ]
-                  }
+                  },
+                  "min": 0
                 },
                 "overrides": [
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "open",
-                      "scope": "series"
+                      "options": "Critical"
                     },
                     "properties": [
                       {
                         "id": "color",
                         "value": {
-                          "fixedColor": "red",
-                          "mode": "fixed"
+                          "mode": "fixed",
+                          "fixedColor": "dark-red"
                         }
                       }
                     ]
@@ -4287,15 +4124,44 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "fixed",
-                      "scope": "series"
+                      "options": "High"
                     },
                     "properties": [
                       {
                         "id": "color",
                         "value": {
-                          "fixedColor": "light-green",
-                          "mode": "fixed"
+                          "mode": "fixed",
+                          "fixedColor": "red"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Medium"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "orange"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Low"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "yellow"
                         }
                       }
                     ]
@@ -4303,26 +4169,20 @@
                 ]
               },
               "options": {
-                "barRadius": 0,
-                "barWidth": 0.97,
-                "fullHighlight": false,
-                "groupWidth": 0.7,
+                "displayMode": "basic",
+                "orientation": "horizontal",
+                "namePlacement": "auto",
+                "reduceOptions": {
+                  "calcs": ["lastNotNull"],
+                  "fields": "",
+                  "values": false
+                },
+                "showUnfilled": true,
+                "sizing": "auto",
+                "valueMode": "color",
                 "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "orientation": "auto",
-                "showValue": "auto",
-                "stacking": "normal",
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                },
-                "xTickLabelRotation": 0,
-                "xTickLabelSpacing": 100
+                  "showLegend": false
+                }
               }
             },
             "version": "13.0.1"
@@ -4348,30 +4208,14 @@
                       "kind": "DataQuery",
                       "spec": {
                         "columns": [],
-                        "computed_columns": [
-                          {
-                            "selector": "[security_severity_level] == 'critical' ? '1 critical' : ([security_severity_level] == 'high' ? '2 high' : ([security_severity_level] == 'medium' ? '3 medium' : ([security_severity_level] == 'low' ? '4 low' : '5 info')))",
-                            "text": "severity_sorted",
-                            "type": "string"
-                          }
-                        ],
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
-                        "pagination_max_pages": 1,
-                        "pagination_mode": "cursor",
-                        "pagination_param_cursor_extraction_path": "",
-                        "pagination_param_cursor_field_name": "Link",
-                        "pagination_param_cursor_field_type": "header",
-                        "pagination_param_page_field_name": "page",
-                        "pagination_param_page_field_type": "replace",
-                        "pagination_param_size_field_name": "per_page",
-                        "pagination_param_size_value": 100,
                         "parser": "backend",
-                        "root_selector": " $map($, function($v) {\n  {\n    \"number\": $v.number,\n    \"state\": $v.state,\n     \"tool\": $v.tool.name,\n    \"description\": $v.rule.description,\n    \"created_at\": $v.created_at,\n    \"fixed_at\": $v.fixed_at,\n    \"dismissed_at\": $v.dismissed_at,\n    \"html_url\": $v.html_url,\n    \"security_severity_level\": $v.rule.security_severity_level,\n    \"severity\": $v.rule.severity\n  }\n})",
+                        "root_selector": "$count($[rule.security_severity_level=\"critical\"])",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts",
+                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts?state=open&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -4379,196 +4223,116 @@
                       },
                       "version": "v0"
                     },
-                    "refId": "A"
+                    "refId": "Critical"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "$count($[rule.security_severity_level=\"high\"])",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts?state=open&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "High"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "$count($[rule.security_severity_level=\"medium\"])",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts?state=open&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Medium"
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "$count($[rule.security_severity_level=\"low\"])",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts?state=open&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "Low"
                   }
                 }
               ],
               "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "convertFieldType",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "conversions": [
-                        {
-                          "destinationType": "time",
-                          "targetField": "created_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "fixed_at"
-                        },
-                        {
-                          "destinationType": "time",
-                          "targetField": "dismissed_at"
-                        }
-                      ],
-                      "fields": {}
-                    }
-                  }
-                },
-                {
-                  "group": "filterByValue",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "between",
-                            "options": {
-                              "from": "$__from",
-                              "to": "$__to"
-                            }
-                          },
-                          "fieldName": "created_at"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                },
-                {
-                  "group": "organize",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "excludeByName": {
-                        "created_at": true,
-                        "description": true,
-                        "dismissed_at": true,
-                        "fixed_at": true,
-                        "html_url": true,
-                        "security_severity_level": true,
-                        "severity": true,
-                        "tool": true
-                      },
-                      "includeByName": {},
-                      "indexByName": {
-                        "created_at": 5,
-                        "description": 4,
-                        "dismissed_at": 7,
-                        "fixed_at": 6,
-                        "html_url": 8,
-                        "number": 0,
-                        "security_severity_level": 9,
-                        "severity": 10,
-                        "severity_sorted": 2,
-                        "state": 1,
-                        "tool": 3
-                      },
-                      "renameByName": {
-                        "created_at": "Created at",
-                        "description": "Description",
-                        "dismissed_at": "Dismissed at",
-                        "fixed_at": "Fixed at",
-                        "html_url": "URL",
-                        "number": "",
-                        "security_severity_level": "Security severity level",
-                        "severity": "Severity",
-                        "state": "",
-                        "tool": "Tool"
-                      }
-                    }
-                  }
-                },
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "Alert ID": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        },
-                        "Security severity level": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        },
-                        "State": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        },
-                        "number": {
-                          "aggregations": ["count"],
-                          "operation": "aggregate"
-                        },
-                        "severity_sorted": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        },
-                        "state": {
-                          "aggregations": [],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "group": "groupingToMatrix",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "columnField": "state",
-                      "rowField": "severity_sorted",
-                      "valueField": "number (count)"
-                    }
-                  }
-                },
-                {
-                  "group": "sortBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {},
-                      "sort": [
-                        {
-                          "field": "severity_sorted\\state"
-                        }
-                      ]
-                    }
-                  }
-                }
-              ]
+              "transformations": []
             }
           },
-          "description": "",
+          "description": "Currently open alerts by security severity. Point in time - not filtered by the dashboard time range. Covers up to 100 open alerts/repo - this endpoint uses a header-only pagination cursor the datasource can't follow, so counts undercount above 100.",
           "id": 87,
           "links": [],
-          "title": "Severity",
+          "title": "Code scanning severity",
           "vizConfig": {
-            "group": "barchart",
+            "group": "bargauge",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "fillOpacity": 80,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "lineWidth": 1,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
+                    "mode": "fixed"
                   },
                   "thresholds": {
                     "mode": "absolute",
@@ -4578,21 +4342,66 @@
                         "value": 0
                       }
                     ]
-                  }
+                  },
+                  "min": 0
                 },
                 "overrides": [
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "open",
-                      "scope": "series"
+                      "options": "Critical"
                     },
                     "properties": [
                       {
                         "id": "color",
                         "value": {
-                          "fixedColor": "red",
-                          "mode": "fixed"
+                          "mode": "fixed",
+                          "fixedColor": "dark-red"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "High"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "red"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Medium"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "orange"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Low"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "yellow"
                         }
                       }
                     ]
@@ -4600,26 +4409,20 @@
                 ]
               },
               "options": {
-                "barRadius": 0,
-                "barWidth": 0.97,
-                "fullHighlight": false,
-                "groupWidth": 0.7,
+                "displayMode": "basic",
+                "orientation": "horizontal",
+                "namePlacement": "auto",
+                "reduceOptions": {
+                  "calcs": ["lastNotNull"],
+                  "fields": "",
+                  "values": false
+                },
+                "showUnfilled": true,
+                "sizing": "auto",
+                "valueMode": "color",
                 "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "orientation": "auto",
-                "showValue": "auto",
-                "stacking": "normal",
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                },
-                "xTickLabelRotation": 0,
-                "xTickLabelSpacing": 0
+                  "showLegend": false
+                }
               }
             },
             "version": "13.0.1"
@@ -5660,10 +5463,10 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "",
+                        "root_selector": "$count($)",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts",
+                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts?state=open&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -5676,35 +5479,13 @@
                 }
               ],
               "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "state": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "group": "transpose",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {}
-                  }
-                }
-              ]
+              "transformations": []
             }
           },
-          "description": "",
+          "description": "Currently open Dependabot alerts. Point in time - not filtered by the dashboard time range. Capped at 100 open alerts/repo - this endpoint uses a header-only pagination cursor the datasource can't follow.",
           "id": 97,
           "links": [],
-          "title": "Current",
+          "title": "Open (Dependabot)",
           "vizConfig": {
             "group": "stat",
             "kind": "VizConfig",
@@ -5728,52 +5509,21 @@
                     ]
                   }
                 },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "open",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "mode": "thresholds"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "fixed",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "green",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  }
-                ]
+                "overrides": []
               },
               "options": {
                 "colorMode": "value",
-                "graphMode": "area",
+                "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["lastNotNull"],
-                  "fields": "",
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
                   "values": false
                 },
                 "showPercentChange": false,
+                "text": {},
                 "textMode": "auto",
                 "wideLayout": true
               }
@@ -5805,10 +5555,10 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "",
+                        "root_selector": "$count($)",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts",
+                        "url": "https://api.github.com/repos/${repos}/code-scanning/alerts?state=open&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -5821,35 +5571,13 @@
                 }
               ],
               "queryOptions": {},
-              "transformations": [
-                {
-                  "group": "groupBy",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {
-                      "fields": {
-                        "state": {
-                          "aggregations": ["count"],
-                          "operation": "groupby"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "group": "transpose",
-                  "kind": "Transformation",
-                  "spec": {
-                    "options": {}
-                  }
-                }
-              ]
+              "transformations": []
             }
           },
-          "description": "",
+          "description": "Currently open code-scanning (CodeQL) alerts. Point in time - not filtered by the dashboard time range. Capped at 100 open alerts/repo - this endpoint uses a header-only pagination cursor the datasource can't follow.",
           "id": 98,
           "links": [],
-          "title": "Current",
+          "title": "Open (code scanning)",
           "vizConfig": {
             "group": "stat",
             "kind": "VizConfig",
@@ -5873,68 +5601,21 @@
                     ]
                   }
                 },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "open",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "mode": "thresholds"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "fixed",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "green",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "dismissed",
-                      "scope": "series"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "light-orange",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  }
-                ]
+                "overrides": []
               },
               "options": {
                 "colorMode": "value",
-                "graphMode": "area",
+                "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["lastNotNull"],
-                  "fields": "",
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
                   "values": false
                 },
                 "showPercentChange": false,
+                "text": {},
                 "textMode": "auto",
                 "wideLayout": true
               }
@@ -6035,6 +5716,1986 @@
             "version": "13.0.1"
           }
         }
+      },
+      "panel-101": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "week",
+                            "text": "Time",
+                            "type": "timestamp_epoch_s"
+                          },
+                          {
+                            "selector": "total",
+                            "text": "Commits",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/stats/commit_activity",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Weekly commit count over the last 52 weeks (GitHub stats API).",
+          "id": 101,
+          "links": [],
+          "title": "Commit activity (weekly)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "blue"
+                  },
+                  "custom": {
+                    "drawStyle": "bars",
+                    "barAlignment": 0,
+                    "lineWidth": 1,
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "showPoints": "never",
+                    "pointSize": 5,
+                    "axisPlacement": "auto",
+                    "axisLabel": "",
+                    "axisColorMode": "text",
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "hideFrom": {
+                      "tooltip": false,
+                      "viz": false,
+                      "legend": false
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "unit": "short",
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "blue",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "legend": {
+                  "showLegend": false,
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "calcs": []
+                },
+                "tooltip": {
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-102": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "0",
+                            "text": "Time",
+                            "type": "timestamp_epoch_s"
+                          },
+                          {
+                            "selector": "1",
+                            "text": "Additions",
+                            "type": "number"
+                          },
+                          {
+                            "selector": "2",
+                            "text": "Deletions",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/stats/code_frequency",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Weekly lines added vs. removed (GitHub stats API). Additions above zero, deletions below.",
+          "id": 102,
+          "links": [],
+          "title": "Code frequency (weekly)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "drawStyle": "bars",
+                    "barAlignment": 0,
+                    "lineWidth": 1,
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "showPoints": "never",
+                    "pointSize": 5,
+                    "stacking": {
+                      "mode": "normal",
+                      "group": "A"
+                    },
+                    "axisPlacement": "auto",
+                    "axisColorMode": "text",
+                    "axisLabel": "lines",
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "hideFrom": {
+                      "tooltip": false,
+                      "viz": false,
+                      "legend": false
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "unit": "short"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Additions"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "green"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Deletions"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "red"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "legend": {
+                  "showLegend": true,
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "calcs": []
+                },
+                "tooltip": {
+                  "mode": "multi",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-103": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "month",
+                            "text": "month",
+                            "type": "timestamp"
+                          },
+                          {
+                            "selector": "opened",
+                            "text": "Opened",
+                            "type": "number"
+                          },
+                          {
+                            "selector": "closed",
+                            "text": "Closed",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "($m := function($d){ $substring($d,0,7) };$all := items;$keys := $distinct($append($all.($m(created_at)), $all[closed_at].($m(closed_at))));[$keys.($k := $; {  \"month\": $k & \"-01T00:00:00Z\",  \"opened\": $count($all[$m(created_at)=$k]),  \"closed\": $count($all[closed_at and $m(closed_at)=$k])})])",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=repo:${repos}+is:issue&sort=created&order=desc&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Issues opened (by created date) vs. closed (by closed date) per month for this repo. Based on the 100 most recent issues - the monthly aggregation is computed inside the query, so it can't be paginated further.",
+          "id": 103,
+          "links": [],
+          "title": "Issues opened vs. closed (monthly)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "drawStyle": "line",
+                    "lineInterpolation": "linear",
+                    "lineWidth": 2,
+                    "fillOpacity": 10,
+                    "gradientMode": "none",
+                    "showPoints": "auto",
+                    "pointSize": 6,
+                    "spanNulls": false,
+                    "axisPlacement": "auto",
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "hideFrom": {
+                      "tooltip": false,
+                      "viz": false,
+                      "legend": false
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "unit": "short",
+                  "min": 0
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Opened"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "#4E86E0"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Closed"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "fixed",
+                          "fixedColor": "#C77C0A"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "legend": {
+                  "showLegend": true,
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "calcs": []
+                },
+                "tooltip": {
+                  "mode": "multi",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-104": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Repositories",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Repositories in this project (GitHub topic).",
+          "id": 104,
+          "links": [],
+          "title": "Repositories",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "text"
+                  },
+                  "unit": "short",
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "text",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "",
+                  "values": false
+                },
+                "colorMode": "none",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "textMode": "auto",
+                "orientation": "auto",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard"
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-105": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Open issues",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=is:issue+state:open+${repos_per_project}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Currently open issues across the project's repos.",
+          "id": 105,
+          "links": [],
+          "title": "Open issues",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "text"
+                  },
+                  "unit": "short",
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "text",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "",
+                  "values": false
+                },
+                "colorMode": "none",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "textMode": "auto",
+                "orientation": "auto",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard"
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-106": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "Open PRs",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=is:pr+state:open+${repos_per_project}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Currently open pull requests across the project's repos.",
+          "id": 106,
+          "links": [],
+          "title": "Open PRs",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "text"
+                  },
+                  "unit": "short",
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "text",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "",
+                  "values": false
+                },
+                "colorMode": "none",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "textMode": "auto",
+                "orientation": "auto",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard"
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-107": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "New issues",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=is:issue+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Issues opened in the selected time range (accurate total via search total_count).",
+          "id": 107,
+          "links": [],
+          "title": "New issues",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "text"
+                  },
+                  "unit": "short",
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "text",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "",
+                  "values": false
+                },
+                "colorMode": "none",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "textMode": "auto",
+                "orientation": "auto",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard"
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-108": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "total_count",
+                            "text": "New PRs",
+                            "type": "number"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=is:pr+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+${repos_per_project}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "PRs opened in the selected time range (accurate total via search total_count).",
+          "id": 108,
+          "links": [],
+          "title": "New PRs",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "text"
+                  },
+                  "unit": "short",
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "text",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "",
+                  "values": false
+                },
+                "colorMode": "none",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "textMode": "auto",
+                "orientation": "auto",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard"
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-109": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "zammad-tickets"
+                      },
+                      "group": "elasticsearch",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "metrics": [
+                          {
+                            "id": "1",
+                            "type": "count"
+                          }
+                        ],
+                        "bucketAggs": [
+                          {
+                            "field": "created_at",
+                            "id": "2",
+                            "type": "date_histogram",
+                            "settings": {
+                              "interval": "auto",
+                              "min_doc_count": "0",
+                              "trimEdges": "0"
+                            }
+                          }
+                        ],
+                        "query": "NOT state.name.keyword:(closed OR merged)",
+                        "timeField": "created_at",
+                        "alias": ""
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Tickets not in closed/merged state (created in range).",
+          "id": 109,
+          "links": [],
+          "title": "Open tickets",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "unit": "short",
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "text",
+                        "value": null
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "reduceOptions": {
+                  "calcs": ["sum"],
+                  "fields": "",
+                  "values": false
+                },
+                "colorMode": "none",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "textMode": "auto",
+                "orientation": "auto",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard"
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-110": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "zammad-tickets"
+                      },
+                      "group": "elasticsearch",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "metrics": [
+                          {
+                            "id": "1",
+                            "type": "count"
+                          }
+                        ],
+                        "bucketAggs": [
+                          {
+                            "field": "created_at",
+                            "id": "2",
+                            "type": "date_histogram",
+                            "settings": {
+                              "interval": "auto",
+                              "min_doc_count": "0",
+                              "trimEdges": "0"
+                            }
+                          }
+                        ],
+                        "query": "escalation_at:<now",
+                        "timeField": "created_at",
+                        "alias": ""
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Tickets past their escalation deadline (escalation_at < now).",
+          "id": 110,
+          "links": [],
+          "title": "Breached SLAs",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "unit": "short",
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 1
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "reduceOptions": {
+                  "calcs": ["sum"],
+                  "fields": "",
+                  "values": false
+                },
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "textMode": "auto",
+                "orientation": "auto",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard"
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-111": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "zammad-tickets"
+                      },
+                      "group": "elasticsearch",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "metrics": [
+                          {
+                            "id": "1",
+                            "type": "count"
+                          }
+                        ],
+                        "bucketAggs": [
+                          {
+                            "field": "state.name.keyword",
+                            "id": "2",
+                            "type": "terms",
+                            "settings": {
+                              "order": "desc",
+                              "orderBy": "1",
+                              "size": "10",
+                              "min_doc_count": "1"
+                            }
+                          }
+                        ],
+                        "query": "",
+                        "timeField": "created_at",
+                        "alias": ""
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Ticket count grouped by workflow state.",
+          "id": 111,
+          "links": [],
+          "title": "Tickets by state",
+          "vizConfig": {
+            "group": "barchart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "#4E86E0"
+                  },
+                  "unit": "short",
+                  "mappings": [],
+                  "custom": {
+                    "lineWidth": 1,
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "axisPlacement": "auto",
+                    "axisLabel": "",
+                    "axisColorMode": "text",
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "hideFrom": {
+                      "tooltip": false,
+                      "viz": false,
+                      "legend": false
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "orientation": "horizontal",
+                "xField": "state.name.keyword",
+                "showValue": "auto",
+                "stacking": "none",
+                "groupWidth": 0.7,
+                "barWidth": 0.8,
+                "fullHighlight": false,
+                "legend": {
+                  "showLegend": false,
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "calcs": []
+                },
+                "tooltip": {
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-112": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "datasource": {
+                        "name": "zammad-tickets"
+                      },
+                      "group": "elasticsearch",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "metrics": [
+                          {
+                            "id": "1",
+                            "type": "count"
+                          }
+                        ],
+                        "bucketAggs": [
+                          {
+                            "field": "created_at",
+                            "id": "2",
+                            "type": "date_histogram",
+                            "settings": {
+                              "interval": "auto",
+                              "min_doc_count": "0",
+                              "trimEdges": "0"
+                            }
+                          }
+                        ],
+                        "query": "",
+                        "timeField": "created_at",
+                        "alias": ""
+                      },
+                      "version": "v0"
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Tickets created over time.",
+          "id": 112,
+          "links": [],
+          "title": "Ticket create rate",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "#4E86E0"
+                  },
+                  "unit": "short",
+                  "min": 0,
+                  "custom": {
+                    "drawStyle": "bars",
+                    "barAlignment": 0,
+                    "lineWidth": 1,
+                    "fillOpacity": 70,
+                    "gradientMode": "none",
+                    "showPoints": "never",
+                    "axisPlacement": "auto",
+                    "axisColorMode": "text",
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "hideFrom": {
+                      "tooltip": false,
+                      "viz": false,
+                      "legend": false
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "legend": {
+                  "showLegend": false,
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "calcs": []
+                },
+                "tooltip": {
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-113": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "total_count",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=is:pr+is:merged+repo:${repos}+merged:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Pull requests merged into ${repos} within the selected range.",
+          "id": 113,
+          "links": [],
+          "title": "Merged",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "green"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-114": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "total_count",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=is:pr+is:unmerged+is:closed+repo:${repos}+closed:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Pull requests closed without merging within the selected range.",
+          "id": 114,
+          "links": [],
+          "title": "Closed (unmerged)",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "orange"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "orange",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-115": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "total_count",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=is:pr+is:open+repo:${repos}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Pull requests currently open in ${repos} (point in time, ignores range).",
+          "id": 115,
+          "links": [],
+          "title": "Open",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "text"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "text",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-116": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "items",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/issues?q=is:pr+is:merged+repo:${repos}+merged:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "group": "convertFieldType",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "conversions": [
+                        {
+                          "destinationType": "time",
+                          "targetField": "created_at"
+                        },
+                        {
+                          "destinationType": "time",
+                          "targetField": "closed_at"
+                        }
+                      ],
+                      "fields": {}
+                    }
+                  }
+                },
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "merge_time",
+                      "binary": {
+                        "left": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "closed_at"
+                          }
+                        },
+                        "operator": "-",
+                        "right": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "created_at"
+                          }
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "Average time from open to merge for merged PRs in range. Averaged over the first 100 PRs (Search API not paginated - GitHub limits search to 30 requests/min).",
+          "id": 116,
+          "links": [],
+          "title": "Avg time to merge",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "blue"
+                  },
+                  "unit": "dtdurationms"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["mean"],
+                  "fields": "/^merge_time$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-118": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "total_count",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/commits?q=repo:${repos}+committer-date:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+merge:true",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Merge commits in ${repos} within the selected range.",
+          "id": 118,
+          "links": [],
+          "title": "Merge commits",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "orange"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "orange",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-119": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "total_count",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/search/commits?q=repo:${repos}+committer-date:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+merge:false",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Non-merge (direct) commits in ${repos} within the selected range.",
+          "id": 119,
+          "links": [],
+          "title": "Direct commits",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "blue"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "blue",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
+      },
+      "panel-117": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P7DE29E761332DDA9"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "$count($distinct($map($, function($c){ ($c.author.login != null) ? $c.author.login : $c.commit.author.name })))",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/${repos}/commits?since=${__from:date:YYYY-MM-DD}&until=${__to:date:YYYY-MM-DD}&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Distinct commit authors, from the most recent 100 commits in range. The distinct count is computed inside the query, so this endpoint can't be paginated further.",
+          "id": 117,
+          "links": [],
+          "title": "Authors",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "green"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["last"],
+                  "fields": "/^A$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {},
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.0.1"
+          }
+        }
       }
     },
     "layout": {
@@ -6073,6 +7734,86 @@
             "kind": "RowsLayoutRow",
             "spec": {
               "collapse": false,
+              "hideHeader": false,
+              "title": "Overview",
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-104"
+                        },
+                        "x": 0,
+                        "y": 0,
+                        "width": 5,
+                        "height": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-105"
+                        },
+                        "x": 5,
+                        "y": 0,
+                        "width": 5,
+                        "height": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-106"
+                        },
+                        "x": 10,
+                        "y": 0,
+                        "width": 5,
+                        "height": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-107"
+                        },
+                        "x": 15,
+                        "y": 0,
+                        "width": 5,
+                        "height": 4
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-108"
+                        },
+                        "x": 20,
+                        "y": 0,
+                        "width": 4,
+                        "height": 4
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "collapse": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -6103,10 +7844,64 @@
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
-                  "items": []
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-109"
+                        },
+                        "x": 0,
+                        "y": 0,
+                        "width": 4,
+                        "height": 8
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-110"
+                        },
+                        "x": 4,
+                        "y": 0,
+                        "width": 4,
+                        "height": 8
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-111"
+                        },
+                        "x": 8,
+                        "y": 0,
+                        "width": 7,
+                        "height": 8
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-112"
+                        },
+                        "x": 15,
+                        "y": 0,
+                        "width": 9,
+                        "height": 8
+                      }
+                    }
+                  ]
                 }
               },
-              "title": "Service management"
+              "title": "Service management",
+              "hideHeader": false
             }
           },
           {
@@ -6453,8 +8248,60 @@
                           "name": "panel-67"
                         },
                         "height": 3,
-                        "width": 3,
+                        "width": 4,
                         "x": 0,
+                        "y": 28
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-113"
+                        },
+                        "height": 3,
+                        "width": 4,
+                        "x": 4,
+                        "y": 28
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-114"
+                        },
+                        "height": 3,
+                        "width": 4,
+                        "x": 8,
+                        "y": 28
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-115"
+                        },
+                        "height": 3,
+                        "width": 4,
+                        "x": 12,
+                        "y": 28
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-116"
+                        },
+                        "height": 3,
+                        "width": 8,
+                        "x": 16,
                         "y": 28
                       }
                     },
@@ -6505,8 +8352,47 @@
                           "name": "panel-62"
                         },
                         "height": 3,
-                        "width": 3,
+                        "width": 6,
                         "x": 0,
+                        "y": 46
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-117"
+                        },
+                        "height": 3,
+                        "width": 6,
+                        "x": 6,
+                        "y": 46
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-118"
+                        },
+                        "height": 3,
+                        "width": 6,
+                        "x": 12,
+                        "y": 46
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-119"
+                        },
+                        "height": 3,
+                        "width": 6,
+                        "x": 18,
                         "y": 46
                       }
                     },
@@ -6520,7 +8406,7 @@
                         "height": 8,
                         "width": 24,
                         "x": 0,
-                        "y": 49
+                        "y": 65
                       }
                     },
                     {
@@ -6533,7 +8419,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 57
+                        "y": 81
                       }
                     },
                     {
@@ -6546,7 +8432,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 58
+                        "y": 82
                       }
                     },
                     {
@@ -6559,7 +8445,7 @@
                         "height": 8,
                         "width": 24,
                         "x": 0,
-                        "y": 60
+                        "y": 84
                       }
                     },
                     {
@@ -6572,7 +8458,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 68
+                        "y": 92
                       }
                     },
                     {
@@ -6585,7 +8471,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 69
+                        "y": 93
                       }
                     },
                     {
@@ -6598,7 +8484,7 @@
                         "height": 9,
                         "width": 24,
                         "x": 0,
-                        "y": 71
+                        "y": 95
                       }
                     },
                     {
@@ -6611,7 +8497,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 80
+                        "y": 104
                       }
                     },
                     {
@@ -6624,7 +8510,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 81
+                        "y": 105
                       }
                     },
                     {
@@ -6637,7 +8523,7 @@
                         "height": 6,
                         "width": 3,
                         "x": 0,
-                        "y": 83
+                        "y": 107
                       }
                     },
                     {
@@ -6650,7 +8536,7 @@
                         "height": 6,
                         "width": 5,
                         "x": 3,
-                        "y": 83
+                        "y": 107
                       }
                     },
                     {
@@ -6663,7 +8549,7 @@
                         "height": 10,
                         "width": 24,
                         "x": 0,
-                        "y": 89
+                        "y": 113
                       }
                     },
                     {
@@ -6676,7 +8562,7 @@
                         "height": 1,
                         "width": 24,
                         "x": 0,
-                        "y": 99
+                        "y": 123
                       }
                     },
                     {
@@ -6689,7 +8575,7 @@
                         "height": 2,
                         "width": 24,
                         "x": 0,
-                        "y": 100
+                        "y": 124
                       }
                     },
                     {
@@ -6702,7 +8588,7 @@
                         "height": 6,
                         "width": 3,
                         "x": 0,
-                        "y": 102
+                        "y": 126
                       }
                     },
                     {
@@ -6715,7 +8601,7 @@
                         "height": 6,
                         "width": 5,
                         "x": 3,
-                        "y": 102
+                        "y": 126
                       }
                     },
                     {
@@ -6728,7 +8614,46 @@
                         "height": 10,
                         "width": 24,
                         "x": 0,
-                        "y": 108
+                        "y": 132
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-101"
+                        },
+                        "x": 0,
+                        "y": 49,
+                        "width": 24,
+                        "height": 8
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-102"
+                        },
+                        "x": 0,
+                        "y": 57,
+                        "width": 24,
+                        "height": 8
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-103"
+                        },
+                        "x": 0,
+                        "y": 73,
+                        "width": 24,
+                        "height": 8
                       }
                     }
                   ]
