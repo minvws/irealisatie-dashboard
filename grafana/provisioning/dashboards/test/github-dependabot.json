@@ -38,7 +38,7 @@
         "spec": {
           "id": 1,
           "title": "Open dependabot pr's $repository",
-          "description": "",
+          "description": "Open Dependabot pull requests (is:open author:app/dependabot) per repository. Repositories are the non-archived, non-fork minvws repos carrying the 'icore' topic. One table per repo (repeated).",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -56,7 +56,7 @@
                       },
                       "spec": {
                         "options": {
-                          "query": "label:dependencies",
+                          "query": "is:open author:app/dependabot",
                           "timeField": 1
                         },
                         "owner": "minvws",
@@ -74,30 +74,37 @@
                   "kind": "Transformation",
                   "group": "organize",
                   "spec": {
-                    "disabled": true,
                     "options": {
                       "excludeByName": {
-                        "dismissReason": true,
-                        "dismissed_at": true,
-                        "value": true,
-                        "withdrawnAt": true
+                        "url": true,
+                        "additions": true,
+                        "deletions": true,
+                        "author_name": true,
+                        "author_login": true,
+                        "author_email": true,
+                        "author_company": true,
+                        "closed": true,
+                        "is_draft": true,
+                        "locked": true,
+                        "merged": true,
+                        "mergeable": true,
+                        "closed_at": true,
+                        "merged_at": true,
+                        "merged_by_name": true,
+                        "merged_by_login": true,
+                        "merged_by_email": true,
+                        "merged_by_company": true,
+                        "open_time": true
                       },
                       "includeByName": {},
                       "indexByName": {
-                        "advisoryDescription": 8,
-                        "created_at": 4,
-                        "cvssScore": 7,
-                        "cvssVector": 11,
-                        "dismissReason": 2,
-                        "dismissed_at": 1,
-                        "firstPatchedVersion": 9,
-                        "packageName": 5,
-                        "permalink": 12,
-                        "severity": 6,
-                        "state": 13,
-                        "value": 0,
-                        "vulnerableVersionRange": 10,
-                        "withdrawnAt": 3
+                        "repository": 0,
+                        "number": 1,
+                        "title": 2,
+                        "state": 3,
+                        "labels": 4,
+                        "created_at": 5,
+                        "updated_at": 6
                       },
                       "renameByName": {}
                     }
@@ -168,7 +175,80 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "scope": "series",
+                      "options": "repository"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "repo"
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 260
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open repository",
+                            "url": "https://github.com/${__value.raw}",
+                            "targetBlank": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "number"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "PR"
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 70
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open pull request",
+                            "url": "https://github.com/${__data.fields.repository}/pull/${__data.fields.number}",
+                            "targetBlank": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "title"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 544
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open pull request",
+                            "url": "https://github.com/${__data.fields.repository}/pull/${__data.fields.number}",
+                            "targetBlank": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
                       "options": "state"
                     },
                     "properties": [
@@ -177,19 +257,6 @@
                         "value": {
                           "type": "color-background"
                         }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "scope": "series",
-                      "options": "title"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.width",
-                        "value": 544
                       }
                     ]
                   }
@@ -256,8 +323,12 @@
         "spec": {
           "name": "repository",
           "current": {
-            "text": ["All"],
-            "value": ["$__all"]
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
           },
           "hide": "dontHide",
           "refresh": "onDashboardLoad",
@@ -267,21 +338,21 @@
             "group": "yesoreyeram-infinity-datasource",
             "version": "v0",
             "datasource": {
-              "name": "PD0067CAD9A63E081"
+              "name": "P7DE29E761332DDA9"
             },
             "spec": {
               "infinityQuery": {
                 "columns": [],
-                "data": "values\nfoo\nbar\nbaz",
+                "data": "",
                 "filterExpression": "archived == false && fork == false",
                 "filters": [],
                 "format": "table",
                 "parser": "backend",
                 "refId": "",
-                "root_selector": "",
+                "root_selector": "items",
                 "source": "url",
                 "type": "json",
-                "url": "https://api.github.com/orgs/minvws/repos?per_page=100",
+                "url": "https://api.github.com/search/repositories?q=org:minvws+topic:icore&per_page=100",
                 "url_options": {
                   "data": "",
                   "method": "GET"
