@@ -1050,32 +1050,79 @@
           "data": {
             "kind": "QueryGroup",
             "spec": {
-              "queries": [],
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PF9153EDC0117EC0B"
+                      },
+                      "group": "yesoreyeram-infinity-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "($p := $[id=\"${projects}\"]; [{\"Field\":\"Project Manager\",\"Value\":$p.team.project_manager.name},{\"Field\":\"Project Owner\",\"Value\":$p.team.project_owner.name},{\"Field\":\"Status\",\"Value\":$p.status},{\"Field\":\"Support\",\"Value\":$p.team.helpdesk.email},{\"Field\":\"Helpdesk\",\"Value\":$p.team.helpdesk.name}])",
+                        "source": "url",
+                        "type": "json",
+                        "url": "/projects",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
               "queryOptions": {},
               "transformations": []
             }
           },
-          "description": "",
+          "description": "Project metadata for the selected project, from the /projects endpoint (json-server db.json).",
           "id": 55,
           "links": [],
           "title": "",
           "transparent": true,
           "vizConfig": {
-            "group": "text",
+            "group": "table",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
-                "defaults": {},
-                "overrides": []
+                "defaults": {
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "inspect": false
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Field"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 220
+                      }
+                    ]
+                  }
+                ]
               },
               "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "| Field            | Value    |\n| ---------------- | -------- |\n| Project Manager  | Alice Doe |\n| Project Owner    | Bob Doe |\n| Status           | In beheer |\n| Duration         | 31 Dec 2026 |\n| Support          | helpdesk@irealisatie.nl |\n| Helpdesk         | Charlie Doe |",
-                "mode": "markdown"
+                "cellHeight": "sm",
+                "showHeader": false
               }
             },
             "version": "13.0.1"
@@ -4557,7 +4604,7 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "name": "PF9153EDC0117EC0B"
+                        "name": "P7DE29E761332DDA9"
                       },
                       "group": "yesoreyeram-infinity-datasource",
                       "kind": "DataQuery",
@@ -4567,13 +4614,19 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "components[repository = \"${repos}\"].used_by",
+                        "root_selector": "$exists(components[repository = \"${repos}\"].used_by) ? components[repository = \"${repos}\"].used_by : []",
                         "source": "url",
                         "type": "json",
-                        "url": "/dependencies",
+                        "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/usage_snapshot.json",
                         "url_options": {
                           "data": "",
-                          "method": "GET"
+                          "method": "GET",
+                          "headers": [
+                            {
+                              "key": "Accept",
+                              "value": "application/vnd.github.raw"
+                            }
+                          ]
                         }
                       },
                       "version": "v0"
@@ -4840,7 +4893,7 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "name": "PF9153EDC0117EC0B"
+                        "name": "P7DE29E761332DDA9"
                       },
                       "group": "yesoreyeram-infinity-datasource",
                       "kind": "DataQuery",
@@ -4850,13 +4903,19 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "$[project=\"${projects}\"].{\"Environment\": environment, \"Software\": software, \"Version\": version}\n",
+                        "root_selector": "$exists($[project=\"${deployment}\"]) ? $map($[project=\"${deployment}\"], function($v){ {\"Environment\": $v.environment, \"Software\": $v.software, \"Version\": $v.version} }) : []",
                         "source": "url",
                         "type": "json",
-                        "url": "/deployments",
+                        "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/inventory.json",
                         "url_options": {
                           "data": "",
-                          "method": "GET"
+                          "method": "GET",
+                          "headers": [
+                            {
+                              "key": "Accept",
+                              "value": "application/vnd.github.raw"
+                            }
+                          ]
                         }
                       },
                       "version": "v0"
@@ -8745,7 +8804,7 @@
           "options": [],
           "query": {
             "datasource": {
-              "name": "P7DE29E761332DDA9"
+              "name": "PF9153EDC0117EC0B"
             },
             "group": "yesoreyeram-infinity-datasource",
             "kind": "DataQuery",
@@ -8757,17 +8816,17 @@
                 "format": "table",
                 "parser": "backend",
                 "refId": "",
-                "root_selector": "$distinct($[].topics[$contains($, \"brba\")])",
+                "root_selector": "",
                 "source": "url",
                 "type": "json",
-                "url": "https://api.github.com/orgs/${organization}/repos?per_page=100",
+                "url": "/projects",
                 "url_options": {
                   "data": "",
                   "method": "GET"
                 }
               },
               "meta": {
-                "valueField": "variable"
+                "valueField": "id"
               },
               "queryType": "infinity",
               "refId": "variable"
@@ -8778,6 +8837,271 @@
           "regex": "",
           "regexApplyTo": "value",
           "skipUrlSync": false,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "label": "Deployment",
+          "multi": false,
+          "name": "deployment",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "PF9153EDC0117EC0B"
+            },
+            "group": "yesoreyeram-infinity-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"deployment\": $p.deployment_id ? $p.deployment_id : $p.id} }) : []",
+                "source": "url",
+                "type": "json",
+                "url": "/projects",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "meta": {
+                "valueField": "deployment"
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": true,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "label": "GitHub id",
+          "multi": false,
+          "name": "github_id",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "PF9153EDC0117EC0B"
+            },
+            "group": "yesoreyeram-infinity-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"value\": $p.links.github.id} }) : []",
+                "source": "url",
+                "type": "json",
+                "url": "/projects",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "meta": {
+                "valueField": "value"
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": true,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "label": "Zammad id",
+          "multi": false,
+          "name": "zammad_id",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "PF9153EDC0117EC0B"
+            },
+            "group": "yesoreyeram-infinity-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"value\": $p.links.zammad.id} }) : []",
+                "source": "url",
+                "type": "json",
+                "url": "/projects",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "meta": {
+                "valueField": "value"
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": true,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "label": "DefectDojo id",
+          "multi": false,
+          "name": "defect_dojo_id",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "PF9153EDC0117EC0B"
+            },
+            "group": "yesoreyeram-infinity-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"value\": $p.links.defect_dojo.id} }) : []",
+                "source": "url",
+                "type": "json",
+                "url": "/projects",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "meta": {
+                "valueField": "value"
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": true,
+          "sort": "disabled"
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "allowCustomValue": false,
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "definition": "",
+          "hide": "hideVariable",
+          "includeAll": false,
+          "label": "SonarCloud id",
+          "multi": false,
+          "name": "sonar_id",
+          "options": [],
+          "query": {
+            "datasource": {
+              "name": "PF9153EDC0117EC0B"
+            },
+            "group": "yesoreyeram-infinity-datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"value\": $p.links.sonar.id} }) : []",
+                "source": "url",
+                "type": "json",
+                "url": "/projects",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "meta": {
+                "valueField": "value"
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            },
+            "version": "v0"
+          },
+          "refresh": "onDashboardLoad",
+          "regex": "",
+          "regexApplyTo": "value",
+          "skipUrlSync": true,
           "sort": "disabled"
         }
       },
