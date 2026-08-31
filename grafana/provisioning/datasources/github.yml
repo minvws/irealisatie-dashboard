@@ -3,6 +3,7 @@ apiVersion: 1
 datasources:
   # Option 1: GitHub Personal Access Token (simpler to set up, but less secure)
   - name: GitHub
+    uid: PF911E414CF6BDFC5
     type: grafana-github-datasource
     jsonData:
       selectedAuthType: personal-access-token

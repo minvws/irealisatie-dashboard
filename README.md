@@ -6,8 +6,8 @@ posture, code quality, and project statuses for the **minvws** (Ministerie van
 Volksgezondheid, Welzijn en Sport) organization repositories.
 
 It aggregates data directly from the **GitHub API** (using both the official
-GitHub plugin and the Infinity API plugin), **SonarCloud**, and local mock
-endpoints.
+GitHub plugin and the Infinity API plugin), **SonarCloud**, **DefectDojo**,
+**Zammad** (via Elasticsearch), and local mock endpoints.
 
 ## Architecture and Component Overview
 
@@ -16,8 +16,9 @@ services:
 
 1. **Grafana (`localhost:3000`)**:
    - Pre-configured with automatic provisioning of datasources and dashboards.
-   - Automatically pre-installs the `grafana-github-datasource` and
-     `yesoreyeram-infinity-datasource` plugins.
+   - Installs the `grafana-github-datasource` and
+     `yesoreyeram-infinity-datasource` plugins via a compose entrypoint (which
+     reinstalls them if missing, e.g. after a volume purge).
 2. **JSON Server (`localhost:3001`)**:
    - A lightweight mock API server built from `./json-server/` serving data
      defined in `db.json` for testing local data streams.
@@ -27,14 +28,14 @@ services:
 ```text
 ├── compose.yml              # Docker Compose definition
 ├── .env.example             # Template for local environment variables
-├── NOTES.md                 # Developer cheat-sheet
 ├── json-server/             # Mock API configuration
 │   ├── Dockerfile
 │   └── data/db.json         # Mock database endpoints
 └── grafana/
     └── provisioning/        # Automatic provisioning for Grafana
-        ├── datasources/     # Configured datasources (GitHub, Infinity, Elasticsearch)
+        ├── datasources/     # Datasources (GitHub, Infinity, DefectDojo, Zammad/Elasticsearch, Mock)
         └── dashboards/      # Preloaded dashboard layouts (.json files)
+            └── draft/       # Experimental / reference dashboards
 ```
 
 ---
@@ -85,24 +86,28 @@ install the required Grafana plugins on first startup.
 The dashboard comes pre-provisioned with the following datasources:
 
 - **GitHub Datasource**: Queries repository metrics, Pull Requests, Issues, and
-  Code Scanning Alerts directly.
-- **Infinity Datasource**: Used for querying arbitrary JSON REST endpoints, such
-  as the public GitHub REST API (for repository listings, topics, etc.) and
-  SonarCloud metrics.
-- **Elasticsearch**: Configured via environment variables for log/metric
-  aggregation.
-- **Mock API**: Points to the local JSON Server for prototyping.
+  Code Scanning Alerts directly (`GitHub` PAT and `GitHub App` variants).
+- **Infinity Datasource**: Used for querying arbitrary JSON REST endpoints:
+  the GitHub REST API (`GitHub API`), `SonarCloud API`, `DefectDojo API`, and
+  the `Local JSON Server`.
+- **Zammad Tickets (Elasticsearch)**: Queries the Zammad ticket index, pointed
+  at a separate Elasticsearch cluster via `ZAMMAD_ES_HOST` / `ZAMMAD_ES_PORT`.
+- **Mock (TestData)**: The default datasource, used for prototyping.
 
 ## Available Dashboards
 
 Once you log into Grafana, you will find the following pre-configured dashboards
-inside the **GitHub** folder:
+in the **General** folder:
 
 - **Organization Overview**: A high-level view showing active vs. archived
   projects, public vs. private repository ratio, overall project topics, and
   average pull request resolution time across the organization.
 - **Projects Overview**: Highlights specific repository metrics grouped by
   project topics (e.g., `icore`).
+
+Additional experimental and reference dashboards (GitHub Dependabot, GitHub
+vulnerabilities, SonarQube, Zammad tickets, etc.) are provisioned under the
+**draft** folder.
 
 ## Development and Resetting
 

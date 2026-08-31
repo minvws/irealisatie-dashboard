@@ -3,6 +3,14 @@ services:
     image: grafana/grafana:13.0.1
     container_name: grafana
     restart: unless-stopped
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        for p in grafana-github-datasource yesoreyeram-infinity-datasource; do
+          [ -d "/var/lib/grafana/plugins/$$p" ] || grafana cli plugins install "$$p"
+        done
+        exec /run.sh
     ports:
       - "3000:3000"
     volumes:
