@@ -1,0 +1,38 @@
+services:
+  grafana:
+    image: grafana/grafana:13.0.1
+    container_name: grafana
+    restart: unless-stopped
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        for p in grafana-github-datasource yesoreyeram-infinity-datasource; do
+          [ -d "/var/lib/grafana/plugins/$$p" ] || grafana cli plugins install "$$p"
+        done
+        exec /run.sh
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  json-server:
+    build:
+      context: ./json-server/
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./json-server/data/db.json:/app/db.json
+
+volumes:
+  grafana-data:
+
+networks:
+  monitoring:
+    external: true

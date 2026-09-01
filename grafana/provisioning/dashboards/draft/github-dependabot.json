@@ -1,0 +1,388 @@
+{
+  "apiVersion": "dashboard.grafana.app/v2",
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "github-dependabot",
+    "generation": 1,
+    "creationTimestamp": "2026-05-12T12:55:55Z",
+    "labels": {},
+    "annotations": {}
+  },
+  "spec": {
+    "annotations": [
+      {
+        "kind": "AnnotationQuery",
+        "spec": {
+          "query": {
+            "kind": "DataQuery",
+            "group": "grafana",
+            "version": "v0",
+            "datasource": {
+              "name": "-- Grafana --"
+            },
+            "spec": {}
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "builtIn": true
+        }
+      }
+    ],
+    "cursorSync": "Off",
+    "editable": true,
+    "elements": {
+      "panel-1": {
+        "kind": "Panel",
+        "spec": {
+          "id": 1,
+          "title": "Open dependabot pr's $repository",
+          "description": "Open Dependabot pull requests (is:open author:app/dependabot) per repository. Repositories are the non-archived, non-fork minvws repos carrying the 'icore' topic. One table per repo (repeated).",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-github-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "spec": {
+                        "options": {
+                          "query": "is:open author:app/dependabot",
+                          "timeField": 1
+                        },
+                        "owner": "minvws",
+                        "queryType": "Pull_Requests",
+                        "repository": "$repository"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [
+                {
+                  "kind": "Transformation",
+                  "group": "organize",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {
+                        "url": true,
+                        "additions": true,
+                        "deletions": true,
+                        "author_name": true,
+                        "author_login": true,
+                        "author_email": true,
+                        "author_company": true,
+                        "closed": true,
+                        "is_draft": true,
+                        "locked": true,
+                        "merged": true,
+                        "mergeable": true,
+                        "closed_at": true,
+                        "merged_at": true,
+                        "merged_by_name": true,
+                        "merged_by_login": true,
+                        "merged_by_email": true,
+                        "merged_by_company": true,
+                        "open_time": true
+                      },
+                      "includeByName": {},
+                      "indexByName": {
+                        "repository": 0,
+                        "number": 1,
+                        "title": 2,
+                        "state": 3,
+                        "labels": 4,
+                        "created_at": 5,
+                        "updated_at": 6
+                      },
+                      "renameByName": {}
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "table",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "mappings": [
+                    {
+                      "type": "value",
+                      "options": {
+                        "CLOSED": {
+                          "color": "light-orange",
+                          "index": 1
+                        },
+                        "MERGED": {
+                          "color": "light-green",
+                          "index": 2
+                        },
+                        "OPEN": {
+                          "color": "light-red",
+                          "index": 0
+                        }
+                      }
+                    }
+                  ],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "repository"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "repo"
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 260
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open repository",
+                            "url": "https://github.com/${__value.raw}",
+                            "targetBlank": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "number"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "PR"
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 70
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open pull request",
+                            "url": "https://github.com/${__data.fields.repository}/pull/${__data.fields.number}",
+                            "targetBlank": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "title"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 544
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open pull request",
+                            "url": "https://github.com/${__data.fields.repository}/pull/${__data.fields.number}",
+                            "targetBlank": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "state"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "kind": "GridLayout",
+      "spec": {
+        "items": [
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "x": 0,
+              "y": 0,
+              "width": 24,
+              "height": 10,
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-1"
+              },
+              "repeat": {
+                "mode": "variable",
+                "value": "repository",
+                "direction": "v"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "links": [],
+    "liveNow": false,
+    "preload": false,
+    "tags": [],
+    "timeSettings": {
+      "timezone": "browser",
+      "from": "now-6M",
+      "to": "now",
+      "autoRefresh": "",
+      "autoRefreshIntervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "hideTimepicker": false,
+      "fiscalYearStartMonth": 0
+    },
+    "title": "GitHub Dependabot",
+    "variables": [
+      {
+        "kind": "QueryVariable",
+        "spec": {
+          "name": "repository",
+          "current": {
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "hide": "dontHide",
+          "refresh": "onDashboardLoad",
+          "skipUrlSync": false,
+          "query": {
+            "kind": "DataQuery",
+            "group": "yesoreyeram-infinity-datasource",
+            "version": "v0",
+            "datasource": {
+              "name": "P7DE29E761332DDA9"
+            },
+            "spec": {
+              "infinityQuery": {
+                "columns": [],
+                "data": "",
+                "filterExpression": "archived == false && fork == false",
+                "filters": [],
+                "format": "table",
+                "parser": "backend",
+                "refId": "",
+                "root_selector": "items",
+                "source": "url",
+                "type": "json",
+                "url": "https://api.github.com/search/repositories?q=org:minvws+topic:icore&per_page=100",
+                "url_options": {
+                  "data": "",
+                  "method": "GET"
+                }
+              },
+              "meta": {
+                "valueField": "name"
+              },
+              "queryType": "infinity",
+              "refId": "variable"
+            }
+          },
+          "regex": "",
+          "regexApplyTo": "value",
+          "sort": "disabled",
+          "definition": "",
+          "options": [],
+          "multi": true,
+          "includeAll": true,
+          "allowCustomValue": true
+        }
+      }
+    ],
+    "preferences": {
+      "layout": {
+        "kind": "GridLayout",
+        "spec": {
+          "items": []
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+apiVersion: 1
+
+datasources:
+  - name: Zammad Tickets
+    uid: zammad-tickets
+    type: elasticsearch
+    access: proxy
+    url: http://${ZAMMAD_ES_HOST}:${ZAMMAD_ES_PORT}
+    jsonData:
+      index: "zammad_production_ticket"
+      esVersion: "9.4.4"
+      timeField: "created_at"
