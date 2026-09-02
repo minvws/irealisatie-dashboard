@@ -875,7 +875,7 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "name": "PF9153EDC0117EC0B"
+                        "name": "P7DE29E761332DDA9"
                       },
                       "group": "yesoreyeram-infinity-datasource",
                       "kind": "DataQuery",
@@ -888,10 +888,16 @@
                         "root_selector": "($p := $[id=\"${projects}\"]; [{\"Field\":\"Project Manager\",\"Value\":$p.team.project_manager.name},{\"Field\":\"Project Owner\",\"Value\":$p.team.project_owner.name},{\"Field\":\"Status\",\"Value\":$p.status},{\"Field\":\"Support\",\"Value\":$p.team.helpdesk.email},{\"Field\":\"Helpdesk\",\"Value\":$p.team.helpdesk.name}])",
                         "source": "url",
                         "type": "json",
-                        "url": "/projects",
+                        "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                         "url_options": {
                           "data": "",
-                          "method": "GET"
+                          "method": "GET",
+                          "headers": [
+                            {
+                              "key": "Accept",
+                              "value": "application/vnd.github.raw"
+                            }
+                          ]
                         }
                       },
                       "version": "v0"
@@ -904,7 +910,7 @@
               "transformations": []
             }
           },
-          "description": "Project metadata for the selected project, from the /projects endpoint (json-server db.json).",
+          "description": "Project metadata for the selected project, from data/projects.json in the private minvws/rdo-icore-docs repo (via the GitHub contents API).",
           "id": 55,
           "links": [],
           "title": "",
@@ -7243,7 +7249,7 @@
           "options": [],
           "query": {
             "datasource": {
-              "name": "PF9153EDC0117EC0B"
+              "name": "P7DE29E761332DDA9"
             },
             "group": "yesoreyeram-infinity-datasource",
             "kind": "DataQuery",
@@ -7258,10 +7264,16 @@
                 "root_selector": "",
                 "source": "url",
                 "type": "json",
-                "url": "/projects",
+                "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                 "url_options": {
                   "data": "",
-                  "method": "GET"
+                  "method": "GET",
+                  "headers": [
+                    {
+                      "key": "Accept",
+                      "value": "application/vnd.github.raw"
+                    }
+                  ]
                 }
               },
               "meta": {
@@ -7296,7 +7308,7 @@
           "options": [],
           "query": {
             "datasource": {
-              "name": "PF9153EDC0117EC0B"
+              "name": "P7DE29E761332DDA9"
             },
             "group": "yesoreyeram-infinity-datasource",
             "kind": "DataQuery",
@@ -7311,10 +7323,16 @@
                 "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"deployment\": $p.deployment_id ? $p.deployment_id : $p.id} }) : []",
                 "source": "url",
                 "type": "json",
-                "url": "/projects",
+                "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                 "url_options": {
                   "data": "",
-                  "method": "GET"
+                  "method": "GET",
+                  "headers": [
+                    {
+                      "key": "Accept",
+                      "value": "application/vnd.github.raw"
+                    }
+                  ]
                 }
               },
               "meta": {
@@ -7349,7 +7367,7 @@
           "options": [],
           "query": {
             "datasource": {
-              "name": "PF9153EDC0117EC0B"
+              "name": "P7DE29E761332DDA9"
             },
             "group": "yesoreyeram-infinity-datasource",
             "kind": "DataQuery",
@@ -7364,10 +7382,16 @@
                 "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"value\": $p.links.github.id} }) : []",
                 "source": "url",
                 "type": "json",
-                "url": "/projects",
+                "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                 "url_options": {
                   "data": "",
-                  "method": "GET"
+                  "method": "GET",
+                  "headers": [
+                    {
+                      "key": "Accept",
+                      "value": "application/vnd.github.raw"
+                    }
+                  ]
                 }
               },
               "meta": {
@@ -7402,7 +7426,7 @@
           "options": [],
           "query": {
             "datasource": {
-              "name": "PF9153EDC0117EC0B"
+              "name": "P7DE29E761332DDA9"
             },
             "group": "yesoreyeram-infinity-datasource",
             "kind": "DataQuery",
@@ -7417,10 +7441,16 @@
                 "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"value\": $p.links.zammad.id} }) : []",
                 "source": "url",
                 "type": "json",
-                "url": "/projects",
+                "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                 "url_options": {
                   "data": "",
-                  "method": "GET"
+                  "method": "GET",
+                  "headers": [
+                    {
+                      "key": "Accept",
+                      "value": "application/vnd.github.raw"
+                    }
+                  ]
                 }
               },
               "meta": {
@@ -7455,7 +7485,7 @@
           "options": [],
           "query": {
             "datasource": {
-              "name": "PF9153EDC0117EC0B"
+              "name": "P7DE29E761332DDA9"
             },
             "group": "yesoreyeram-infinity-datasource",
             "kind": "DataQuery",
@@ -7470,10 +7500,16 @@
                 "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"value\": $p.links.defect_dojo.id} }) : []",
                 "source": "url",
                 "type": "json",
-                "url": "/projects",
+                "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                 "url_options": {
                   "data": "",
-                  "method": "GET"
+                  "method": "GET",
+                  "headers": [
+                    {
+                      "key": "Accept",
+                      "value": "application/vnd.github.raw"
+                    }
+                  ]
                 }
               },
               "meta": {
@@ -7508,7 +7544,7 @@
           "options": [],
           "query": {
             "datasource": {
-              "name": "PF9153EDC0117EC0B"
+              "name": "P7DE29E761332DDA9"
             },
             "group": "yesoreyeram-infinity-datasource",
             "kind": "DataQuery",
@@ -7523,10 +7559,16 @@
                 "root_selector": "$exists($[id=\"${projects}\"]) ? $map($[id=\"${projects}\"], function($p){ {\"value\": $p.links.sonar.id} }) : []",
                 "source": "url",
                 "type": "json",
-                "url": "/projects",
+                "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                 "url_options": {
                   "data": "",
-                  "method": "GET"
+                  "method": "GET",
+                  "headers": [
+                    {
+                      "key": "Accept",
+                      "value": "application/vnd.github.raw"
+                    }
+                  ]
                 }
               },
               "meta": {
