@@ -2,7 +2,7 @@
   "apiVersion": "dashboard.grafana.app/v2",
   "kind": "Dashboard",
   "metadata": {
-    "name": "github-dependabot",
+    "name": "components-overview",
     "generation": 1,
     "creationTimestamp": "2026-05-12T12:55:55Z",
     "labels": {},
@@ -37,7 +37,7 @@
         "kind": "Panel",
         "spec": {
           "id": 2,
-          "title": "Repository",
+          "title": "",
           "links": [],
           "description": "Description and topics for ${repository}, from the GitHub REST repo endpoint.",
           "data": {
@@ -1013,7 +1013,7 @@
       "hideTimepicker": false,
       "fiscalYearStartMonth": 0
     },
-    "title": "GitHub Dependabot",
+    "title": "Components Overview",
     "variables": [
       {
         "kind": "TextVariable",
