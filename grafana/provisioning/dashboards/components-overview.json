@@ -884,6 +884,384 @@
             }
           }
         }
+      },
+      "panel-7": {
+        "kind": "Panel",
+        "spec": {
+          "id": 7,
+          "title": "Identified security issues",
+          "description": "Open (identified) Dependabot vulnerability alerts for ${repository}, by severity.",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-github-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "spec": {
+                        "owner": "minvws",
+                        "queryType": "Vulnerabilities",
+                        "repository": "$repository"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [
+                {
+                  "kind": "Transformation",
+                  "group": "filterByValue",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "OPEN"
+                            }
+                          },
+                          "fieldName": "state"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "organize",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {
+                        "dismissReason": true,
+                        "dismissed_at": true,
+                        "value": true,
+                        "withdrawnAt": true
+                      },
+                      "includeByName": {},
+                      "indexByName": {
+                        "advisoryDescription": 8,
+                        "created_at": 4,
+                        "cvssScore": 7,
+                        "cvssVector": 11,
+                        "dismissReason": 2,
+                        "dismissed_at": 1,
+                        "firstPatchedVersion": 9,
+                        "packageName": 5,
+                        "permalink": 12,
+                        "severity": 6,
+                        "state": 13,
+                        "value": 0,
+                        "vulnerableVersionRange": 10,
+                        "withdrawnAt": 3
+                      },
+                      "renameByName": {
+                        "severity": "Severity",
+                        "packageName": "Package",
+                        "created_at": "Identified",
+                        "cvssScore": "CVSS",
+                        "cvssVector": "CVSS vector",
+                        "advisoryDescription": "Advisory",
+                        "firstPatchedVersion": "First patched",
+                        "vulnerableVersionRange": "Affected versions",
+                        "permalink": "Link",
+                        "state": "State"
+                      }
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "table",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "mappings": [
+                    {
+                      "type": "value",
+                      "options": {
+                        "HIGH": {
+                          "color": "light-red",
+                          "index": 0
+                        },
+                        "LOW": {
+                          "color": "light-green",
+                          "index": 2
+                        },
+                        "MODERATE": {
+                          "color": "light-orange",
+                          "index": 1
+                        }
+                      }
+                    }
+                  ],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "scope": "series",
+                      "options": "severity"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "color-background"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "panel-8": {
+        "kind": "Panel",
+        "spec": {
+          "id": 8,
+          "title": "Open PRs",
+          "description": "Number of open Dependabot pull requests for ${repository}. Green when there is nothing to merge, red when there are PRs waiting.",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "refId": "A",
+                    "hidden": false,
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-github-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "spec": {
+                        "options": {
+                          "query": "is:open author:app/dependabot",
+                          "timeField": 1
+                        },
+                        "owner": "minvws",
+                        "queryType": "Pull_Requests",
+                        "repository": "$repository"
+                      }
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "textMode": "value",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "count"
+                  ],
+                  "fields": "number",
+                  "values": false
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [],
+                  "unit": "short",
+                  "noValue": "0",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 1
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-9": {
+        "kind": "Panel",
+        "spec": {
+          "id": 9,
+          "title": "Security",
+          "description": "Number of open (identified) Dependabot vulnerability alerts for ${repository}. Green when there are none, red when any are open.",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "refId": "A",
+                    "hidden": false,
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-github-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "PF911E414CF6BDFC5"
+                      },
+                      "spec": {
+                        "owner": "minvws",
+                        "queryType": "Vulnerabilities",
+                        "repository": "$repository"
+                      }
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": [
+                {
+                  "kind": "Transformation",
+                  "group": "filterByValue",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "OPEN"
+                            }
+                          },
+                          "fieldName": "state"
+                        }
+                      ],
+                      "match": "any",
+                      "type": "include"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "textMode": "value",
+                "wideLayout": true,
+                "showPercentChange": false,
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "count"
+                  ],
+                  "fields": "packageName",
+                  "values": false
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [],
+                  "unit": "short",
+                  "noValue": "0",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 1
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
       }
     },
     "layout": {
@@ -908,6 +1286,32 @@
                       "spec": {
                         "x": 0,
                         "y": 0,
+                        "width": 12,
+                        "height": 3,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-8"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 12,
+                        "y": 0,
+                        "width": 12,
+                        "height": 3,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-9"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 3,
                         "width": 24,
                         "height": 4,
                         "element": {
@@ -920,7 +1324,7 @@
                       "kind": "GridLayoutItem",
                       "spec": {
                         "x": 0,
-                        "y": 4,
+                        "y": 7,
                         "width": 12,
                         "height": 8,
                         "element": {
@@ -933,7 +1337,7 @@
                       "kind": "GridLayoutItem",
                       "spec": {
                         "x": 12,
-                        "y": 4,
+                        "y": 7,
                         "width": 12,
                         "height": 8,
                         "element": {
@@ -946,7 +1350,7 @@
                       "kind": "GridLayoutItem",
                       "spec": {
                         "x": 0,
-                        "y": 12,
+                        "y": 15,
                         "width": 4,
                         "height": 3,
                         "element": {
@@ -959,7 +1363,7 @@
                       "kind": "GridLayoutItem",
                       "spec": {
                         "x": 0,
-                        "y": 15,
+                        "y": 18,
                         "width": 4,
                         "height": 3,
                         "element": {
@@ -972,12 +1376,25 @@
                       "kind": "GridLayoutItem",
                       "spec": {
                         "x": 4,
-                        "y": 12,
+                        "y": 15,
                         "width": 20,
                         "height": 6,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-4"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 21,
+                        "width": 24,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-7"
                         }
                       }
                     }
