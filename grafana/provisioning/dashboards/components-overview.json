@@ -59,6 +59,11 @@
                       "spec": {
                         "columns": [
                           {
+                            "selector": "full_name",
+                            "text": "Repository",
+                            "type": "string"
+                          },
+                          {
                             "selector": "description",
                             "text": "Description",
                             "type": "string"
@@ -113,6 +118,28 @@
                   {
                     "matcher": {
                       "id": "byName",
+                      "options": "Repository"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 260
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open repository on GitHub",
+                            "url": "https://github.com/${__value.text}",
+                            "targetBlank": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
                       "options": "Description"
                     },
                     "properties": [
@@ -148,7 +175,7 @@
         "spec": {
           "id": 1,
           "title": "Open Dependabot PRs",
-          "description": "Open Dependabot pull requests (is:open author:app/dependabot) per repository. Repositories are the non-archived, non-fork minvws repos carrying the 'icore' topic. One table per repo (repeated).",
+          "description": "Open Dependabot pull requests (is:open author:app/dependabot) per repository. Repositories are the non-archived, non-fork minvws repos carrying the 'component' topic. One table per repo (repeated).",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -890,7 +917,7 @@
         "spec": {
           "id": 7,
           "title": "Identified security issues",
-          "description": "Open (identified) Dependabot vulnerability alerts for ${repository}, by severity.",
+          "description": "Open Dependabot vulnerability alerts for ${repository}, from the GitHub REST dependabot/alerts endpoint. Each row links to the alert in the repository.",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -899,86 +926,100 @@
                 {
                   "kind": "PanelQuery",
                   "spec": {
+                    "refId": "A",
+                    "hidden": false,
                     "query": {
                       "kind": "DataQuery",
-                      "group": "grafana-github-datasource",
+                      "group": "yesoreyeram-infinity-datasource",
                       "version": "v0",
                       "datasource": {
-                        "name": "PF911E414CF6BDFC5"
+                        "name": "P7DE29E761332DDA9"
                       },
                       "spec": {
-                        "owner": "minvws",
-                        "queryType": "Vulnerabilities",
-                        "repository": "$repository"
+                        "columns": [
+                          {
+                            "selector": "security_advisory.severity",
+                            "text": "Severity",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "dependency.package.name",
+                            "text": "Package",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "created_at",
+                            "text": "Identified",
+                            "type": "timestamp"
+                          },
+                          {
+                            "selector": "security_advisory.cvss.score",
+                            "text": "CVSS",
+                            "type": "number"
+                          },
+                          {
+                            "selector": "security_advisory.summary",
+                            "text": "Advisory",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "security_vulnerability.first_patched_version.identifier",
+                            "text": "First patched",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "security_vulnerability.vulnerable_version_range",
+                            "text": "Affected versions",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "html_url",
+                            "text": "Link",
+                            "type": "string"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/minvws/${repository}/dependabot/alerts?state=open&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET",
+                          "headers": [
+                            {
+                              "key": "Accept",
+                              "value": "application/vnd.github+json"
+                            }
+                          ]
+                        }
                       }
-                    },
-                    "refId": "A",
-                    "hidden": false
+                    }
                   }
                 }
               ],
               "transformations": [
                 {
                   "kind": "Transformation",
-                  "group": "filterByValue",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "equal",
-                            "options": {
-                              "value": "OPEN"
-                            }
-                          },
-                          "fieldName": "state"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
                   "group": "organize",
                   "spec": {
                     "options": {
-                      "excludeByName": {
-                        "dismissReason": true,
-                        "dismissed_at": true,
-                        "value": true,
-                        "withdrawnAt": true
-                      },
+                      "excludeByName": {},
                       "includeByName": {},
                       "indexByName": {
-                        "advisoryDescription": 8,
-                        "created_at": 4,
-                        "cvssScore": 7,
-                        "cvssVector": 11,
-                        "dismissReason": 2,
-                        "dismissed_at": 1,
-                        "firstPatchedVersion": 9,
-                        "packageName": 5,
-                        "permalink": 12,
-                        "severity": 6,
-                        "state": 13,
-                        "value": 0,
-                        "vulnerableVersionRange": 10,
-                        "withdrawnAt": 3
+                        "Severity": 0,
+                        "Package": 1,
+                        "Identified": 2,
+                        "CVSS": 3,
+                        "Advisory": 4,
+                        "First patched": 5,
+                        "Affected versions": 6,
+                        "Link": 7
                       },
-                      "renameByName": {
-                        "severity": "Severity",
-                        "packageName": "Package",
-                        "created_at": "Identified",
-                        "cvssScore": "CVSS",
-                        "cvssVector": "CVSS vector",
-                        "advisoryDescription": "Advisory",
-                        "firstPatchedVersion": "First patched",
-                        "vulnerableVersionRange": "Affected versions",
-                        "permalink": "Link",
-                        "state": "State"
-                      }
+                      "renameByName": {}
                     }
                   }
                 }
@@ -1001,17 +1042,21 @@
                     {
                       "type": "value",
                       "options": {
-                        "HIGH": {
-                          "color": "light-red",
+                        "critical": {
+                          "color": "dark-red",
                           "index": 0
                         },
-                        "LOW": {
-                          "color": "light-green",
+                        "high": {
+                          "color": "light-red",
+                          "index": 1
+                        },
+                        "medium": {
+                          "color": "light-orange",
                           "index": 2
                         },
-                        "MODERATE": {
-                          "color": "light-orange",
-                          "index": 1
+                        "low": {
+                          "color": "light-green",
+                          "index": 3
                         }
                       }
                     }
@@ -1047,8 +1092,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "scope": "series",
-                      "options": "severity"
+                      "options": "Severity"
                     },
                     "properties": [
                       {
@@ -1056,6 +1100,91 @@
                         "value": {
                           "type": "color-background"
                         }
+                      },
+                      {
+                        "id": "custom.width",
+                        "value": 110
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "CVSS"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Advisory"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 480
+                      },
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "auto",
+                          "wrapText": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Package"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 260
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open this alert in the repository",
+                            "url": "${__data.fields.Link}",
+                            "targetBlank": true
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Link"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 120
+                      },
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "type": "auto"
+                        }
+                      },
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "title": "Open this alert in the repository",
+                            "url": "${__value.text}",
+                            "targetBlank": true
+                          }
+                        ]
                       }
                     ]
                   }
@@ -1160,7 +1289,7 @@
         "spec": {
           "id": 9,
           "title": "Security",
-          "description": "Number of open (identified) Dependabot vulnerability alerts for ${repository}. Green when there are none, red when any are open.",
+          "description": "Number of open Dependabot vulnerability alerts for ${repository}, from the GitHub REST dependabot/alerts endpoint. Green when there are none, red when any are open.",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1173,44 +1302,38 @@
                     "hidden": false,
                     "query": {
                       "kind": "DataQuery",
-                      "group": "grafana-github-datasource",
+                      "group": "yesoreyeram-infinity-datasource",
                       "version": "v0",
                       "datasource": {
-                        "name": "PF911E414CF6BDFC5"
+                        "name": "P7DE29E761332DDA9"
                       },
                       "spec": {
-                        "owner": "minvws",
-                        "queryType": "Vulnerabilities",
-                        "repository": "$repository"
+                        "columns": [],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "$count($)",
+                        "source": "url",
+                        "type": "json",
+                        "url": "https://api.github.com/repos/minvws/${repository}/dependabot/alerts?state=open&per_page=100",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET",
+                          "headers": [
+                            {
+                              "key": "Accept",
+                              "value": "application/vnd.github+json"
+                            }
+                          ]
+                        }
                       }
                     }
                   }
                 }
               ],
               "queryOptions": {},
-              "transformations": [
-                {
-                  "kind": "Transformation",
-                  "group": "filterByValue",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "equal",
-                            "options": {
-                              "value": "OPEN"
-                            }
-                          },
-                          "fieldName": "state"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                }
-              ]
+              "transformations": []
             }
           },
           "vizConfig": {
@@ -1229,9 +1352,9 @@
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                   "calcs": [
-                    "count"
+                    "lastNotNull"
                   ],
-                  "fields": "packageName",
+                  "fields": "",
                   "values": false
                 }
               },
@@ -1433,20 +1556,6 @@
     "title": "Components Overview",
     "variables": [
       {
-        "kind": "TextVariable",
-        "spec": {
-          "name": "topic",
-          "label": "Topic",
-          "query": "icore",
-          "current": {
-            "text": "icore",
-            "value": "icore"
-          },
-          "hide": "dontHide",
-          "skipUrlSync": false
-        }
-      },
-      {
         "kind": "QueryVariable",
         "spec": {
           "name": "repository",
@@ -1480,7 +1589,7 @@
                 "root_selector": "items",
                 "source": "url",
                 "type": "json",
-                "url": "https://api.github.com/search/repositories?q=org:minvws+topic:${topic}&per_page=100&sort=updated&order=desc",
+                "url": "https://api.github.com/search/repositories?q=org:minvws+topic:component+-topic:deprecated&per_page=100&sort=updated&order=desc",
                 "url_options": {
                   "data": "",
                   "method": "GET"
@@ -1512,6 +1621,6 @@
         }
       }
     },
-    "description": "Per-repository overview for minvws repos carrying the ${topic} topic: description & topics, open Dependabot PRs, latest releases, and 'used by' dependency usage."
+    "description": "Per-repository overview for minvws repos carrying the 'component' topic: description & topics, open Dependabot PRs, latest releases, and 'used by' dependency usage."
   }
 }
