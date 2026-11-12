@@ -69,7 +69,7 @@
                         "root_selector": "items",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
+                        "url": "https://api.github.com/search/repositories?q=${repos_per_project}&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -292,7 +292,7 @@
               ]
             }
           },
-          "description": "Repositories with the selected topic. Shows the first 100 (not paginated: GitHub's Search API allows only 30 requests/min and this dashboard already makes many search calls).",
+          "description": "Repositories in the selected project, taken from its 'repositories' list in projects.json (fetched by name via the Search API in a single call).",
           "id": 51,
           "links": [],
           "title": "Repositories",
@@ -618,7 +618,7 @@
                         "root_selector": "items",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
+                        "url": "https://api.github.com/search/repositories?q=${repos_per_project}&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -652,7 +652,7 @@
               ]
             }
           },
-          "description": "Repositories by status (active vs. archived). Covers the first 100 repositories (Search API not paginated - GitHub limits search to 30 requests/min).",
+          "description": "Repositories by status (active vs. archived) for the selected project, from its 'repositories' list in projects.json.",
           "id": 52,
           "links": [],
           "title": "Repository status",
@@ -766,7 +766,7 @@
                         "root_selector": "items",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
+                        "url": "https://api.github.com/search/repositories?q=${repos_per_project}&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -800,7 +800,7 @@
               ]
             }
           },
-          "description": "Repositories by visibility (public / private / internal). Covers the first 100 repositories (Search API not paginated - GitHub limits search to 30 requests/min).",
+          "description": "Repositories by visibility (public / private / internal) for the selected project, from its 'repositories' list in projects.json.",
           "id": 53,
           "links": [],
           "title": "Repository visibility",
@@ -1165,7 +1165,7 @@
                           "method": "GET"
                         },
                         "pagination_mode": "page",
-                        "pagination_max_pages": 5,
+                        "pagination_max_pages": 1,
                         "pagination_param_page_field_name": "page",
                         "pagination_param_page_field_type": "query"
                       },
@@ -1303,7 +1303,7 @@
               ]
             }
           },
-          "description": "Repository releases. Paginated up to 500 (5 pages of 100).",
+          "description": "Repository releases, newest first (up to 100). A single page is fetched: the Infinity datasource cannot stop on an empty page, so paginating further errors the whole query on repos with fewer pages.",
           "id": 63,
           "links": [],
           "title": "Releases",
@@ -1486,7 +1486,7 @@
                           "method": "GET"
                         },
                         "pagination_mode": "page",
-                        "pagination_max_pages": 5,
+                        "pagination_max_pages": 1,
                         "pagination_param_page_field_name": "page",
                         "pagination_param_page_field_type": "query"
                       },
@@ -1542,7 +1542,7 @@
               ]
             }
           },
-          "description": "Number of releases. Paginated up to 500 (5 pages of 100).",
+          "description": "Number of releases (counts the latest 100; a single page is fetched to avoid the Infinity empty-page merge error).",
           "id": 64,
           "links": [],
           "title": "Releases",
@@ -2052,7 +2052,7 @@
                           "method": "GET"
                         },
                         "pagination_mode": "page",
-                        "pagination_max_pages": 5,
+                        "pagination_max_pages": 1,
                         "pagination_param_page_field_name": "page",
                         "pagination_param_page_field_type": "query"
                       },
@@ -2066,7 +2066,7 @@
               "transformations": []
             }
           },
-          "description": "Commits in the selected range. Paginated up to 500 (5 pages of 100).",
+          "description": "Commits in the selected range, newest first (up to 100). A single page is fetched to avoid the Infinity empty-page merge error; a very active repo over a wide range may be truncated.",
           "id": 66,
           "links": [],
           "title": "Commits",
@@ -4449,10 +4449,23 @@
                 }
               ],
               "queryOptions": {},
-              "transformations": []
+              "transformations": [
+                {
+                  "kind": "Transformation",
+                  "group": "groupingToMatrix",
+                  "spec": {
+                    "options": {
+                      "columnField": "Environment",
+                      "rowField": "Software",
+                      "valueField": "Version",
+                      "emptyValue": "empty"
+                    }
+                  }
+                }
+              ]
             }
           },
-          "description": "",
+          "description": "Deployed software versions for the selected project, as a matrix: one row per software component, one column per environment, the deployed version in each cell. Empty cell = not deployed in that environment.",
           "id": 93,
           "links": [],
           "title": "Deployments",
@@ -5277,24 +5290,24 @@
                       "group": "yesoreyeram-infinity-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [
-                          {
-                            "selector": "total_count",
-                            "text": "Repositories",
-                            "type": "number"
-                          }
-                        ],
+                        "columns": [],
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "",
+                        "root_selector": "$count($[id=\"${projects}\"].repositories)",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                        "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                         "url_options": {
                           "data": "",
-                          "method": "GET"
+                          "method": "GET",
+                          "headers": [
+                            {
+                              "key": "Accept",
+                              "value": "application/vnd.github.raw"
+                            }
+                          ]
                         }
                       },
                       "version": "v0"
@@ -5306,7 +5319,7 @@
               "transformations": []
             }
           },
-          "description": "Repositories in this project (GitHub topic).",
+          "description": "Number of repositories in the selected project, from its 'repositories' list in projects.json.",
           "id": 104,
           "links": [],
           "title": "Repositories",
@@ -7219,20 +7232,6 @@
         }
       },
       {
-        "kind": "TextVariable",
-        "spec": {
-          "current": {
-            "text": "minvws",
-            "value": "minvws"
-          },
-          "hide": "dontHide",
-          "label": "Organization",
-          "name": "organization",
-          "query": "minvws",
-          "skipUrlSync": false
-        }
-      },
-      {
         "kind": "QueryVariable",
         "spec": {
           "allowCustomValue": true,
@@ -7615,13 +7614,19 @@
                 "format": "table",
                 "parser": "backend",
                 "refId": "",
-                "root_selector": "items.full_name ~> $map(function($v){ \"repo:\" & $v }) ~> $join(\" \")",
+                "root_selector": "$exists($[id=\"${projects}\"].repositories) ? ($[id=\"${projects}\"].repositories ~> $map(function($v){ \"repo:\" & $v }) ~> $join(\" \")) : \"\"",
                 "source": "url",
                 "type": "json",
-                "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects",
+                "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                 "url_options": {
                   "data": "",
-                  "method": "GET"
+                  "method": "GET",
+                  "headers": [
+                    {
+                      "key": "Accept",
+                      "value": "application/vnd.github.raw"
+                    }
+                  ]
                 }
               },
               "meta": {
@@ -7668,13 +7673,19 @@
                 "format": "table",
                 "parser": "backend",
                 "refId": "",
-                "root_selector": "items.full_name",
+                "root_selector": "$exists($[id=\"${projects}\"].repositories) ? $[id=\"${projects}\"].repositories : []",
                 "source": "url",
                 "type": "json",
-                "url": "https://api.github.com/search/repositories?q=org:${organization}+topic:$projects&per_page=100",
+                "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                 "url_options": {
                   "data": "",
-                  "method": "GET"
+                  "method": "GET",
+                  "headers": [
+                    {
+                      "key": "Accept",
+                      "value": "application/vnd.github.raw"
+                    }
+                  ]
                 }
               },
               "meta": {
