@@ -175,7 +175,7 @@
         "spec": {
           "id": 1,
           "title": "Open Dependabot PRs",
-          "description": "Open Dependabot pull requests (is:open author:app/dependabot) per repository. Repositories are the non-archived, non-fork minvws repos carrying the 'component' topic. One table per repo (repeated).",
+          "description": "Open Dependabot pull requests (is:open author:app/dependabot) per repository. Repositories are the non-archived, non-fork minvws repos carrying the 'component' or 'action' topic. One table per repo (repeated).",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1589,7 +1589,7 @@
                 "root_selector": "items",
                 "source": "url",
                 "type": "json",
-                "url": "https://api.github.com/search/repositories?q=org:minvws+topic:component+-topic:deprecated&per_page=100&sort=updated&order=desc",
+                "url": "https://api.github.com/search/repositories?q=org:minvws+topic:component,action+-topic:deprecated&per_page=100&sort=updated&order=desc",
                 "url_options": {
                   "data": "",
                   "method": "GET"
@@ -1621,6 +1621,6 @@
         }
       }
     },
-    "description": "Per-repository overview for minvws repos carrying the 'component' topic: description & topics, open Dependabot PRs, latest releases, and 'used by' dependency usage."
+    "description": "Per-repository overview for minvws repos carrying the 'component' or 'action' topic: description & topics, open Dependabot PRs, latest releases, and 'used by' dependency usage."
   }
 }
