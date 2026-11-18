@@ -5898,10 +5898,10 @@
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "total_count",
+                        "root_selector": "$count($)",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:pr+is:open+repo:${repos}",
+                        "url": "https://api.github.com/repos/${repos}/pulls?state=open&per_page=100",
                         "url_options": {
                           "data": "",
                           "method": "GET"
@@ -5917,7 +5917,7 @@
               "transformations": []
             }
           },
-          "description": "Pull requests currently open in ${repos} (point in time, ignores range).",
+          "description": "Pull requests currently open in ${repos} (point in time, ignores range). Uses the core REST pulls endpoint (not Search API) to avoid rate limits; counts up to 100 open PRs.",
           "id": 115,
           "links": [],
           "title": "Open",
@@ -6081,184 +6081,6 @@
                 "reduceOptions": {
                   "calcs": ["mean"],
                   "fields": "/^merge_time$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-118": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "total_count",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/commits?q=repo:${repos}+committer-date:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+merge:true",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "Merge commits in ${repos} within the selected range.",
-          "id": 118,
-          "links": [],
-          "title": "Merge commits",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "orange"
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "orange",
-                        "value": 0
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["last"],
-                  "fields": "/^A$/",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "text": {},
-                "textMode": "auto",
-                "wideLayout": true
-              }
-            },
-            "version": "13.0.1"
-          }
-        }
-      },
-      "panel-119": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "P7DE29E761332DDA9"
-                      },
-                      "group": "yesoreyeram-infinity-datasource",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "total_count",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/commits?q=repo:${repos}+committer-date:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}+merge:false",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "Non-merge (direct) commits in ${repos} within the selected range.",
-          "id": 119,
-          "links": [],
-          "title": "Direct commits",
-          "vizConfig": {
-            "group": "stat",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "blue"
-                  },
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "blue",
-                        "value": 0
-                      }
-                    ]
-                  }
-                },
-                "overrides": []
-              },
-              "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": ["last"],
-                  "fields": "/^A$/",
                   "values": false
                 },
                 "showPercentChange": false,
@@ -6830,32 +6652,6 @@
                         "height": 3,
                         "width": 6,
                         "x": 6,
-                        "y": 46
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-118"
-                        },
-                        "height": 3,
-                        "width": 6,
-                        "x": 12,
-                        "y": 46
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-119"
-                        },
-                        "height": 3,
-                        "width": 6,
-                        "x": 18,
                         "y": 46
                       }
                     },
