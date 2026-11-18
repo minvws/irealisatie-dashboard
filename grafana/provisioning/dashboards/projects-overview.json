@@ -594,35 +594,13 @@
                     "refId": "A",
                     "query": {
                       "datasource": {
-                        "name": "P7DE29E761332DDA9"
+                        "name": "-- Dashboard --"
                       },
-                      "group": "yesoreyeram-infinity-datasource",
+                      "group": "dashboard",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [
-                          {
-                            "selector": "archived",
-                            "text": "archived",
-                            "type": "string"
-                          },
-                          {
-                            "selector": "id",
-                            "text": "id",
-                            "type": "number"
-                          }
-                        ],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=${repos_per_project}&per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
+                        "panelId": 51,
+                        "withTransforms": false
                       },
                       "version": "v0"
                     }
@@ -742,35 +720,13 @@
                     "refId": "A",
                     "query": {
                       "datasource": {
-                        "name": "P7DE29E761332DDA9"
+                        "name": "-- Dashboard --"
                       },
-                      "group": "yesoreyeram-infinity-datasource",
+                      "group": "dashboard",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [
-                          {
-                            "selector": "visibility",
-                            "text": "visibility",
-                            "type": "string"
-                          },
-                          {
-                            "selector": "id",
-                            "text": "id",
-                            "type": "number"
-                          }
-                        ],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "items",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=${repos_per_project}&per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
+                        "panelId": 51,
+                        "withTransforms": false
                       },
                       "version": "v0"
                     }
@@ -2130,24 +2086,13 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "name": "P7DE29E761332DDA9"
+                        "name": "-- Dashboard --"
                       },
-                      "group": "yesoreyeram-infinity-datasource",
+                      "group": "dashboard",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "total_count",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:pr+repo:${repos}+created:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
+                        "panelId": 65,
+                        "withTransforms": false
                       },
                       "version": "v0"
                     },
@@ -2196,8 +2141,8 @@
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["last"],
-                  "fields": "/^A$/",
+                  "calcs": ["count"],
+                  "fields": "/^number$/",
                   "values": false
                 },
                 "showPercentChange": false,
@@ -4681,24 +4626,14 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "name": "P7DE29E761332DDA9"
+                        "name": "PF911E414CF6BDFC5"
                       },
-                      "group": "yesoreyeram-infinity-datasource",
+                      "group": "grafana-github-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "$count($)",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/repos/${repos}/dependabot/alerts?state=open&per_page=100",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
+                        "owner": "minvws",
+                        "queryType": "Vulnerabilities",
+                        "repository": "${repos}"
                       },
                       "version": "v0"
                     },
@@ -4707,10 +4642,32 @@
                 }
               ],
               "queryOptions": {},
-              "transformations": []
+              "transformations": [
+                {
+                  "kind": "Transformation",
+                  "group": "filterByValue",
+                  "spec": {
+                    "options": {
+                      "type": "include",
+                      "match": "all",
+                      "filters": [
+                        {
+                          "fieldName": "state",
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "OPEN"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
             }
           },
-          "description": "Currently open Dependabot alerts. Point in time - not filtered by the dashboard time range. Capped at 100 open alerts/repo - this endpoint uses a header-only pagination cursor the datasource can't follow.",
+          "description": "Currently open Dependabot alerts (native GitHub datasource, GraphQL). Point in time - not filtered by the dashboard time range. Repos with Dependabot alerts disabled return empty instead of a 403.",
           "id": 97,
           "links": [],
           "title": "Open (Dependabot)",
@@ -4746,8 +4703,8 @@
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["last"],
-                  "fields": "/^A$/",
+                  "calcs": ["count"],
+                  "fields": "/^value$/",
                   "values": false
                 },
                 "showPercentChange": false,
@@ -5764,24 +5721,13 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "name": "P7DE29E761332DDA9"
+                        "name": "-- Dashboard --"
                       },
-                      "group": "yesoreyeram-infinity-datasource",
+                      "group": "dashboard",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "total_count",
-                        "source": "url",
-                        "type": "json",
-                        "url": "https://api.github.com/search/issues?q=is:pr+is:merged+repo:${repos}+merged:${__from:date:YYYY-MM-DD}..${__to:date:YYYY-MM-DD}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
+                        "panelId": 116,
+                        "withTransforms": false
                       },
                       "version": "v0"
                     },
@@ -5826,8 +5772,8 @@
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": ["last"],
-                  "fields": "/^A$/",
+                  "calcs": ["count"],
+                  "fields": "/^number$/",
                   "values": false
                 },
                 "showPercentChange": false,
@@ -6647,7 +6593,7 @@
           {
             "kind": "RowsLayoutRow",
             "spec": {
-              "collapse": false,
+              "collapse": true,
               "hideHeader": true,
               "layout": {
                 "kind": "GridLayout",
