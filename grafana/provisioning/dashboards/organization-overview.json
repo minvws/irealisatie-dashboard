@@ -424,24 +424,24 @@
                       "group": "yesoreyeram-infinity-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "columns": [
-                          {
-                            "selector": "total_count",
-                            "text": "Project",
-                            "type": "number"
-                          }
-                        ],
+                        "columns": [],
                         "filters": [],
                         "format": "table",
                         "global_query_id": "",
                         "parser": "backend",
-                        "root_selector": "",
+                        "root_selector": "$count($)",
                         "source": "url",
                         "type": "json",
-                        "url": "https://api.github.com/search/repositories?q=org:${organization}+archived:false+topic:project",
+                        "url": "https://api.github.com/repos/minvws/rdo-icore-docs/contents/data/projects.json",
                         "url_options": {
                           "data": "",
-                          "method": "GET"
+                          "method": "GET",
+                          "headers": [
+                            {
+                              "key": "Accept",
+                              "value": "application/vnd.github.raw"
+                            }
+                          ]
                         }
                       },
                       "version": "v0"
